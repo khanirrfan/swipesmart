@@ -14,6 +14,7 @@ func main() {
 	r.HandleFunc("/login", controller.LoginHandler).Methods("POST")
 	r.HandleFunc("/profile", controller.ProfileHandler).Methods("GET")
 	r.HandleFunc("/profiles", controller.GetProfiles).Methods("GET")
+	r.HandleFunc("/protected", controller.TokenVerifyMiddleWare(controller.ProtectedEndPoint)).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8080", r))
 
 }
