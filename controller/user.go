@@ -153,7 +153,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	var jwt model.JWT
 
 	err = collection.FindOne(context.TODO(), bson.D{{"username", user.Username}}).Decode(&result)
-
+	fmt.Println(result)
 	if err != nil {
 		res.Error = "Invalid username"
 		json.NewEncoder(w).Encode(res)
