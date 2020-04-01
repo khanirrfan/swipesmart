@@ -23,12 +23,17 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		return []byte("secret"), nil
 	})
+	if err != nil {
+		log.Fatal(err)
+	}
 	var result model.User
 	var res model.ResponseResult
+
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		result.Username = claims["username"].(string)
 		result.FirstName = claims["firstname"].(string)
 		result.LastName = claims["lastname"].(string)
+		result.Email = claims["email"].(string)
 
 		json.NewEncoder(w).Encode(result)
 		return

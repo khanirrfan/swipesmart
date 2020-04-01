@@ -19,6 +19,10 @@ type Getuser struct {
 	LastName  string             `json:"lastname, omitempty" bson:"lastname, omitempty"`
 	Email     string             `json:"email, omitempty" bson:"email, omitempty"`
 }
+
+// type Profile struct {
+// 	Education
+// }
 type ResponseResult struct {
 	Error  string `bson:"error, omitempty"`
 	Result string `bson:"result, omitempty"`

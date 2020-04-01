@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/jwt-auth/model"
 )
@@ -22,10 +21,12 @@ func GenerateToken(user model.User) (string, error) {
 	var err error
 	secret := "secret"
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"email": user.Email,
-		"iss":   "course",
+		"email":     user.Email,
+		"lastname":  user.LastName,
+		"firstname": user.FirstName,
+		"username":  user.Username,
 	})
-	spew.Dump(token)
+	// spew.Dump(token)
 
 	tokenstring, err := token.SignedString([]byte(secret))
 	if err != nil {
