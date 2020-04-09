@@ -16,6 +16,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+// ProfileHandler ...
 func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	tokenString := r.Header.Get("Authorization")
@@ -48,6 +49,8 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+
+// GetProfiles ...
 func GetProfiles(w http.ResponseWriter, r *http.Request) {
 	var result []model.Getuser
 	w.Header().Set("Content-Type", "application/json")
@@ -83,7 +86,9 @@ func GetProfiles(w http.ResponseWriter, r *http.Request) {
 	}
 	json.NewEncoder(w).Encode(result)
 }
-func GetProfileById(w http.ResponseWriter, r *http.Request) {
+
+// GetProfileByID ...
+func GetProfileByID(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
 	id := params["id"]

@@ -14,6 +14,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
+// CreateJobs ...
 func CreateJobs(w http.ResponseWriter, r *http.Request) {
 	var jobs model.Jobs
 	body, _ := ioutil.ReadAll(r.Body)
@@ -45,6 +46,7 @@ func CreateJobs(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// GetJobs ...
 func GetJobs(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-ype", "application/json")
 	var jobs []model.GetJobs

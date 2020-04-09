@@ -16,7 +16,7 @@ func main() {
 	// user profile
 	r.HandleFunc("/profile", controller.ProfileHandler).Methods("GET")
 	r.HandleFunc("/profiles", controller.GetProfiles).Methods("GET")
-	r.HandleFunc("/profile/{id}", controller.GetProfileById).Methods("GET")
+	r.HandleFunc("/profile/{id}", controller.GetProfileByID).Methods("GET")
 	// jobs
 	r.HandleFunc("/jobs", controller.GetJobs).Methods("GET")
 	r.HandleFunc("/addjob", controller.CreateJobs).Methods("POST")

@@ -19,6 +19,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// TokenVerifyMiddleWare ...
 func TokenVerifyMiddleWare(next http.HandlerFunc) http.HandlerFunc {
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -59,10 +60,12 @@ func TokenVerifyMiddleWare(next http.HandlerFunc) http.HandlerFunc {
 	})
 }
 
+//ProtectedEndPoint ...
 func ProtectedEndPoint(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Protected called")
 }
 
+// RegisterHandler ...
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
@@ -119,6 +122,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+//LoginHandler ...
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")

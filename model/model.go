@@ -5,28 +5,28 @@ import (
 )
 
 type User struct {
-	Username  string `json:"username, omitempty" bson:"username, omitempty"`
-	FirstName string `json:"firstname, omitempty" bson:"firstname, omitempty"`
-	LastName  string `json:"lastname, omitempty" bson:"lastname, omitempty"`
-	Email     string `json:"email, omitempty" bson:"email, omitempty"`
-	Password  string `json:"password, omitempty" bson:"password, omitempty"`
-	// Token     string             `json:"token, omitempty" bson:"token, omitempty"`
+	Username  string `json:"username,omitempty" bson:"username,omitempty"`
+	FirstName string `json:"firstname,omitempty" bson:"firstname,omitempty"`
+	LastName  string `json:"lastname,omitempty" bson:"lastname,omitempty"`
+	Email     string `json:"email,omitempty" bson:"email,omitempty"`
+	Password  string `json:"password,omitempty" bson:"password,omitempty"`
+	// Token     string             `json:"token,omitempty" bson:"token,omitempty"`
 }
 type Getuser struct {
-	ID        primitive.ObjectID `json:"_id, omitempty" bson:"_id, omitempty"`
-	Username  string             `json:"username, omitempty" bson:"username, omitempty"`
-	FirstName string             `json:"firstname, omitempty" bson:"firstname, omitempty"`
-	LastName  string             `json:"lastname, omitempty" bson:"lastname, omitempty"`
-	Email     string             `json:"email, omitempty" bson:"email, omitempty"`
+	ID        primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	Username  string             `json:"username,omitempty" bson:"username,omitempty"`
+	FirstName string             `json:"firstname,omitempty" bson:"firstname,omitempty"`
+	LastName  string             `json:"lastname,omitempty" bson:"lastname,omitempty"`
+	Email     string             `json:"email,omitempty" bson:"email,omitempty"`
 }
 
 type ResponseResult struct {
-	Error  string `bson:"error, omitempty"`
-	Result string `bson:"result, omitempty"`
+	Error  string `bson:"error,omitempty"`
+	Result string `bson:"result,omitempty"`
 }
 
 type JWT struct {
-	Token string `bson:"token, omitempty"`
+	Token string `bson:"token,omitempty"`
 }
 
 type Profile struct {
@@ -39,7 +39,7 @@ type Profile struct {
 // Experience -
 // 			company: name,
 // 			position: name,
-// 			expereince, [todate-fromdate],
+// 			expereince,[todate-fromdate],
 
 // Education -
 // 			bachlors:
@@ -59,12 +59,12 @@ type Profile struct {
 // 		field,
 // 		lookingfor[jobTpe]
 // 		country
-// 		job category[normal, startup, premium]
+// 		job category[normal,startup,premium]
 
 // JobType - [
-// GlobalMarket:["quantativeAnalyst", "financialAnalyst"],
-// trading["", "", ""],
-// asesetmanagment["", "", ""],
-// auditiing["", "", ""],
-// businessDevelopment["", "", ""]
+// GlobalMarket:["quantativeAnalyst","financialAnalyst"],
+// trading["","",""],
+// asesetmanagment["","",""],
+// auditiing["","",""],
+// businessDevelopment["","",""]
 // ]
