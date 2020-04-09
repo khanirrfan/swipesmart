@@ -87,14 +87,14 @@ func GetProfileById(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
 	id := params["id"]
-	fmt.Println("id:", id)
 	tokenString := r.Header.Get("Authorization")
-	_, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method")
 		}
 		return []byte("secret"), nil
 	})
+
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -103,15 +103,16 @@ func GetProfileById(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	// fmt.Println("token:", token)
 	userID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		log.Fatal("Invalid ObjectID")
 	}
 	var userProfile model.Getuser
-	err = collection.FindOne(context.TODO(), bson.M{"_id": userID}).Decode(&userProfile)
-	if err != nil {
-		fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
+	if token.Valid {
+		err = collection.FindOne(context.TODO(), bson.M{"_id": userID}).Decode(&userProfile)
+		if err != nil {
+			fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
+		}
 	}
 	json.NewEncoder(w).Encode(userProfile)
 }

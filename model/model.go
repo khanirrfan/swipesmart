@@ -20,9 +20,6 @@ type Getuser struct {
 	Email     string             `json:"email, omitempty" bson:"email, omitempty"`
 }
 
-type UserId struct {
-	ProfileId string `json:"id"`
-}
 type ResponseResult struct {
 	Error  string `bson:"error, omitempty"`
 	Result string `bson:"result, omitempty"`
@@ -31,3 +28,43 @@ type ResponseResult struct {
 type JWT struct {
 	Token string `bson:"token, omitempty"`
 }
+
+type Profile struct {
+	Education  map[string]string
+	Experience map[string]string
+}
+
+// About - string
+
+// Experience -
+// 			company: name,
+// 			position: name,
+// 			expereince, [todate-fromdate],
+
+// Education -
+// 			bachlors:
+// 				stream: degree name,
+// 				collegeName: name,
+// 				graduationYear: year
+// 			masters:
+// 				stream: degree name,
+// 				collegeName: name,
+// 				graduationYear: year
+// 			PHD:
+// 				stream: degree name,
+// 				collegeName: name,
+// 				graduationYear: year
+
+// Search -
+// 		field,
+// 		lookingfor[jobTpe]
+// 		country
+// 		job category[normal, startup, premium]
+
+// JobType - [
+// GlobalMarket:["quantativeAnalyst", "financialAnalyst"],
+// trading["", "", ""],
+// asesetmanagment["", "", ""],
+// auditiing["", "", ""],
+// businessDevelopment["", "", ""]
+// ]

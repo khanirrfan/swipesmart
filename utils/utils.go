@@ -34,3 +34,18 @@ func GenerateToken(user model.User) (string, error) {
 	}
 	return tokenstring, nil
 }
+
+// func TokenValidation(w http.ResponseWriter, r *http.Request) {
+// 	tokenString := r.Header.Get("Authorization")
+// 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+// 		// Don't forget to validate the alg is what you expect:
+// 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+// 			return nil, fmt.Errorf("Unexpected signing method")
+// 		}
+// 		return []byte("secret"), nil
+// 	})
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	fmt.Println(token)
+// }
