@@ -1,6 +1,10 @@
 package model
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import (
+	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 // Jobs ...
 type Jobs struct {
@@ -16,6 +20,7 @@ type Jobs struct {
 	Country        string    `json:"country,omitempty" bson:"country,omitempty"`
 	JobCategory    []string  `json:"jobCategory,omitempty" bson:"jobCategory,omitempty"` //"All","normal","startup","premium"
 	JobTypes       Fields    `json:"jobtypes,omitempty" bson:"jobtypes,omitempty"`
+	CreationDate   time.Time
 }
 
 // Education ...
@@ -59,6 +64,7 @@ type Getjobs struct {
 	Country        string             `json:"country,omitempty" bson:"country,omitempty"`
 	JobCategory    []string           `json:"jobCategory,omitempty" bson:"jobCategory,omitempty"` //"All","normal","startup","premium"
 	JobTypes       Fields             `json:"jobTypes,omitempty" bson:"jobTypes,omitempty"`
+	CreationDate   time.Time
 }
 
 //JobSwipe ...

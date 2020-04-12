@@ -122,7 +122,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-//LoginHandler ...
+// LoginHandler ...
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
@@ -144,9 +144,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		utils.RespondWithError(w, http.StatusBadRequest, error)
 		return
 	}
-	// password := user.Password
-
-	// collection, err := db.GetDBCollection()
 	dbConnection, err := db.GetDBCollection()
 	collection := dbConnection.Collection("user")
 	if err != nil {
@@ -178,25 +175,5 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	w.WriteHeader(http.StatusOK)
 	jwt.Token = token
-
 	utils.ResponseJSON(w, jwt)
-	// token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-	// 	"username":  result.Username,
-	// 	"firstname": result.FirstName,
-	// 	"lastname":  result.LastName,
-	// })
-
-	// tokenString, err := token.SignedString([]byte("secret"))
-
-	// if err != nil {
-	// 	res.Error = "Error while generating token,Try again"
-	// 	json.NewEncoder(w).Encode(res)
-	// 	return
-	// }
-
-	// result.Token = tokenString
-	// result.Password = ""
-
-	// json.NewEncoder(w).Encode(result)
-
 }

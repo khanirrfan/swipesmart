@@ -22,34 +22,44 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		// Don't forget to validate the alg is what you expect:
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method")
 		}
 		return []byte("secret"), nil
 	})
+	fmt.Println("token:", token)
 	if err != nil {
 		log.Fatal(err)
 	}
-	var result model.User
 	var res model.ResponseResult
+	dbConnection, err := db.GetDBCollection()
+	collection := dbConnection.Collection("user")
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		fmt.Println("claims:", claims)
-		// result.ID = claims["id"].(string)
-		result.Username = claims["username"].(string)
-		result.FirstName = claims["firstname"].(string)
-		result.LastName = claims["lastname"].(string)
-		result.Email = claims["email"].(string)
-
-		json.NewEncoder(w).Encode(result)
+		id, ok := claims["id"].(string)
+		if !ok {
+			log.Fatal(ok)
+		}
+		userID, err := primitive.ObjectIDFromHex(id)
+		if err != nil {
+			log.Fatal(err)
+		}
+		var userProfile model.Getuser
+		err = collection.FindOne(context.TODO(), bson.M{"_id": userID}).Decode(&userProfile)
+		if err != nil {
+			fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
+		}
+		json.NewEncoder(w).Encode(userProfile)
 		return
 	} else {
 		res.Error = err.Error()
 		json.NewEncoder(w).Encode(res)
 		return
 	}
-
 }
 
 // GetProfiles ...
