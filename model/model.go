@@ -6,6 +6,7 @@ import (
 
 // User ...
 type User struct {
+	// ID        primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
 	Username  string `json:"username,omitempty" bson:"username,omitempty"`
 	FirstName string `json:"firstname,omitempty" bson:"firstname,omitempty"`
 	LastName  string `json:"lastname,omitempty" bson:"lastname,omitempty"`
@@ -20,6 +21,7 @@ type Getuser struct {
 	FirstName string             `json:"firstname,omitempty" bson:"firstname,omitempty"`
 	LastName  string             `json:"lastname,omitempty" bson:"lastname,omitempty"`
 	Email     string             `json:"email,omitempty" bson:"email,omitempty"`
+	About     string             `json:"about,omitempty" bson:"about,omitempty"`
 	Details   Profile            `json:"details,omitempty" bson:"details,omitempty"`
 }
 
@@ -38,7 +40,6 @@ type JWT struct {
 type Profile struct {
 	Education  Education  `json:"education,omitempty" bson:"education,omitempty"`
 	Experience Experience `json:"experience,omitempty" bson:"experience,omitempty"`
-	About      string     `json:"about,omitempty" bson:"about,omitempty"`
 }
 
 // Experience ...

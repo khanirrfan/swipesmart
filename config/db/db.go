@@ -20,6 +20,9 @@ func GetDBCollection() (*mongo.Database, error) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	// quit := make(chan os.Signal)
+	// signal.Notify(quit, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+	// <-quit
 	ctx, cancel := context.WithTimeout(context.Background(), 50*time.Second)
 	err = clientOptions.Connect(ctx)
 	if err != nil {

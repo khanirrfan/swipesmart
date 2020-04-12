@@ -133,6 +133,7 @@ func DeleteJobByID(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// UpdateJob ...
 func UpdateJob(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	jobID := mux.Vars(r)["id"]
@@ -169,4 +170,44 @@ func UpdateJob(w http.ResponseWriter, r *http.Request) {
 			w.Write([]byte("Updated successfully"))
 		}
 	}
+}
+
+// AppliedJobs ...
+func AppliedJobs(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+}
+
+// RejectedJobs ...
+func RejectedJobs(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+}
+
+// SaveJobs ...
+func SaveJobs(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	// var job job.Getjobs
+	// userID := mux.Vars(r)["id"]
+	// fmt.Println("USERID:", userID)
+	tokenString := r.Header.Get("Authorization")
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method")
+		}
+		return []byte("secret"), nil
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(token.Valid)
+	fmt.Println(token.Claims)
+	dbConnection, err := db.GetDBCollection()
+	if err != nil {
+		log.Fatal(err)
+	}
+	collection := dbConnection.Collection("savedJobs")
+	// dbConnection.
+	fmt.Println(collection)
+
 }

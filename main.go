@@ -23,7 +23,12 @@ func main() {
 	r.HandleFunc("/addjob", controller.CreateJobs).Methods("POST")
 	r.HandleFunc("/delete-job/{id}", controller.DeleteJobByID).Methods("GET")
 	r.HandleFunc("/update-job/{id}", controller.UpdateJob).Methods("POST")
-	r.HandleFunc("/protected", controller.TokenVerifyMiddleWare(controller.ProtectedEndPoint)).Methods("GET")
+	// applied, saved, rejected
+	r.HandleFunc("/savejob", controller.SaveJobs).Methods("POST")
+	// upload files
+	r.HandleFunc("/upload", controller.UploadFile).Methods("POST")
+
+	r.HandleFunc("/protected", controller.TokenVerifyMiddleWare(controller.ProtectedEndPoint))
 	log.Fatal(http.ListenAndServe(":8080", r))
 
 }

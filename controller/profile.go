@@ -36,6 +36,7 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		fmt.Println("claims:", claims)
+		// result.ID = claims["id"].(string)
 		result.Username = claims["username"].(string)
 		result.FirstName = claims["firstname"].(string)
 		result.LastName = claims["lastname"].(string)
