@@ -9,9 +9,11 @@ import (
 	"net/http"
 
 	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/gorilla/mux"
 	"github.com/jwt-auth/config/db"
 	"github.com/jwt-auth/model"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // CreateJobs ...
@@ -49,7 +51,7 @@ func CreateJobs(w http.ResponseWriter, r *http.Request) {
 // GetJobs ...
 func GetJobs(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-ype", "application/json")
-	var jobs []model.GetJobs
+	var jobs []model.Getjobs
 	tokenString := r.Header.Get("Authorization")
 	// utils.TokenValidation(w http.ResponseWriter, r *http.Request)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
@@ -75,10 +77,10 @@ func GetJobs(w http.ResponseWriter, r *http.Request) {
 	defer cursor.Close(context.Background())
 	for cursor.Next(context.Background()) {
 		if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-			var job model.GetJobs
+			var job model.Getjobs
 			cursor.Decode(&job)
 			jobs = append(jobs, job)
-			fmt.Println(jobs)
+			// fmt.Println(jobs)
 		}
 	}
 	if err := cursor.Err(); err != nil {
@@ -87,4 +89,84 @@ func GetJobs(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	json.NewEncoder(w).Encode(jobs)
+}
+
+// DeleteJobByID ...
+func DeleteJobByID(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	jobID := mux.Vars(r)["id"]
+	// id := params["id"]
+	tokenString := r.Header.Get("Authorization")
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method")
+		}
+		return []byte("secret"), nil
+	})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	dbConnection, err := db.GetDBCollection()
+	collection := dbConnection.Collection("jobs")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	jobByID, err := primitive.ObjectIDFromHex(jobID)
+
+	fmt.Println(jobByID, jobID)
+	if err != nil {
+		log.Fatal("Invalid ObjectID")
+	}
+	var jobs model.Getjobs
+	if token.Valid {
+		result, err := collection.DeleteOne(context.TODO(), bson.M{"_id": jobByID})
+		if err != nil {
+			fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
+		}
+		fmt.Println(result.DeletedCount)
+
+	}
+	fmt.Println("job delete successfully")
+	json.NewEncoder(w).Encode(jobs)
+
+}
+
+func UpdateJob(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	jobID := mux.Vars(r)["id"]
+	var job model.Jobs
+	updJob, _ := ioutil.ReadAll(r.Body)
+	json.Unmarshal(updJob, &job)
+
+	tokenString := r.Header.Get("Authorization")
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method")
+		}
+		return []byte("secret"), nil
+	})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	dbConnection, err := db.GetDBCollection()
+	collection := dbConnection.Collection("jobs")
+	if err != nil {
+		log.Fatal(err)
+	}
+	jobByID, err := primitive.ObjectIDFromHex(jobID)
+
+	fmt.Println(jobByID, jobID)
+	if token.Valid {
+		result, err := collection.UpdateOne(context.TODO(), bson.M{"_id": jobByID}, bson.M{"$set": &job})
+		fmt.Println("err", err, "result", result.UpsertedCount, result.UpsertedID, result.MatchedCount, result.ModifiedCount)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(err.Error()))
+		} else {
+			w.Write([]byte("Updated successfully"))
+		}
+	}
 }

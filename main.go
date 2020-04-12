@@ -17,9 +17,12 @@ func main() {
 	r.HandleFunc("/profile", controller.ProfileHandler).Methods("GET")
 	r.HandleFunc("/profiles", controller.GetProfiles).Methods("GET")
 	r.HandleFunc("/profile/{id}", controller.GetProfileByID).Methods("GET")
+	r.HandleFunc("/update-profile/{id}", controller.UpdateProfile).Methods("POST")
 	// jobs
 	r.HandleFunc("/jobs", controller.GetJobs).Methods("GET")
 	r.HandleFunc("/addjob", controller.CreateJobs).Methods("POST")
+	r.HandleFunc("/delete-job/{id}", controller.DeleteJobByID).Methods("GET")
+	r.HandleFunc("/update-job/{id}", controller.UpdateJob).Methods("POST")
 	r.HandleFunc("/protected", controller.TokenVerifyMiddleWare(controller.ProtectedEndPoint)).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8080", r))
 

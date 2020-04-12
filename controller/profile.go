@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 
@@ -120,4 +121,44 @@ func GetProfileByID(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	json.NewEncoder(w).Encode(userProfile)
+}
+
+// UpdateProfile ...
+func UpdateProfile(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var profile model.Profile
+	profileID := mux.Vars(r)["id"]
+	w.Write([]byte(profileID))
+	updProfile, _ := ioutil.ReadAll(r.Body)
+	json.Unmarshal(updProfile, &profile)
+	tokenString := r.Header.Get("Authorization")
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method")
+		}
+		return []byte("secret"), nil
+	})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	dbConnection, err := db.GetDBCollection()
+	collection := dbConnection.Collection("users")
+	if err != nil {
+		log.Fatal(err)
+	}
+	profileByID, err := primitive.ObjectIDFromHex(profileID)
+
+	fmt.Println(profileByID, profileID)
+	if token.Valid {
+		result, err := collection.UpdateOne(context.TODO(), bson.M{"_id": profileByID}, bson.M{"$set": &profile})
+		fmt.Println("err", err, "result", result.UpsertedCount, result.UpsertedID, result.MatchedCount, result.ModifiedCount)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(err.Error()))
+		} else {
+			w.Write([]byte("Updated successfully"))
+		}
+	}
+
 }
