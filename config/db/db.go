@@ -5,14 +5,13 @@ import (
 	"log"
 	"time"
 
-	// "github.com/mongodb/mongo-go-driver/bson"
-
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 var client *mongo.Database
 
+// GetDBCollection ...
 func GetDBCollection() (*mongo.Database, error) {
 
 	clientOptions, err := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017"))
