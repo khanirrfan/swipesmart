@@ -25,6 +25,8 @@ func main() {
 	r.HandleFunc("/update-job/{id}", controller.UpdateJob).Methods("POST")
 	// applied, saved, rejected
 	r.HandleFunc("/savejob", controller.SaveJobs).Methods("POST")
+	r.HandleFunc("/rejectjob", controller.RejectedJobs).Methods("POST")
+	r.HandleFunc("/appliedjob", controller.AppliedJobs).Methods("POST")
 	// upload files
 	r.HandleFunc("/upload", controller.UploadFile).Methods("POST")
 

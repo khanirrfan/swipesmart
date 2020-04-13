@@ -37,11 +37,6 @@ type DegreeName struct {
 	GraduationYear string `json:"graduationyear,omitempty" bson:"graduationyear,omitempty"`
 }
 
-// JobType ...
-// type JobType struct {
-// 	jobFields []*Fields `json:"jobfields,omitempty" bson:"jobfields,omitempty"`
-// }
-
 // Fields ...
 type Fields struct {
 	GlobalMarket    []string `json:"globalmarket,omitempty" bson:"globalmarket,omitempty"`
@@ -65,6 +60,15 @@ type Getjobs struct {
 	JobCategory    []string           `json:"jobCategory,omitempty" bson:"jobCategory,omitempty"` //"All","normal","startup","premium"
 	JobTypes       Fields             `json:"jobTypes,omitempty" bson:"jobTypes,omitempty"`
 	CreationDate   time.Time
+}
+
+// UserSavedJobs ...
+type SavedJobs struct {
+	UserID primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	Jobs   Getjobs            `json:"jobs,omitempty" bson:"jobs,omitempty"`
+}
+type UserSavedJobs struct {
+	UserJobs SavedJobs `json:"savedjobs,omitempty" bson:"savedjobs,omitempty"`
 }
 
 //JobSwipe ...

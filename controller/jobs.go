@@ -175,13 +175,122 @@ func UpdateJob(w http.ResponseWriter, r *http.Request) {
 // AppliedJobs ...
 func AppliedJobs(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+	var job model.Getjobs
+	updJob, _ := ioutil.ReadAll(r.Body)
+	json.Unmarshal(updJob, &job)
+	currentJobID := job.JobID
+	fmt.Println("jobID:", currentJobID)
+	// var jobResponse model.Getjobs
+	var appiedJobs model.UserSavedJobs
+	tokenString := r.Header.Get("Authorization")
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method")
+		}
+		return []byte("secret"), nil
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	var response model.ResponseResult
+	dbConnection, err := db.GetDBCollection()
+	collection := dbConnection.Collection("jobs")
+	saveCollection := dbConnection.Collection("rejectedjobs")
+	if err != nil {
+		log.Fatal(err)
+	}
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		fmt.Println(claims)
+		id, ok := claims["id"].(string)
+		if !ok {
+			log.Fatal(ok)
+		}
+		userID, err := primitive.ObjectIDFromHex(id)
+		fmt.Println("userID:", userID)
+		if err != nil {
+			log.Fatal(err)
+		}
+		err = collection.FindOne(context.TODO(), bson.M{"_id": currentJobID}).Decode(&job)
+		if err != nil {
+			fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
+		}
+		appiedJobs.UserJobs.UserID = userID
+		appiedJobs.UserJobs.Jobs = job
+		fmt.Println(appiedJobs)
 
+		cursor, err := saveCollection.InsertOne(context.TODO(), appiedJobs)
+		if err != nil {
+			log.Fatal(err)
+		}
+		json.NewEncoder(w).Encode(cursor)
+
+		// json.NewEncoder(w).Encode(job)
+		// return
+	} else {
+		response.Error = err.Error()
+		json.NewEncoder(w).Encode(response)
+	}
 }
 
 // RejectedJobs ...
 func RejectedJobs(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+	var job model.Getjobs
+	updJob, _ := ioutil.ReadAll(r.Body)
+	json.Unmarshal(updJob, &job)
+	currentJobID := job.JobID
+	fmt.Println("jobID:", currentJobID)
+	// var jobResponse model.Getjobs
+	var rejectedJobs model.UserSavedJobs
+	tokenString := r.Header.Get("Authorization")
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method")
+		}
+		return []byte("secret"), nil
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	var response model.ResponseResult
+	dbConnection, err := db.GetDBCollection()
+	collection := dbConnection.Collection("jobs")
+	saveCollection := dbConnection.Collection("rejectedjobs")
+	if err != nil {
+		log.Fatal(err)
+	}
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		fmt.Println(claims)
+		id, ok := claims["id"].(string)
+		if !ok {
+			log.Fatal(ok)
+		}
+		userID, err := primitive.ObjectIDFromHex(id)
+		fmt.Println("userID:", userID)
+		if err != nil {
+			log.Fatal(err)
+		}
+		err = collection.FindOne(context.TODO(), bson.M{"_id": currentJobID}).Decode(&job)
+		if err != nil {
+			fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
+		}
+		rejectedJobs.UserJobs.UserID = userID
+		rejectedJobs.UserJobs.Jobs = job
+		fmt.Println(rejectedJobs)
 
+		cursor, err := saveCollection.InsertOne(context.TODO(), rejectedJobs)
+		if err != nil {
+			log.Fatal(err)
+		}
+		// cursor = append(cursor, savedJobs)
+		json.NewEncoder(w).Encode(cursor)
+
+		// json.NewEncoder(w).Encode(job)
+		// return
+	} else {
+		response.Error = err.Error()
+		json.NewEncoder(w).Encode(response)
+	}
 }
 
 // SaveJobs ...
@@ -190,9 +299,10 @@ func SaveJobs(w http.ResponseWriter, r *http.Request) {
 	var job model.Getjobs
 	updJob, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(updJob, &job)
-	fmt.Println(job.JobID)
 	currentJobID := job.JobID
-	var jobResponse model.Getjobs
+	fmt.Println("jobID:", currentJobID)
+	// var jobResponse model.Getjobs
+	var savedJobs model.UserSavedJobs
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -200,14 +310,13 @@ func SaveJobs(w http.ResponseWriter, r *http.Request) {
 		}
 		return []byte("secret"), nil
 	})
-	fmt.Println("token:", token)
 	if err != nil {
 		log.Fatal(err)
 	}
 	var response model.ResponseResult
 	dbConnection, err := db.GetDBCollection()
 	collection := dbConnection.Collection("jobs")
-	// saveCollection := dbConnection.Collection("savejobs")
+	saveCollection := dbConnection.Collection("savejobs")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -215,32 +324,32 @@ func SaveJobs(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(claims)
 		id, ok := claims["id"].(string)
 		if !ok {
-			fmt.Println("Hello3")
 			log.Fatal(ok)
 		}
 		userID, err := primitive.ObjectIDFromHex(id)
-		// jobID := currentJobID
-		fmt.Println(userID)
-		// fmt.Println(jobID)
+		fmt.Println("userID:", userID)
 		if err != nil {
 			log.Fatal(err)
 		}
-		err = collection.FindOne(context.TODO(), bson.M{"_id": currentJobID}).Decode(&jobResponse)
+		err = collection.FindOne(context.TODO(), bson.M{"_id": currentJobID}).Decode(&job)
 		if err != nil {
 			fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
 		}
+		savedJobs.UserJobs.UserID = userID
+		savedJobs.UserJobs.Jobs = job
+		fmt.Println(savedJobs)
 
-		// cursor, err := collection.InsertOne(context.TODO(), jobs)
-		// if err != nil {
-		// 	log.Fatal(err)
-		// }
-		// json.NewEncoder(w).Encode(cursor)
+		cursor, err := saveCollection.InsertOne(context.TODO(), savedJobs)
+		if err != nil {
+			log.Fatal(err)
+		}
+		// cursor = append(cursor, savedJobs)
+		json.NewEncoder(w).Encode(cursor)
 
-		json.NewEncoder(w).Encode(jobResponse)
-		return
+		// json.NewEncoder(w).Encode(job)
+		// return
 	} else {
 		response.Error = err.Error()
 		json.NewEncoder(w).Encode(response)
-		return
 	}
 }
