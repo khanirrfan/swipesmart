@@ -21,7 +21,7 @@ func GenerateToken(user model.User) (string, error) {
 	var err error
 	secret := "secret"
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		// "id":        user.ID,
+		"id":        user.ID,
 		"email":     user.Email,
 		"lastname":  user.LastName,
 		"firstname": user.FirstName,

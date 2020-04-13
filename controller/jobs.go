@@ -187,6 +187,11 @@ func RejectedJobs(w http.ResponseWriter, r *http.Request) {
 // SaveJobs ...
 func SaveJobs(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
+	var job model.Getjobs
+	updJob, _ := ioutil.ReadAll(r.Body)
+	json.Unmarshal(updJob, &job)
+	fmt.Println(job.JobID)
+	currentJobID := job.JobID
 	var jobResponse model.Getjobs
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
@@ -202,6 +207,7 @@ func SaveJobs(w http.ResponseWriter, r *http.Request) {
 	var response model.ResponseResult
 	dbConnection, err := db.GetDBCollection()
 	collection := dbConnection.Collection("jobs")
+	// saveCollection := dbConnection.Collection("savejobs")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -213,14 +219,23 @@ func SaveJobs(w http.ResponseWriter, r *http.Request) {
 			log.Fatal(ok)
 		}
 		userID, err := primitive.ObjectIDFromHex(id)
+		// jobID := currentJobID
 		fmt.Println(userID)
+		// fmt.Println(jobID)
 		if err != nil {
 			log.Fatal(err)
 		}
-		err = collection.FindOne(context.TODO(), bson.M{"_id": userID}).Decode(&jobResponse)
+		err = collection.FindOne(context.TODO(), bson.M{"_id": currentJobID}).Decode(&jobResponse)
 		if err != nil {
 			fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
 		}
+
+		// cursor, err := collection.InsertOne(context.TODO(), jobs)
+		// if err != nil {
+		// 	log.Fatal(err)
+		// }
+		// json.NewEncoder(w).Encode(cursor)
+
 		json.NewEncoder(w).Encode(jobResponse)
 		return
 	} else {

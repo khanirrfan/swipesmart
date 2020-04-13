@@ -175,5 +175,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	w.WriteHeader(http.StatusOK)
 	jwt.Token = token
+
 	utils.ResponseJSON(w, jwt)
 }
