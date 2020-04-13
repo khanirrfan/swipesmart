@@ -1,25 +1,38 @@
 package controller
 
 import (
-	"io"
+	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
-	"os"
 )
 
-// Upload ...
+// UploadFile ...
 func UploadFile(w http.ResponseWriter, r *http.Request) {
-	file, handler, err := r.FormFile("file")
-	fileName := r.FormValue("file_name")
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
+	r.ParseMultipartForm(10 * 1024 * 1024)
+	files := r.MultipartForm.File["files"]
+	for _, file := range files {
+		fmt.Println("File Name:", file.Filename)
+		fmt.Println("File Size:", file.Size)
+		fmt.Println("File Type:", file.Header.Get("Content-Type"))
+		fmt.Println("--------------")
+		// save file to server
 
-	f, err := os.OpenFile(handler.Filename, os.O_WRONLY|os.O_CREATE, 0666)
-	if err != nil {
-		panic(err)
+		f, _ := file.Open()
+
+		tempFile, err := ioutil.TempFile("uploads", "upload-*.png")
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer tempFile.Close()
+
+		fileBytes, err := ioutil.ReadAll(f)
+		if err != nil {
+			log.Fatal(err)
+		}
+		tempFile.Write(fileBytes)
+
 	}
-	defer f.Close()
-	_, _ = io.WriteString(w, "File "+fileName+" Uploaded successfully")
-	_, _ = io.Copy(f, file)
+	fmt.Println("Done uploading")
+
 }

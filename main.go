@@ -28,7 +28,7 @@ func main() {
 	r.HandleFunc("/rejectjob", controller.RejectedJobs).Methods("POST")
 	r.HandleFunc("/appliedjob", controller.AppliedJobs).Methods("POST")
 	// upload files
-	r.HandleFunc("/upload", controller.UploadFile).Methods("POST")
+	r.HandleFunc("/upload-files", controller.UploadFile).Methods("POST")
 
 	r.HandleFunc("/protected", controller.TokenVerifyMiddleWare(controller.ProtectedEndPoint))
 	log.Fatal(http.ListenAndServe(":8080", r))
