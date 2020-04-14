@@ -8,7 +8,6 @@ import (
 
 // Jobs ...
 type Jobs struct {
-	// JobID          primitive.ObjectID `json:"_jobid,omitempty" bson:"J_jobid,omitempty"`
 	JobTitle       string    `json:"jobtitle,omitempty" bson:"jobtitle,omitempty"`
 	JobDescription string    `json:"jobdescription,omitempty" bson:"jobdescription,omitempty"`
 	Skills         []string  `json:"skills,omitempty" bson:"skills,omitempty"`
@@ -18,7 +17,7 @@ type Jobs struct {
 	Language       []string  `json:"language,omitempty" bson:"language,omitempty"`
 	Education      Education `json:"education,omitempty" bson:"education,omitempty"`
 	Country        string    `json:"country,omitempty" bson:"country,omitempty"`
-	JobCategory    []string  `json:"jobCategory,omitempty" bson:"jobCategory,omitempty"` //"All","normal","startup","premium"
+	JobCategory    []string  `json:"jobCategory,omitempty" bson:"jobCategory,omitempty"`
 	JobTypes       Fields    `json:"jobtypes,omitempty" bson:"jobtypes,omitempty"`
 	CreationDate   time.Time
 }
@@ -57,23 +56,24 @@ type Getjobs struct {
 	Language       []string           `json:"language,omitempty" bson:"language,omitempty"`
 	Education      Education          `json:"education,omitempty" bson:"education,omitempty"`
 	Country        string             `json:"country,omitempty" bson:"country,omitempty"`
-	JobCategory    []string           `json:"jobCategory,omitempty" bson:"jobCategory,omitempty"` //"All","normal","startup","premium"
+	JobCategory    []string           `json:"jobCategory,omitempty" bson:"jobCategory,omitempty"`
 	JobTypes       Fields             `json:"jobTypes,omitempty" bson:"jobTypes,omitempty"`
 	CreationDate   time.Time
 }
 
-// UserSavedJobs ...
+// SavedJobs ...
 type SavedJobs struct {
 	UserID primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
 	Jobs   Getjobs            `json:"jobs,omitempty" bson:"jobs,omitempty"`
 }
+
+// UserSavedJobs ...
 type UserSavedJobs struct {
 	UserJobs SavedJobs `json:"savedjobs,omitempty" bson:"savedjobs,omitempty"`
 }
 
 //JobSwipe ...
 type JobSwipe struct {
-	// JobID         primitive.ObjectID `json:"_jobid,omitempty" bson:"J_jobid,omitempty"`
 	JobTitle      string
 	Salary        string
 	Language      string
@@ -84,7 +84,6 @@ type JobSwipe struct {
 
 // JobList ...
 type JobList struct {
-	// JobID         primitive.ObjectID `json:"_jobid,omitempty" bson:"J_jobid,omitempty"`
 	JobTitle      string
 	Salary        string
 	Language      string

@@ -22,9 +22,7 @@ func CreateJobs(w http.ResponseWriter, r *http.Request) {
 	body, _ := ioutil.ReadAll(r.Body)
 	err := json.Unmarshal(body, &jobs)
 	tokenString := r.Header.Get("Authorization")
-	// utils.TokenValidation(w http.ResponseWriter, r *http.Request)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		// Don't forget to validate the alg is what you expect:
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method")
 		}
@@ -44,7 +42,6 @@ func CreateJobs(w http.ResponseWriter, r *http.Request) {
 			log.Fatal(err)
 		}
 		json.NewEncoder(w).Encode(cursor)
-		// fmt.Println(cursor)
 	}
 }
 
@@ -53,9 +50,7 @@ func GetJobs(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-ype", "application/json")
 	var jobs []model.Getjobs
 	tokenString := r.Header.Get("Authorization")
-	// utils.TokenValidation(w http.ResponseWriter, r *http.Request)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		// Don't forget to validate the alg is what you expect:
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method")
 		}
@@ -70,7 +65,6 @@ func GetJobs(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	cursor, err := collection.Find(context.Background(), bson.M{})
-	// w.Write([]byte("Hello jobs"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -80,7 +74,6 @@ func GetJobs(w http.ResponseWriter, r *http.Request) {
 			var job model.Getjobs
 			cursor.Decode(&job)
 			jobs = append(jobs, job)
-			// fmt.Println(jobs)
 		}
 	}
 	if err := cursor.Err(); err != nil {
@@ -95,7 +88,6 @@ func GetJobs(w http.ResponseWriter, r *http.Request) {
 func DeleteJobByID(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	jobID := mux.Vars(r)["id"]
-	// id := params["id"]
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -123,12 +115,11 @@ func DeleteJobByID(w http.ResponseWriter, r *http.Request) {
 	if token.Valid {
 		result, err := collection.DeleteOne(context.TODO(), bson.M{"_id": jobByID})
 		if err != nil {
-			fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
+			fmt.Println(" ERROR:", err)
 		}
 		fmt.Println(result.DeletedCount)
 
 	}
-	fmt.Println("job delete successfully")
 	json.NewEncoder(w).Encode(jobs)
 
 }
@@ -180,7 +171,6 @@ func AppliedJobs(w http.ResponseWriter, r *http.Request) {
 	json.Unmarshal(updJob, &job)
 	currentJobID := job.JobID
 	fmt.Println("jobID:", currentJobID)
-	// var jobResponse model.Getjobs
 	var appiedJobs model.UserSavedJobs
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
@@ -212,7 +202,7 @@ func AppliedJobs(w http.ResponseWriter, r *http.Request) {
 		}
 		err = collection.FindOne(context.TODO(), bson.M{"_id": currentJobID}).Decode(&job)
 		if err != nil {
-			fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
+			fmt.Println("ERROR:", err)
 		}
 		appiedJobs.UserJobs.UserID = userID
 		appiedJobs.UserJobs.Jobs = job
@@ -223,9 +213,6 @@ func AppliedJobs(w http.ResponseWriter, r *http.Request) {
 			log.Fatal(err)
 		}
 		json.NewEncoder(w).Encode(cursor)
-
-		// json.NewEncoder(w).Encode(job)
-		// return
 	} else {
 		response.Error = err.Error()
 		json.NewEncoder(w).Encode(response)
@@ -240,7 +227,6 @@ func RejectedJobs(w http.ResponseWriter, r *http.Request) {
 	json.Unmarshal(updJob, &job)
 	currentJobID := job.JobID
 	fmt.Println("jobID:", currentJobID)
-	// var jobResponse model.Getjobs
 	var rejectedJobs model.UserSavedJobs
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
@@ -282,11 +268,8 @@ func RejectedJobs(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		// cursor = append(cursor, savedJobs)
 		json.NewEncoder(w).Encode(cursor)
 
-		// json.NewEncoder(w).Encode(job)
-		// return
 	} else {
 		response.Error = err.Error()
 		json.NewEncoder(w).Encode(response)
@@ -301,7 +284,6 @@ func SaveJobs(w http.ResponseWriter, r *http.Request) {
 	json.Unmarshal(updJob, &job)
 	currentJobID := job.JobID
 	fmt.Println("jobID:", currentJobID)
-	// var jobResponse model.Getjobs
 	var savedJobs model.UserSavedJobs
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
@@ -343,11 +325,8 @@ func SaveJobs(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		// cursor = append(cursor, savedJobs)
 		json.NewEncoder(w).Encode(cursor)
 
-		// json.NewEncoder(w).Encode(job)
-		// return
 	} else {
 		response.Error = err.Error()
 		json.NewEncoder(w).Encode(response)

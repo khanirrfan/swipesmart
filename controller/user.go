@@ -34,8 +34,6 @@ func TokenVerifyMiddleWare(next http.HandlerFunc) http.HandlerFunc {
 				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 					return nil, fmt.Errorf("There was an error")
 				}
-				// spew.Dump(token)
-
 				return []byte("secret"), nil
 
 			})
@@ -67,7 +65,6 @@ func ProtectedEndPoint(w http.ResponseWriter, r *http.Request) {
 
 // RegisterHandler ...
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
-
 	w.Header().Set("Content-Type", "application/json")
 	var user model.User
 	body, _ := ioutil.ReadAll(r.Body)
@@ -79,7 +76,6 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// collection, err := db.GetDBCollection()
 	dbConnection, err := db.GetDBCollection()
 	collection := dbConnection.Collection("user")
 
@@ -88,7 +84,6 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(res)
 		return
 	}
-	// var result []model.User
 	err = collection.FindOne(context.TODO(), bson.D{{"username", user.Username}}).Decode(&user)
 	if err != nil {
 		if err.Error() == "mongo: no documents in result" {
@@ -100,8 +95,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			user.Password = string(hash)
-			resu, err := collection.InsertOne(context.TODO(), user)
-			fmt.Println("resu", resu)
+			_, err = collection.InsertOne(context.TODO(), user)
 			if err != nil {
 				res.Error = "Error While Creating User, Try Again"
 				json.NewEncoder(w).Encode(res)
@@ -162,7 +156,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(result.Password), []byte(user.Password))
-
 	if err != nil {
 		res.Error = "Invalid password"
 		json.NewEncoder(w).Encode(res)
@@ -175,6 +168,5 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	w.WriteHeader(http.StatusOK)
 	jwt.Token = token
-
 	utils.ResponseJSON(w, jwt)
 }

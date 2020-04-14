@@ -27,7 +27,6 @@ func GenerateToken(user model.User) (string, error) {
 		"firstname": user.FirstName,
 		"username":  user.Username,
 	})
-	// spew.Dump(token)
 
 	tokenstring, err := token.SignedString([]byte(secret))
 	if err != nil {

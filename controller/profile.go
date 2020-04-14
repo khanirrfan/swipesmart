@@ -27,7 +27,6 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		return []byte("secret"), nil
 	})
-	fmt.Println("token:", token)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -39,7 +38,6 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		fmt.Println("claims:", claims)
 		id, ok := claims["id"].(string)
 		if !ok {
 			log.Fatal(ok)
@@ -51,7 +49,7 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 		var userProfile model.Getuser
 		err = collection.FindOne(context.TODO(), bson.M{"_id": userID}).Decode(&userProfile)
 		if err != nil {
-			fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
+			fmt.Println("ERROR:", err)
 		}
 		json.NewEncoder(w).Encode(userProfile)
 		return
@@ -68,7 +66,6 @@ func GetProfiles(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		// Don't forget to validate the alg is what you expect:
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method")
 		}
