@@ -76,7 +76,9 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	collection, err := db.GetDBCollection()
+	// collection, err := db.GetDBCollection()
+	dbConnection, err := db.GetDBCollection()
+	collection := dbConnection.Collection("user")
 
 	if err != nil {
 		res.Error = err.Error()
@@ -140,8 +142,9 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	// password := user.Password
 
-	collection, err := db.GetDBCollection()
-
+	// collection, err := db.GetDBCollection()
+	dbConnection, err := db.GetDBCollection()
+	collection := dbConnection.Collection("user")
 	if err != nil {
 		log.Fatal(err)
 	}

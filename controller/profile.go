@@ -30,6 +30,7 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	var res model.ResponseResult
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		fmt.Println("claims:", claims)
 		result.Username = claims["username"].(string)
 		result.FirstName = claims["firstname"].(string)
 		result.LastName = claims["lastname"].(string)
@@ -55,7 +56,8 @@ func GetProfiles(w http.ResponseWriter, r *http.Request) {
 		}
 		return []byte("secret"), nil
 	})
-	collection, err := db.GetDBCollection()
+	dbConnection, err := db.GetDBCollection()
+	collection := dbConnection.Collection("user")
 	if err != nil {
 		log.Fatal(err)
 	}
