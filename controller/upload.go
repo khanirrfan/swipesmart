@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/jwt-auth/config/db"
+	"github.com/swipesmart/config/db"
 	"go.mongodb.org/mongo-driver/mongo/gridfs"
 )
 

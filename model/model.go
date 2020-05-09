@@ -12,6 +12,7 @@ type User struct {
 	LastName  string             `json:"lastname,omitempty" bson:"lastname,omitempty"`
 	Email     string             `json:"email,omitempty" bson:"email,omitempty"`
 	Password  string             `json:"password,omitempty" bson:"password,omitempty"`
+	Details   Profile            `json:"details,omitempty" bson:"details,omitempty"`
 }
 
 // Getuser ...
@@ -38,8 +39,8 @@ type JWT struct {
 
 // Profile ...
 type Profile struct {
-	Education  Education  `json:"education,omitempty" bson:"education,omitempty"`
-	Experience Experience `json:"experience,omitempty" bson:"experience,omitempty"`
+	Education  []*Education  `json:"education,omitempty" bson:"education,omitempty"`
+	Experience []*Experience `json:"experience,omitempty" bson:"experience,omitempty"`
 }
 
 // Experience ...

@@ -11,8 +11,8 @@ import (
 	"github.com/gorilla/mux"
 
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/jwt-auth/config/db"
-	"github.com/jwt-auth/model"
+	"github.com/swipesmart/config/db"
+	"github.com/swipesmart/model"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -52,11 +52,11 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("ERROR:", err)
 		}
 		json.NewEncoder(w).Encode(userProfile)
-		return
+
 	} else {
 		res.Error = err.Error()
 		json.NewEncoder(w).Encode(res)
-		return
+
 	}
 }
 
@@ -134,10 +134,11 @@ func GetProfileByID(w http.ResponseWriter, r *http.Request) {
 // UpdateProfile ...
 func UpdateProfile(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var profile model.Profile
+	var profile model.Getuser
 	profileID := mux.Vars(r)["id"]
 	w.Write([]byte(profileID))
 	updProfile, _ := ioutil.ReadAll(r.Body)
+	fmt.Println(updProfile)
 	json.Unmarshal(updProfile, &profile)
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
@@ -148,11 +149,13 @@ func UpdateProfile(w http.ResponseWriter, r *http.Request) {
 	})
 
 	if err != nil {
+		fmt.Println("hello------")
 		log.Fatal(err)
 	}
 	dbConnection, err := db.GetDBCollection()
 	collection := dbConnection.Collection("users")
 	if err != nil {
+		fmt.Println("hello------+++++++")
 		log.Fatal(err)
 	}
 	profileByID, err := primitive.ObjectIDFromHex(profileID)
@@ -162,10 +165,9 @@ func UpdateProfile(w http.ResponseWriter, r *http.Request) {
 		result, err := collection.UpdateOne(context.TODO(), bson.M{"_id": profileByID}, bson.M{"$set": &profile})
 		fmt.Println("err", err, "result", result.UpsertedCount, result.UpsertedID, result.MatchedCount, result.ModifiedCount)
 		if err != nil {
+			fmt.Println("hello------========")
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
-		} else {
-			w.Write([]byte("Updated successfully"))
 		}
 	}
 

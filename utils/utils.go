@@ -6,17 +6,21 @@ import (
 	"net/http"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/jwt-auth/model"
+	"github.com/swipesmart/model"
 )
 
+// RespondWithError ...
 func RespondWithError(w http.ResponseWriter, status int, error model.ResponseResult) {
 	w.WriteHeader(status)
 	json.NewEncoder(w).Encode(error)
 }
+
+// ResponseJSON ...
 func ResponseJSON(w http.ResponseWriter, data interface{}) {
 	json.NewEncoder(w).Encode(data)
 }
 
+// GenerateToken ...
 func GenerateToken(user model.User) (string, error) {
 	var err error
 	secret := "secret"
@@ -26,6 +30,7 @@ func GenerateToken(user model.User) (string, error) {
 		"lastname":  user.LastName,
 		"firstname": user.FirstName,
 		"username":  user.Username,
+		"details":   user.Details,
 	})
 
 	tokenstring, err := token.SignedString([]byte(secret))

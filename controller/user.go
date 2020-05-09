@@ -9,10 +9,10 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/jwt-auth/utils"
+	"github.com/swipesmart/utils"
 
-	"github.com/jwt-auth/config/db"
-	"github.com/jwt-auth/model"
+	"github.com/swipesmart/config/db"
+	"github.com/swipesmart/model"
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"go.mongodb.org/mongo-driver/bson"

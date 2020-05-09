@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/jwt-auth/controller"
+	"github.com/swipesmart/controller"
 )
 
 func main() {
@@ -30,6 +30,8 @@ func main() {
 	// upload files
 	r.HandleFunc("/upload-files", controller.UploadFile).Methods("POST")
 	// r.HandleFunc("/download-files", controller.DownloadFile).Methods("GET")
+	// matchPercent
+	r.HandleFunc("/matchPercent", controller.MatchPercent).Methods("GET")
 
 	r.HandleFunc("/protected", controller.TokenVerifyMiddleWare(controller.ProtectedEndPoint))
 	log.Fatal(http.ListenAndServe(":8080", r))
