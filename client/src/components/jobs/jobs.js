@@ -1,27 +1,51 @@
-import React, { useEffect, Fragment } from 'react';
-import Link from 'react-router-dom';
+import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
+import ProfileItem from '../profiles/ProfileItem';
+import { getJobs } from '../../actions/jobs'
 
-import {getJobs} from '../../actions/jobs';
-const Jobs = ({getJobs, auth: { user }, jobs: { job, loading }}) => {
+const Jobs = ({ getJobs, jobList: { list, loading } }) => {
     useEffect(() => {
         getJobs();
-    },[getJobs])
-    return loading && job === null ? (
+    }, [getJobs]);
+  
+  return (
+    <Fragment>
+      {loading ? (
         <Spinner />
-    ):(
+      ) : (
         <Fragment>
-            Hello
+          <h1 className='large text-primary'>Developers</h1>
+          <p className='lead'>
+            <i className='fab fa-connectdevelop' /> Browse and connect with
+            developers
+          </p>
+          <div className='profiles'>
+            {list && list.length > 0 ? (
+                list.map(item => (
+                <ProfileItem key={item._id} item={item} />
+              ))
+            ) : (
+              <h4>No jobs found...</h4>
+            )}
+          </div>
         </Fragment>
-    )
-}
-const mapStateToProps = state => ({
-    auth: state.auth,
-    jobs: state.jobs
+      )}
+    </Fragment>
+  );
+};
+
+Jobs.propTypes = {
+    getJobs: PropTypes.func.isRequired,
+    jobList: PropTypes.object.isRequired
+  };
+  
+  const mapStateToProps = state => ({
+    list: state.list
   });
+
 export default connect(
-    mapStateToProps, 
-    {getJobs}
-) (Jobs)
+    mapStateToProps,
+    { getJobs }
+)(Jobs);

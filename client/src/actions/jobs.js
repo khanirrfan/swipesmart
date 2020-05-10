@@ -1,17 +1,19 @@
 import axios from 'axios';
-import { setAlert } from './alert';
-
-import {
-    GET_JOB, GET_JOBS, GET_SAVED_JOBS, GET_REJECTED_JOBS, GET_APPLIED_JOBS, JOB_ERROR
-} from './types';
+import { GET_JOBS, JOB_ERROR } from './types';
 
 // get all jobs
-
 export const getJobs = () => async dispatch => {
     try {
         const res = await axios.get('/jobs');
-        console.log(res);
-    } catch (error) {
-        
+        console.log(res.data);
+        dispatch({
+            type:GET_JOBS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type:JOB_ERROR,
+            payload:{msg: err.response.statusText, status: err.response.status }
+        });
     }
-}
+};

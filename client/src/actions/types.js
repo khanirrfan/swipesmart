@@ -28,8 +28,8 @@ export const ADD_COMMENT = 'ADD_COMMENT';
 export const REMOVE_COMMENT = 'REMOVE_COMMENT';
 
 export const GET_JOBS = 'GET_JOBS';
-export const GET_JOB = 'GET_JOBS';
-export const GET_SAVED_JOBS = 'GET_SAVED_JOBS';
-export const GET_APPLIED_JOBS = 'GET_APPLIED_JOBS';
-export const GET_REJECTED_JOBS = 'GET_REJECTED_JOBS'
+// export const GET_JOB = 'GET_JOB';
+// export const GET_SAVED_JOBS = 'GET_SAVED_JOBS';
+// export const GET_APPLIED_JOBS = 'GET_APPLIED_JOBS';
+// export const GET_REJECTED_JOBS = 'GET_REJECTED_JOBS'
 export const JOB_ERROR ='JOB_ERROR';
