@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_JOBS, JOB_ERROR } from './types';
+import { PROFILE_ERROR, GET_PROFILE } from './types';
 
 // get all jobs
 export const getJobs = () => async dispatch => {
@@ -7,12 +7,12 @@ export const getJobs = () => async dispatch => {
         const res = await axios.get('/jobs');
         console.log(res.data);
         dispatch({
-            type:GET_JOBS,
+            type:GET_PROFILE,
             payload: res.data
         });
     } catch (err) {
         dispatch({
-            type:JOB_ERROR,
+            type:PROFILE_ERROR,
             payload:{msg: err.response.statusText, status: err.response.status }
         });
     }

@@ -2,10 +2,10 @@ import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
-import ProfileItem from '../profiles/ProfileItem';
+import JobItem from './jobItem';
 import { getJobs } from '../../actions/jobs'
 
-const Jobs = ({ getJobs, jobList: { list, loading } }) => {
+const Jobs = ({ getJobs, profile: { profile, loading } }) => {
     useEffect(() => {
         getJobs();
     }, [getJobs]);
@@ -16,15 +16,14 @@ const Jobs = ({ getJobs, jobList: { list, loading } }) => {
         <Spinner />
       ) : (
         <Fragment>
-          <h1 className='large text-primary'>Developers</h1>
+          <h1 className='large text-primary'>JOB</h1>
           <p className='lead'>
-            <i className='fab fa-connectdevelop' /> Browse and connect with
-            developers
+            <i className='fab fa-connectdevelop' /> Browse jobs
           </p>
           <div className='profiles'>
-            {list && list.length > 0 ? (
-                list.map(item => (
-                <ProfileItem key={item._id} item={item} />
+            {profile && profile.length > 0 ? (
+                profile.map(item => (
+                <JobItem key={item._id} item={item} />
               ))
             ) : (
               <h4>No jobs found...</h4>
@@ -38,11 +37,11 @@ const Jobs = ({ getJobs, jobList: { list, loading } }) => {
 
 Jobs.propTypes = {
     getJobs: PropTypes.func.isRequired,
-    jobList: PropTypes.object.isRequired
+    profile: PropTypes.object.isRequired
   };
   
   const mapStateToProps = state => ({
-    list: state.list
+    profile: state.profile
   });
 
 export default connect(
