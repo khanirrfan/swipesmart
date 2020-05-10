@@ -28,16 +28,18 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
+    console.log('isAuthenticated:', isAuthenticated);
     return <Redirect to='/dashboard' />;
   }
 
   return (
     <Fragment>
-      <h1 className='large text-primary'>Sign Up</h1>
-      <p className='lead'>
+    <div className="authBox">
+    {/*      <h1 className="text-center large text-primary">Sign Up</h1>*/}
+    <p className='text-center lead'>
         <i className='fas fa-user' /> Create Your Account
       </p>
-      <form className='form' onSubmit={e => onSubmit(e)}>
+      <form className='formContainer form' onSubmit={e => onSubmit(e)}>
         <div className='form-group'>
           <input
             type='text'
@@ -55,10 +57,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             value={email}
             onChange={e => onChange(e)}
           />
-          <small className='form-text'>
-            This site uses Gravatar so if you want a profile image, use a
-            Gravatar email
-          </small>
         </div>
         <div className='form-group'>
           <input
@@ -80,9 +78,11 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
         </div>
         <input type='submit' className='btn btn-primary' value='Register' />
       </form>
-      <p className='my-1'>
+      <p className='text-center my-1'>
         Already have an account? <Link to='/login'>Sign In</Link>
       </p>
+    </div>
+      
     </Fragment>
   );
 };

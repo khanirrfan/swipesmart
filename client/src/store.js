@@ -23,11 +23,13 @@ store.subscribe(() => {
   let previousState = currentState;
   currentState = store.getState();
   // if the token changes set the value in localStorage
-  if (previousState && previousState.auth.token !== currentState.auth.token) {
-    const token = currentState.auth.token;
+  console.log(currentState);
+  console.log(previousState);
+  if (previousState && previousState.auth.Token !== currentState.auth.Token) {
+    const token = currentState.auth.Token;
     token
-      ? localStorage.setItem('token', token)
-      : localStorage.removeItem('token');
+      ? localStorage.setItem('Token', token)
+      : localStorage.removeItem('Token');
   }
 });
 

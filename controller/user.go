@@ -24,7 +24,7 @@ func TokenVerifyMiddleWare(next http.HandlerFunc) http.HandlerFunc {
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var errorObject model.ResponseResult
-		authHeader := r.Header.Get("AUthorized")
+		authHeader := r.Header.Get("Authorization")
 		bearerToken := strings.Split(authHeader, " ")
 
 		if len(bearerToken) == 2 {

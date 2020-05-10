@@ -21,34 +21,43 @@ import (
 func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	tokenString := r.Header.Get("Authorization")
+
+	fmt.Println("tokenString", tokenString)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			fmt.Println("2")
 			return nil, fmt.Errorf("Unexpected signing method")
 		}
 		return []byte("secret"), nil
 	})
+	// fmt.Println("token:", token)
 	if err != nil {
+		fmt.Println("3")
 		log.Fatal(err)
 	}
 	var res model.ResponseResult
 	dbConnection, err := db.GetDBCollection()
 	collection := dbConnection.Collection("user")
 	if err != nil {
+		fmt.Println("3")
 		log.Fatal(err)
 	}
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		id, ok := claims["id"].(string)
 		if !ok {
+			fmt.Println("4")
 			log.Fatal(ok)
 		}
 		userID, err := primitive.ObjectIDFromHex(id)
 		if err != nil {
+			fmt.Println("5")
 			log.Fatal(err)
 		}
 		var userProfile model.Getuser
 		err = collection.FindOne(context.TODO(), bson.M{"_id": userID}).Decode(&userProfile)
 		if err != nil {
+			fmt.Println("6")
 			fmt.Println("ERROR:", err)
 		}
 		json.NewEncoder(w).Encode(userProfile)

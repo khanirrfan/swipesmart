@@ -235,6 +235,19 @@ img {
 }
 
 /* Forms */
+.authBox {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+  height: 80vh !important;
+}
+.formContainer {
+  width:80%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* text-align: center; */
+}
 .form .form-group {
   margin: 1.2rem 0;
 }

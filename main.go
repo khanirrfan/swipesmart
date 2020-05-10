@@ -11,6 +11,7 @@ import (
 func main() {
 	r := mux.NewRouter()
 	// user regisration/login
+	// r.HandleFunc("/auth", controller.Auth).Methods("GET");
 	r.HandleFunc("/register", controller.RegisterHandler).Methods("POST")
 	r.HandleFunc("/login", controller.LoginHandler).Methods("POST")
 	// user profile
