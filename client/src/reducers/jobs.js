@@ -1,14 +1,14 @@
 import {
-	GET_PROFILE,
-	PROFILE_ERROR,
-	CLEAR_PROFILE,
-	UPDATE_PROFILE,
-	GET_PROFILES,
-	GET_REPOS
+	JOB_PROFILE,
+	JOB_ERROR,
+	// CLEAR_PROFILE,
+	// UPDATE_PROFILE,
+	// GET_PROFILES,
+	// GET_REPOS
 } from '../actions/types';
 
 const initialState = {
-	profile: null,
+	jobs: null,
 	profiles: [],
 	repos: [],
 	loading: true,
@@ -19,39 +19,39 @@ export default function(state = initialState, action) {
 	const { type, payload } = action;
 
 	switch (type) {
-		case GET_PROFILE:
-		case UPDATE_PROFILE:
+		case JOB_PROFILE:
+		// case UPDATE_PROFILE:
 			return {
 				...state,
-				profile: payload,
+				jobs: payload,
 				loading: false
 			};
-		case GET_PROFILES:
-			return {
-				...state,
-				profiles: payload,
-				loading: false
-			};
-		case PROFILE_ERROR:
+		// case GET_PROFILES:
+		// 	return {
+		// 		...state,
+		// 		profiles: payload,
+		// 		loading: false
+		// 	};
+		case JOB_ERROR:
 			return {
 				...state,
 				error: payload,
 				loading: false,
-				profile: null
+				jobs: null
 			};
-		case CLEAR_PROFILE:
-			return {
-				...state,
-				profile: null,
-				repos: [],
-				loading: false
-			};
-		case GET_REPOS:
-			return {
-				...state,
-				repos: payload,
-				loading: false
-			};
+		// case CLEAR_PROFILE:
+		// 	return {
+		// 		...state,
+		// 		profile: null,
+		// 		repos: [],
+		// 		loading: false
+		// 	};
+		// case GET_REPOS:
+		// 	return {
+		// 		...state,
+		// 		repos: payload,
+		// 		loading: false
+		// 	};
 		default:
 			return state;
 	}

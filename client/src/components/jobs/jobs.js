@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import JobItem from './jobItem';
-import { getJobs } from '../../actions/jobs'
+import { getJobs } from '../../actions/jobs';
 
-const Jobs = ({ getJobs, profile: { profile, loading } }) => {
+const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
+    console.log('profile:', jobs);
     useEffect(() => {
         getJobs();
     }, [getJobs]);
@@ -21,8 +22,8 @@ const Jobs = ({ getJobs, profile: { profile, loading } }) => {
             <i className='fab fa-connectdevelop' /> Browse jobs
           </p>
           <div className='profiles'>
-            {profile && profile.length > 0 ? (
-                profile.map(item => (
+            {jobs && jobs.length > 0 ? (
+                jobs.map(item => (
                 <JobItem key={item._id} item={item} />
               ))
             ) : (
@@ -35,16 +36,15 @@ const Jobs = ({ getJobs, profile: { profile, loading } }) => {
   );
 };
 
-Jobs.propTypes = {
+JobsListing.propTypes = {
     getJobs: PropTypes.func.isRequired,
-    profile: PropTypes.object.isRequired
+    jobs: PropTypes.object.isRequired
   };
   
   const mapStateToProps = state => ({
-    profile: state.profile
+    jobs: state.jobs
   });
-
 export default connect(
     mapStateToProps,
     { getJobs }
-)(Jobs);
+)(JobsListing);

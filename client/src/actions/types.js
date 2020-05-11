@@ -27,6 +27,10 @@ export const ADD_POST = 'ADD_POST';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const REMOVE_COMMENT = 'REMOVE_COMMENT';
 
+export const JOB_PROFILE = 'JOB_PROFILE';
+// export const JOB_ERROR = 'REMOVE_COMMENT';
+
+
 export const GET_JOBS = 'GET_JOBS';
 // export const GET_JOB = 'GET_JOB';
 // export const GET_SAVED_JOBS = 'GET_SAVED_JOBS';

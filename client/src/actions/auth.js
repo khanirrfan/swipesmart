@@ -14,7 +14,6 @@ import setAuthToken from '../utils/setAuthToken';
 
 // Load User
 export const loadUser = () => async dispatch => {
-  console.log("headerToken", localStorage);
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -22,7 +21,6 @@ export const loadUser = () => async dispatch => {
     }
   };
   if (localStorage.Token) {
-    console.log("localStorage:", localStorage);
     setAuthToken(localStorage.Token);
   }
 
@@ -49,7 +47,6 @@ export const register = ({ username, email, password }) => async dispatch => {
   };
 
   const body = JSON.stringify({ username, email, password });
-  console.log('body:', body);
   try {
     const res = await axios.post('/register', body, config);
 
