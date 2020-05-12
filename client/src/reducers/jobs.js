@@ -1,6 +1,9 @@
 import {
 	JOB_PROFILE,
 	JOB_ERROR,
+	APPLIED_JOB,
+	REJECTED_JOB,
+	SAVED_JOBS
 	// CLEAR_PROFILE,
 	// UPDATE_PROFILE,
 	// GET_PROFILES,
@@ -9,6 +12,9 @@ import {
 
 const initialState = {
 	jobs: null,
+	jobsApplied: null,
+	jobsRejected:null,
+	jobsSaved:null,
 	profiles: [],
 	repos: [],
 	loading: true,
@@ -26,12 +32,12 @@ export default function(state = initialState, action) {
 				jobs: payload,
 				loading: false
 			};
-		// case GET_PROFILES:
-		// 	return {
-		// 		...state,
-		// 		profiles: payload,
-		// 		loading: false
-		// 	};
+		case APPLIED_JOB:
+			return {
+				...state,
+				jobsApplied: payload,
+				loading: false
+			};
 		case JOB_ERROR:
 			return {
 				...state,
@@ -39,13 +45,18 @@ export default function(state = initialState, action) {
 				loading: false,
 				jobs: null
 			};
-		// case CLEAR_PROFILE:
-		// 	return {
-		// 		...state,
-		// 		profile: null,
-		// 		repos: [],
-		// 		loading: false
-		// 	};
+		case REJECTED_JOB:
+			return {
+				...state,
+				jobsRejected:payload,
+				loading: false
+			}	
+		case SAVED_JOBS:
+			return {
+				...state,
+				jobsSaved: payload,
+				loading: false
+			};
 		// case GET_REPOS:
 		// 	return {
 		// 		...state,

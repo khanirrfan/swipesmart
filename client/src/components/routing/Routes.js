@@ -13,7 +13,9 @@ import Profile from '../profile/Profile';
 import Posts from '../posts/Posts';
 import Post from '../post/Post';
 import Jobs from '../jobs/jobs';
-// import Job from '../jobs/job';
+import AppliedJobsPage from '../jobs/appliedJobs';
+import SavedJobs from '../jobs/savedJobs';
+import RejectedJobs from '../jobs/rejectedJobs';
 import NotFound from '../layout/NotFound';
 import PrivateRoute from '../routing/PrivateRoute';
 
@@ -22,6 +24,7 @@ const Routes = () => {
     <section className='container'>
       <Alert />
       <Switch>
+
         <Route exact path='/register' component={Register} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/profiles' component={Profiles} />
@@ -34,6 +37,9 @@ const Routes = () => {
         <PrivateRoute exact path='/posts' component={Posts} />
         <PrivateRoute exact path='/posts/:id' component={Post} />
         <PrivateRoute exact path='/jobs' component={Jobs} />
+        <PrivateRoute exact path ='/appliedJobs' component ={ AppliedJobsPage}/>
+        <PrivateRoute exact path ='/rejectedJobs' component = { RejectedJobs} />
+        <PrivateRoute exact path ='/savedJobs' component = { SavedJobs} />
         {/*<PrivateRoute exact path ='/job/:id' component={Job} />*/}
         <Route component={NotFound} />
       </Switch>

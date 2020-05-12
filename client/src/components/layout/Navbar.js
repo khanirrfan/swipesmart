@@ -8,8 +8,17 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
     <ul>
       <li>
-        <Link to='/jobs'>Jobs(Developers)</Link>
+        <Link to='/jobs'>Jobs</Link>
       </li>
+      <li>
+      <Link to='/savedJobs'>Saved Jobs</Link>
+    </li>
+      <li>
+        <Link to='/appliedJobs'>Applied Jobs</Link>
+      </li>
+      <li>
+      <Link to='/rejectedJobs'>Rejected Jobs</Link>
+    </li>
       <li>
         <Link to='/posts'>Posts</Link>
       </li>
@@ -20,10 +29,10 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         </Link>
       </li>
       <li>
-        <a onClick={logout} href='#!'>
+        <Link to ="/" onClick={logout} >
           <i className='fas fa-sign-out-alt' />{' '}
           <span className='hide-sm'>Logout</span>
-        </a>
+        </Link>
       </li>
     </ul>
   );

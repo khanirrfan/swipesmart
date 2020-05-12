@@ -28,12 +28,13 @@ export const ADD_COMMENT = 'ADD_COMMENT';
 export const REMOVE_COMMENT = 'REMOVE_COMMENT';
 
 export const JOB_PROFILE = 'JOB_PROFILE';
-// export const JOB_ERROR = 'REMOVE_COMMENT';
-
+export const JOB_SAVE = 'JOB_SAVE';
+export const APPLIED_JOB = 'APPLIED_JOB';
+export const REJECTED_JOB = 'REJECTED_JOB';
 
 export const GET_JOBS = 'GET_JOBS';
-// export const GET_JOB = 'GET_JOB';
-// export const GET_SAVED_JOBS = 'GET_SAVED_JOBS';
+
+export const SAVED_JOBS = 'SAVED_JOBS';
 // export const GET_APPLIED_JOBS = 'GET_APPLIED_JOBS';
 // export const GET_REJECTED_JOBS = 'GET_REJECTED_JOBS'
 export const JOB_ERROR ='JOB_ERROR';

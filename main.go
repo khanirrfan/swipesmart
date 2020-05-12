@@ -28,6 +28,11 @@ func main() {
 	r.HandleFunc("/savejob", controller.SaveJobs).Methods("POST")
 	r.HandleFunc("/rejectjob", controller.RejectedJobs).Methods("POST")
 	r.HandleFunc("/appliedjob", controller.AppliedJobs).Methods("POST")
+	// get applied, saved, rejected jobs
+	r.HandleFunc("/getsavedjobs", controller.GetSavedJobs).Methods("GET")
+	r.HandleFunc("/getappliedjobs", controller.GetAppliedJobs).Methods("GET")
+	r.HandleFunc("/getrejectedjobs", controller.GetRejectedJobs).Methods("GET")
+
 	// upload files
 	r.HandleFunc("/upload-files", controller.UploadFile).Methods("POST")
 	// r.HandleFunc("/download-files", controller.DownloadFile).Methods("GET")

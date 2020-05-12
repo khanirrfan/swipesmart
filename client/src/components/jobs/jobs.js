@@ -6,7 +6,6 @@ import JobItem from './jobItem';
 import { getJobs } from '../../actions/jobs';
 
 const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
-    console.log('profile:', jobs);
     useEffect(() => {
         getJobs();
     }, [getJobs]);
@@ -22,7 +21,8 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
             <i className='fab fa-connectdevelop' /> Browse jobs
           </p>
           <div className='profiles'>
-            {jobs && jobs.length > 0 ? (
+            {
+                jobs && jobs.length > 0 ? (
                 jobs.map(item => (
                 <JobItem key={item._id} item={item} />
               ))

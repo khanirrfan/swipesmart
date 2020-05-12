@@ -58,12 +58,13 @@ type Getjobs struct {
 	Country        string             `json:"country,omitempty" bson:"country,omitempty"`
 	JobCategory    []string           `json:"jobCategory,omitempty" bson:"jobCategory,omitempty"`
 	JobTypes       Fields             `json:"jobTypes,omitempty" bson:"jobTypes,omitempty"`
-	CreationDate   time.Time
+	CreationDate   time.Time          `jsob:"created_at,omitempty" bson:"created_at,omitempty"`
+	Status         string             `json:"status,omitempty" bson:"status,omitempty"`
 }
 
 // SavedJobs ...
 type SavedJobs struct {
-	UserID primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	UserID primitive.ObjectID `json:"_uid,omitempty" bson:"_uid,omitempty"`
 	Jobs   Getjobs            `json:"jobs,omitempty" bson:"jobs,omitempty"`
 }
 
