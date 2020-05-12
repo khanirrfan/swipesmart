@@ -69,9 +69,9 @@ type SavedJobs struct {
 }
 
 // UserSavedJobs ...
-type UserSavedJobs struct {
-	UserJobs SavedJobs `json:"savedjobs,omitempty" bson:"savedjobs,omitempty"`
-}
+// type UserSavedJobs struct {
+// 	UserJobs SavedJobs `json:"savedjobs,omitempty" bson:"savedjobs,omitempty"`
+// }
 
 //JobSwipe ...
 type JobSwipe struct {

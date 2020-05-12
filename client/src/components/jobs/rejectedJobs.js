@@ -24,7 +24,7 @@ const RejectedJobs = ({getRejectedJobs, jobs:{jobsRejected, loading} }) => {
               {
                 jobsRejected && jobsRejected.length > 0 ? (
                     jobsRejected.map(item => (
-                  <JobItem key={item._id} item={item} />
+                  <JobItem key={item.jobs._id} item={item.jobs} />
                 ))
               ) : (
                 <h4>No jobs found...</h4>
