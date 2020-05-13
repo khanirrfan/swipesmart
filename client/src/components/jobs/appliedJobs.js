@@ -21,8 +21,8 @@ const AppliedJobsPage = ({appliedJobs, jobs:{jobsApplied, loading}}) => {
           <div className='profiles'>
             {
                 jobsApplied && jobsApplied.length > 0 ? (
-                jobsApplied.map(item => (
-                <JobItem key={item.jobs._id} item={item.jobs} />
+                jobsApplied.map((item,index) => (
+                <JobItem key={index} item={item.jobs} />
               ))
             ) : (
               <h4>No jobs found...</h4>

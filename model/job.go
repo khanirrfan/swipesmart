@@ -20,6 +20,7 @@ type Jobs struct {
 	JobCategory    []string  `json:"jobCategory,omitempty" bson:"jobCategory,omitempty"`
 	JobTypes       Fields    `json:"jobtypes,omitempty" bson:"jobtypes,omitempty"`
 	CreationDate   time.Time
+	Status         string `json:"status,omitempty" bson:"status,omitempty"`
 }
 
 // Education ...

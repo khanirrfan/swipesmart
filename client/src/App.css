@@ -31,9 +31,12 @@ p {
   margin-top: 1%;
 }
 ul {
-  list-style: none;
+  list-style:none;
 }
-
+p ul li {
+  list-style-type: disc;
+  margin-left: 3rem;
+}
 img {
   width: 100%;
 }
@@ -418,7 +421,7 @@ img {
   }
   .modal-dialog {
     max-width: 500px;
-    margin: 1.75rem auto;
+    /* margin: 1.75rem auto; */
   }
   .modal-dialog-scrollable {
     max-height: calc(100% - 3.5rem);

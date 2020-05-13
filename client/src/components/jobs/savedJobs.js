@@ -22,8 +22,8 @@ const SavedJobs = ({getSavedJobs, jobs:{jobsSaved, loading}}) => {
             <div className='profiles'>
               {
                 jobsSaved && jobsSaved.length > 0 ? (
-                    jobsSaved.map(item => (
-                  <JobItem key={item.jobs._id} item={item.jobs} />
+                    jobsSaved.map((item, index) => (
+                  <JobItem key={index} item={item.jobs} />
                 ))
               ) : (
                 <h4>No jobs found...</h4>
