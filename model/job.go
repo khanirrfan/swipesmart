@@ -74,6 +74,12 @@ type SavedJobs struct {
 // 	UserJobs SavedJobs `json:"savedjobs,omitempty" bson:"savedjobs,omitempty"`
 // }
 
+// FilterParams ...
+type FilterParams struct {
+	Salary   string `json:"salary,omitempty" bson:salary,omitempty"`
+	JobTitle string `json:"jobtitle,omitempty" bson:jobtitle,omitempty"`
+}
+
 //JobSwipe ...
 type JobSwipe struct {
 	JobTitle      string

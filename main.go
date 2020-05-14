@@ -22,8 +22,8 @@ func main() {
 	// jobs
 	r.HandleFunc("/jobs", controller.GetJobs).Methods("GET")
 	r.HandleFunc("/addjob", controller.CreateJobs).Methods("POST")
-	r.HandleFunc("/delete-job/{id}", controller.DeleteJobByID).Methods("GET")
-	r.HandleFunc("/update-job/{id}", controller.UpdateJob).Methods("POST")
+	r.HandleFunc("/delete-job/{id}", controller.DeleteJobByID).Methods("DELETE")
+	r.HandleFunc("/update-job/{id}", controller.UpdateJob).Methods("PUT")
 	// applied, saved, rejected
 	r.HandleFunc("/savejob", controller.SaveJobs).Methods("POST")
 	r.HandleFunc("/rejectjob", controller.RejectedJobs).Methods("POST")
@@ -32,7 +32,8 @@ func main() {
 	r.HandleFunc("/getsavedjobs", controller.GetSavedJobs).Methods("GET")
 	r.HandleFunc("/getappliedjobs", controller.GetAppliedJobs).Methods("GET")
 	r.HandleFunc("/getrejectedjobs", controller.GetRejectedJobs).Methods("GET")
-
+	// filterjobs
+	r.HandleFunc("/filterjobs", controller.FilterJobs).Methods("POST")
 	// upload files
 	r.HandleFunc("/upload-files", controller.UploadFile).Methods("POST")
 	// r.HandleFunc("/download-files", controller.DownloadFile).Methods("GET")

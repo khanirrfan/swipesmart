@@ -441,3 +441,49 @@ func GetRejectedJobs(w http.ResponseWriter, r *http.Request) {
 	}
 	json.NewEncoder(w).Encode(jobs)
 }
+
+// FilterJobs ...
+
+func FilterJobs(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-type", "application/json")
+	var jobs []model.Getjobs
+	var params model.FilterParams
+	filterParams, _ := ioutil.ReadAll(r.Body)
+	json.Unmarshal(filterParams, &params)
+	// currentJobID := job.JobID
+	fmt.Println("body job:", params.JobTitle)
+	tokenString := r.Header.Get("Authorization")
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method")
+		}
+		return []byte("secret"), nil
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	dbConnection, err := db.GetDBCollection()
+	if err != nil {
+		log.Fatal(err)
+	}
+	collection := dbConnection.Collection("jobs")
+
+	cursor, err := collection.Find(context.Background(), bson.M{"salary": params.Salary, "jobtitle": params.JobTitle})
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer cursor.Close(context.Background())
+	for cursor.Next(context.Background()) {
+		if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+			var job model.Getjobs
+			cursor.Decode(&job)
+			jobs = append(jobs, job)
+		}
+	}
+	if err := cursor.Err(); err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(`{"message":"` + err.Error() + `"}`))
+		return
+	}
+	json.NewEncoder(w).Encode(jobs)
+}

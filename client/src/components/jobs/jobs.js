@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import JobItem from './jobItem';
 import { getJobs } from '../../actions/jobs';
+// import Search from '../search/search';
 
 const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
     useEffect(() => {
