@@ -5,7 +5,8 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { deleteEducation } from '../../actions/profile';
 
-const Education = ({ education, deleteEducation }) => {
+const Education = ({ education:{education}, deleteEducation }) => {
+  console.log('education:', education);
   const educations = education.map(edu => (
     <tr key={edu._id}>
       <td>{edu.school}</td>

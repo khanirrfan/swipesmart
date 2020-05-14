@@ -6,10 +6,11 @@ import { connect } from 'react-redux';
 import { deleteExperience } from '../../actions/profile';
 
 const Experience = ({ experience, deleteExperience }) => {
-  const experiences = experience.map(exp => (
+  console.log(experience);
+  const experiences = experience.experience.map(exp => (
     <tr key={exp._id}>
       <td>{exp.company}</td>
-      <td className="hide-sm">{exp.title}</td>
+      <td className="hide-sm">{exp.position}</td>
       <td>
         <Moment format="YYYY/MM/DD">{moment.utc(exp.from)}</Moment> -{' '}
         {exp.to === null ? (
@@ -27,7 +28,8 @@ const Experience = ({ experience, deleteExperience }) => {
         </button>
       </td>
     </tr>
-  ));
+   )
+  );
 
   return (
     <Fragment>
