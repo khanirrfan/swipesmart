@@ -35,11 +35,20 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   return (
     <Fragment>
     <div className="authBox">
-    {/*      <h1 className="text-center large text-primary">Sign Up</h1>*/}
     <p className='text-center lead'>
         <i className='fas fa-user' /> Create Your Account
       </p>
       <form className='formContainer form' onSubmit={e => onSubmit(e)}>
+      <div class="form-check">
+      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked />
+      <label class="form-check-label" for="exampleRadios1">
+        Default radio
+      </label>
+      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked />
+      <label class="form-check-label" for="exampleRadios1">
+        Default radio
+      </label>
+    </div>
         <div className='form-group'>
           <input
             type='text'

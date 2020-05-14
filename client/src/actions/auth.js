@@ -14,18 +14,19 @@ import setAuthToken from '../utils/setAuthToken';
 
 // Load User
 export const loadUser = () => async dispatch => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': localStorage.Token
-    }
-  };
+  // const config = {
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'Authorization': localStorage.Token
+  //   }
+  // };
+  console.log(localStorage.Token)
   if (localStorage.Token) {
     setAuthToken(localStorage.Token);
   }
 
   try {
-    const res = await axios.get('/profile', config);
+    const res = await axios.get('/profile');
 
     dispatch({
       type: USER_LOADED,
