@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import Register from '../auth/Register';
 import Login from '../auth/Login';
@@ -18,8 +19,11 @@ import SavedJobs from '../jobs/savedJobs';
 import RejectedJobs from '../jobs/rejectedJobs';
 import NotFound from '../layout/NotFound';
 import PrivateRoute from '../routing/PrivateRoute';
+import CreateJobs from '../jobs/createJobs';
+import { connect } from 'react-redux';
 
-const Routes = () => {
+const Routes = ({auth:{user}}) => {
+  console.log('user:', user);
   return (
     <section className='container'>
       <Alert />
@@ -37,14 +41,23 @@ const Routes = () => {
         <PrivateRoute exact path='/posts' component={Posts} />
         <PrivateRoute exact path='/posts/:id' component={Post} />
         <PrivateRoute exact path='/jobs' component={Jobs} />
-        <PrivateRoute exact path ='/appliedJobs' component ={ AppliedJobsPage}/>
+         <PrivateRoute exact path ='/appliedJobs' component ={ AppliedJobsPage}/>
         <PrivateRoute exact path ='/rejectedJobs' component = { RejectedJobs} />
         <PrivateRoute exact path ='/savedJobs' component = { SavedJobs} />
-        {/*<PrivateRoute exact path ='/job/:id' component={Job} />*/}
+        <PrivateRoute exact path ='/createJobs' component = {CreateJobs} /> 
         <Route component={NotFound} />
+        
       </Switch>
     </section>
   );
 };
 
-export default Routes;
+Dashboard.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(Routes);

@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -22,15 +23,17 @@ func ResponseJSON(w http.ResponseWriter, data interface{}) {
 
 // GenerateToken ...
 func GenerateToken(user model.User) (string, error) {
+	fmt.Println(user)
 	var err error
 	secret := "secret"
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"id":        user.ID,
+		// "id":        user.ID,
 		"email":     user.Email,
 		"lastname":  user.LastName,
 		"firstname": user.FirstName,
 		"username":  user.Username,
-		"details":   user.Details,
+		"type":      user.Type,
+		// "details":   user.Details,
 	})
 
 	tokenstring, err := token.SignedString([]byte(secret))

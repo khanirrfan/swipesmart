@@ -5,9 +5,13 @@ import { connect } from 'react-redux';
 
 const PrivateRoute = ({
   component: Component,
-  auth: { isAuthenticated, loading },
+  auth: { isAuthenticated, user, loading },
   ...rest
-}) => (
+}) => {
+  // if (user && user.type==='employe'){
+  // console.log(user.type)
+
+  return (
   <Route
     {...rest}
     render={props =>
@@ -15,7 +19,10 @@ const PrivateRoute = ({
     }
   />
 );
-
+// } else {
+//   return null
+// }
+}
 PrivateRoute.propTypes = {
   auth: PropTypes.object.isRequired
 };

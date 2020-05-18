@@ -3,11 +3,11 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const Landing = ({ isAuthenticated }) => {
+const Landing = ({ auth:{user, isAuthenticated} }) => {
   if (isAuthenticated) {
     return <Redirect to='/dashboard' />;
   }
-
+console.log('landing:', user);
   return (
     <section className='landing'>
       <div className='dark-overlay'>
@@ -32,11 +32,13 @@ const Landing = ({ isAuthenticated }) => {
 };
 
 Landing.propTypes = {
-  isAuthenticated: PropTypes.bool
+  // isAuthenticated: PropTypes.bool,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  // isAuthenticated: state.auth.isAuthenticated,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps)(Landing);

@@ -31,7 +31,7 @@ export const JOB_PROFILE = 'JOB_PROFILE';
 export const JOB_SAVE = 'JOB_SAVE';
 export const APPLIED_JOB = 'APPLIED_JOB';
 export const REJECTED_JOB = 'REJECTED_JOB';
-
+export const ADD_JOB = 'ADD_JOB';
 export const GET_JOBS = 'GET_JOBS';
 
 export const SAVED_JOBS = 'SAVED_JOBS';

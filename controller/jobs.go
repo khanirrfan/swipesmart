@@ -8,8 +8,14 @@ import (
 	"log"
 	"net/http"
 
+	// "go.mongodb.org/mongo-driver/x/mongo/driver/mongocrypt/options"
+
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
+
+	// "github.com/mongodb/mongo-go-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	// "github.com/mongodb/mongo-go-driver/mongo/options"
 	"github.com/swipesmart/config/db"
 	"github.com/swipesmart/model"
 	"go.mongodb.org/mongo-driver/bson"
@@ -131,7 +137,6 @@ func UpdateJob(w http.ResponseWriter, r *http.Request) {
 	var job model.Jobs
 	updJob, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(updJob, &job)
-
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -149,18 +154,25 @@ func UpdateJob(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	jobByID, err := primitive.ObjectIDFromHex(jobID)
+	// go.mongodb.org/mongo-driver/mongo
+	fmt.Println(jobByID)
+	opts := options.FindOneAndUpdate().SetUpsert(true)
+	filter := bson.D{{"_id", jobByID}}
+	update := bson.D{{"$set", &job}}
+	// var updatedDocument bson.M
 
-	fmt.Println(jobByID, jobID)
 	if token.Valid {
-		result, err := collection.UpdateOne(context.TODO(), bson.M{"_id": jobByID}, bson.M{"$set": &job})
-		fmt.Println("err", err, "result", result.UpsertedCount, result.UpsertedID, result.MatchedCount, result.ModifiedCount)
+		err := collection.FindOneAndUpdate(context.Background(), filter, update, opts).Decode(&job)
 		if err != nil {
+			fmt.Println("error:", err)
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
 		} else {
 			w.Write([]byte("Updated successfully"))
+			fmt.Println(job)
 		}
 	}
+
 }
 
 // AppliedJobs ...

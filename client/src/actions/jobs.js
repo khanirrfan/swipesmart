@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { JOB_ERROR, JOB_PROFILE, APPLIED_JOB, REJECTED_JOB, SAVED_JOBS } from './types';
+import { JOB_ERROR, JOB_PROFILE, APPLIED_JOB, REJECTED_JOB, SAVED_JOBS, ADD_JOB } from './types';
 import { setAlert } from './alert';
 
 // get all jobs
@@ -110,4 +110,25 @@ export const getSavedJobs = () => async dispatch => {
             payload: { msg: err.response.statusText, status: err.response.status}
         })
     }
+}
+
+export const addJob = (formData) => async dispatch => {
+const config = {
+    headers: {
+        'Contente-Type': 'application/json',
+        
+    }
+};
+   try {
+       const res = await axios.post('/addjob', formData, config);
+    console.log('resp:', res.data);
+       dispatch({
+           type:ADD_JOB,
+           payload: res.data
+       })
+       dispatch(setAlert('Job created successfully', 'success'));
+       dispatch(getJobs())
+   } catch (error) {
+       
+   }
 }

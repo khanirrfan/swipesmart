@@ -8,21 +8,22 @@ const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     username:'',
     email: '',
-    password: ''
+    password: '',
+    type: ''
   });
 
-  const {username, email, password } = formData;
+  const {username, email, password, type } = formData;
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async e => {
     e.preventDefault();
-    login(username,email, password);
+    login(username,email, password, type);
   };
 
   if (isAuthenticated) {
-    return <Redirect to='/dashboard' />;
+    return <Redirect to='/jobs' />;
   }
 
   return (
@@ -33,6 +34,16 @@ const Login = ({ login, isAuthenticated }) => {
       <i className='fas fa-user' /> Sign Into Your Account
     </p>
     <form className='form formContainer' onSubmit={e => onSubmit(e)}>
+    <div className="form-check">
+    <input className="form-check-input" type="checkbox" name="type" id="employer" value="employe" onChange={e => onChange(e)} />
+    <label className="form-check-label" htmlFor="employer">
+     Login As employe
+    </label>
+    <input className="form-check-input" type="checkbox" name="type" id="organisation" value="org" onChange={e => onChange(e)} />
+    <label className="form-check-label" htmlFor="organisation">
+    Login as Employer
+    </label>
+  </div>
     <div className='form-group'>
         <input
           type='text'

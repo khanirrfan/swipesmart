@@ -36,10 +36,13 @@ func main() {
 	r.HandleFunc("/filterjobs", controller.FilterJobs).Methods("POST")
 	// upload files
 	r.HandleFunc("/upload-files", controller.UploadFile).Methods("POST")
+	r.HandleFunc("/fetchFiles", controller.FetchCVFiles).Methods("GET")
 	// r.HandleFunc("/download-files", controller.DownloadFile).Methods("GET")
 	// matchPercent
-	r.HandleFunc("/matchPercent", controller.MatchPercent).Methods("GET")
-
+	// r.HandleFunc("/matchPercent", controller.MatchPercent).Methods("GET")
+	// add/edit profile experience / education
+	r.HandleFunc("/experience", controller.AddProfileExperience).Methods("POST")
+	r.HandleFunc("/education", controller.AddProfileEducation).Methods("POST")
 	r.HandleFunc("/protected", controller.TokenVerifyMiddleWare(controller.ProtectedEndPoint))
 	log.Fatal(http.ListenAndServe(":8080", r))
 

@@ -6,13 +6,12 @@ import (
 
 // User ...
 type User struct {
-	ID        primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	Username  string             `json:"username,omitempty" bson:"username,omitempty"`
-	FirstName string             `json:"firstname,omitempty" bson:"firstname,omitempty"`
-	LastName  string             `json:"lastname,omitempty" bson:"lastname,omitempty"`
-	Email     string             `json:"email,omitempty" bson:"email,omitempty"`
-	Password  string             `json:"password,omitempty" bson:"password,omitempty"`
-	Details   Profile            `json:"details,omitempty" bson:"details,omitempty"`
+	Username  string `json:"username,omitempty" bson:"username,omitempty"`
+	FirstName string `json:"firstname,omitempty" bson:"firstname,omitempty"`
+	LastName  string `json:"lastname,omitempty" bson:"lastname,omitempty"`
+	Email     string `json:"email,omitempty" bson:"email,omitempty"`
+	Password  string `json:"password,omitempty" bson:"password,omitempty"`
+	Type      string `json:"type,omitempty" bson:"type,omitempty"`
 }
 
 // Getuser ...
@@ -22,8 +21,8 @@ type Getuser struct {
 	FirstName string             `json:"firstname,omitempty" bson:"firstname,omitempty"`
 	LastName  string             `json:"lastname,omitempty" bson:"lastname,omitempty"`
 	Email     string             `json:"email,omitempty" bson:"email,omitempty"`
+	Type      string             `json:"type,omitempty" bson:"type,omitempty"`
 	About     string             `json:"about,omitempty" bson:"about,omitempty"`
-	Details   Profile            `json:"details,omitempty" bson:"details,omitempty"`
 }
 
 // ResponseResult ...
@@ -37,9 +36,16 @@ type JWT struct {
 	Token string `bson:"token,omitempty"`
 }
 
-// Profile ...
-type Profile struct {
-	Education  []*Education  `json:"education,omitempty" bson:"education,omitempty"`
+// ProfileExperience ...
+type ProfileExperience struct {
+	Experience UserExperience `json:"experience,omitempty" bson:"experience,omitempty"`
+}
+
+// ProfileEducation ...
+type ProfileEducation struct {
+	Education Education `json:"education,omitempty" bson:"education,omitempty"`
+}
+type UserExperience struct {
 	Experience []*Experience `json:"experience,omitempty" bson:"experience,omitempty"`
 }
 

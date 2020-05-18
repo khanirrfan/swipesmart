@@ -15,15 +15,15 @@ import {
 export const getCurrentProfile = () => async dispatch => {
   try {
     const res = await axios.get('/profile');
-    console.log("response:", res.data);
     dispatch({
       type: GET_PROFILE,
       payload: res.data
     });
   } catch (err) {
+    console.log(err)
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err.Error, status: err.status }
     });
   }
 };

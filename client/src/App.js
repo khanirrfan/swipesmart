@@ -14,12 +14,11 @@ import './App.css';
 
 const App = () => {
   useEffect(() => {
-    if (localStorage.Token) {
-      setAuthToken(localStorage.Token);
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
       store.dispatch(loadUser());
     }
   }, []);
-
   return (
     <Provider store={store}>
       <Router>

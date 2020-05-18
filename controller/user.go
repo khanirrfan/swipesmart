@@ -101,8 +101,16 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 				json.NewEncoder(w).Encode(res)
 				return
 			}
+			var jwt model.JWT
 			res.Result = "Registration Successful"
-			json.NewEncoder(w).Encode(res)
+			token, err := utils.GenerateToken(user)
+			if err != nil {
+				log.Fatal(err)
+			}
+			w.WriteHeader(http.StatusOK)
+			jwt.Token = token
+			utils.ResponseJSON(w, jwt)
+			// json.NewEncoder(w).Encode(res)
 			return
 		}
 

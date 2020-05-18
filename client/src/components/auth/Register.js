@@ -10,10 +10,11 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     username: '',
     email: '',
     password: '',
-    password2: ''
+    password2: '',
+    type:''
   });
 
-  const { username, email, password, password2 } = formData;
+  const { username, email, password, password2, type } = formData;
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,7 +24,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     if (password !== password2) {
       setAlert('Passwords do not match', 'danger');
     } else {
-      register({ username, email, password });
+      register({ username, email, password, type });
     }
   };
 
@@ -39,13 +40,13 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
         <i className='fas fa-user' /> Create Your Account
       </p>
       <form className='formContainer form' onSubmit={e => onSubmit(e)}>
-      <div class="form-check">
-      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked />
-      <label class="form-check-label" for="exampleRadios1">
+      <div className="form-check">
+      <input className="form-check-input" type="checkbox" name="type" id="employer" value="employer" onChange={e => onChange(e)} />
+      <label className="form-check-label" htmlFor="employer">
         Default radio
       </label>
-      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked />
-      <label class="form-check-label" for="exampleRadios1">
+      <input className="form-check-input" type="checkbox" name="type" id="organisation" value="org" onChange={e => onChange(e)} />
+      <label className="form-check-label" htmlFor="organisation">
         Default radio
       </label>
     </div>
