@@ -25,9 +25,9 @@ func main() {
 	r.HandleFunc("/delete-job/{id}", controller.DeleteJobByID).Methods("DELETE")
 	r.HandleFunc("/update-job/{id}", controller.UpdateJob).Methods("PUT")
 	// applied, saved, rejected
-	r.HandleFunc("/savejob", controller.SaveJobs).Methods("POST")
-	r.HandleFunc("/rejectjob", controller.RejectedJobs).Methods("POST")
-	r.HandleFunc("/appliedjob", controller.AppliedJobs).Methods("POST")
+	r.HandleFunc("/savejob/{id}", controller.SaveJobs).Methods("POST")
+	r.HandleFunc("/rejectjob/{id}", controller.RejectedJobs).Methods("POST")
+	r.HandleFunc("/appliedjob/{id}", controller.AppliedJobs).Methods("POST")
 	// get applied, saved, rejected jobs
 	r.HandleFunc("/getsavedjobs", controller.GetSavedJobs).Methods("GET")
 	r.HandleFunc("/getappliedjobs", controller.GetAppliedJobs).Methods("GET")

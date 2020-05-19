@@ -20,10 +20,9 @@ export const getJobs = () => async dispatch => {
 };
 
 // save job
-export const saveJob = (item) => async dispatch => {
-    console.log(item);
+export const saveJob = ({item, user}) => async dispatch => {
     try {
-        await axios.post('/savejob', item);
+        await axios.post(`/savejob/${user._id}`, item);
         dispatch(setAlert('job saved successfully', 'success'));
     } catch (err) {
         dispatch({
@@ -33,10 +32,10 @@ export const saveJob = (item) => async dispatch => {
     }
 }
 // reject job
-export const rejectJob = (item) => async dispatch => {
-    console.log(item);
+export const rejectJob = ({item, user}) => async dispatch => {
+    // console.log(item);
     try {
-        await axios.post('/rejectjob', item);
+        await axios.post(`/rejectjob/${user._id}`, item);
         dispatch(setAlert('You have reject this job', 'success'));
     } catch (err) {
         dispatch({
@@ -47,11 +46,11 @@ export const rejectJob = (item) => async dispatch => {
 }
 
 // apply job
-export const applyJob = (item) => async dispatch => {
+export const applyJob = ({item, user}) => async dispatch => {
     console.log(item);
     item.status = 'applied'
     try {
-        await axios.post('/appliedjob', item);
+        await axios.post(`/appliedjob/${user._id}`, item);
         dispatch(setAlert('You have successfully applied to this job', 'success'));
     } catch (err) {
         dispatch({
@@ -62,9 +61,9 @@ export const applyJob = (item) => async dispatch => {
 }
 
 // get applied job
-export const appliedJobs = () => async dispatch => {
+export const appliedJobs = ({user}) => async dispatch => {
     try {
-        const res = await axios.get('/getappliedjobs');
+        const res = await axios.get(`/getappliedjobs/${user._id}`);
         console.log("response:", res.data)
         dispatch({
             type:APPLIED_JOB,
@@ -79,9 +78,9 @@ export const appliedJobs = () => async dispatch => {
 }
 
 // get REJECTED job
-export const getRejectedJobs = () => async dispatch => {
+export const getRejectedJobs = ({user}) => async dispatch => {
     try {
-        const res = await axios.get('/getrejectedjobs');
+        const res = await axios.get(`/getrejectedjobs/${user._id}`);
         console.log("response:", res.data)
         dispatch({
             type:REJECTED_JOB,
@@ -96,9 +95,9 @@ export const getRejectedJobs = () => async dispatch => {
 }
 
 // get saved job
-export const getSavedJobs = () => async dispatch => {
+export const getSavedJobs = ({user}) => async dispatch => {
     try {
-        const res = await axios.get('/getsavedjobs');
+        const res = await axios.get(`/getsavedjobs/${user._id}`);
         console.log("response:", res)
         dispatch({
             type:SAVED_JOBS,
@@ -111,8 +110,8 @@ export const getSavedJobs = () => async dispatch => {
         })
     }
 }
-
-export const addJob = (formData) => async dispatch => {
+// create job
+export const addJob = ({formData}) => async dispatch => {
 const config = {
     headers: {
         'Contente-Type': 'application/json',
