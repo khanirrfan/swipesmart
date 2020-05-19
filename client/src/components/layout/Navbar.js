@@ -19,12 +19,7 @@ const Navbar = ({ auth: { isAuthenticated, loading, user}, logout }) => {
       <li>
         <Link to='/rejectedJobs'>Rejected Jobs</Link>
       </li>
-      <li>
-        <Link to='/createJobs'>Create Job</Link>
-      </li>
-      <li>
-        <Link to='/posts'>Posts</Link>
-      </li>
+
       <li>
         <Link to='/dashboard'>
           <i className='fas fa-user' />{ ' ' }
@@ -42,15 +37,24 @@ const Navbar = ({ auth: { isAuthenticated, loading, user}, logout }) => {
 
   const orgLinks = (
     <ul>
-      <li>
-        <Link to='/jobs'>Jobs(Developers)</Link>
-      </li>
-      <li>
-        <Link to='/register'>Register</Link>
-      </li>
-      <li>
-        <Link to='/login'>Login</Link>
-      </li>
+    <li>
+    <Link to='/createJobs'>Create Job</Link>
+  </li>
+  <li>
+  <Link to='/posts'>Posts</Link>
+</li>
+<li>
+<Link to='/dashboard'>
+  <i className='fas fa-user' />{ ' ' }
+  <span className='hide-sm'>Dashboard</span>
+</Link>
+</li>
+<li>
+<Link to="/" onClick={ logout } >
+  <i className='fas fa-sign-out-alt' />{ ' ' }
+  <span className='hide-sm'>Logout</span>
+</Link>
+</li>
     </ul>
   );
 
