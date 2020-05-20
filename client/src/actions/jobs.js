@@ -61,9 +61,9 @@ export const applyJob = ({item, user}) => async dispatch => {
 }
 
 // get applied job
-export const appliedJobs = ({user}) => async dispatch => {
+export const appliedJobs = userId => async dispatch => {
     try {
-        const res = await axios.get(`/getappliedjobs/${user._id}`);
+        const res = await axios.get(`/getappliedjobs/${userId}`);
         console.log("response:", res.data)
         dispatch({
             type:APPLIED_JOB,
@@ -78,9 +78,10 @@ export const appliedJobs = ({user}) => async dispatch => {
 }
 
 // get REJECTED job
-export const getRejectedJobs = ({user}) => async dispatch => {
+export const getRejectedJobs = userId => async dispatch => {
+    console.log('user Id', userId);
     try {
-        const res = await axios.get(`/getrejectedjobs/${user._id}`);
+        const res = await axios.get(`/getrejectedjobs/${userId}`);
         console.log("response:", res.data)
         dispatch({
             type:REJECTED_JOB,
@@ -89,15 +90,15 @@ export const getRejectedJobs = ({user}) => async dispatch => {
     } catch (err) {
         dispatch({
             type:JOB_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status}
+            payload: { msg: err.statusText, status: err.status}
         })
     }
 }
 
 // get saved job
-export const getSavedJobs = ({user}) => async dispatch => {
+export const getSavedJobs = userId => async dispatch => {
     try {
-        const res = await axios.get(`/getsavedjobs/${user._id}`);
+        const res = await axios.get(`/getsavedjobs/${userId}`);
         console.log("response:", res)
         dispatch({
             type:SAVED_JOBS,

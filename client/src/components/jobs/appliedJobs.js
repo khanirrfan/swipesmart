@@ -4,10 +4,10 @@ import { appliedJobs } from '../../actions/jobs';
 import JobItem from './jobItem';
 import Spinner from '../layout/Spinner';
 import { connect } from 'react-redux';
-const AppliedJobsPage = ({appliedJobs, jobs:{jobsApplied, loading}}) => {
+const AppliedJobsPage = ({appliedJobs, jobs:{jobsApplied, loading}, match}) => {
     useEffect(() => {
-        appliedJobs();
-    }, [appliedJobs]);
+        appliedJobs(match.params.id);
+    }, [appliedJobs], match.params.id);
     return (
         <Fragment>
       {loading ? (

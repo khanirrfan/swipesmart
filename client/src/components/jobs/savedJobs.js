@@ -5,10 +5,10 @@ import JobItem from './jobItem';
 import Spinner from '../layout/Spinner';
 import { connect } from 'react-redux';
 
-const SavedJobs = ({getSavedJobs, jobs:{jobsSaved, loading}}) => {
+const SavedJobs = ({getSavedJobs, jobs:{jobsSaved, loading}, match}) => {
     useEffect(() => {
-        getSavedJobs();
-    }, [getSavedJobs]);
+        getSavedJobs(match.params.id);
+    }, [getSavedJobs, match.params.id]);
     return (
         <Fragment>
         {loading ? (
