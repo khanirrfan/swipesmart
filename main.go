@@ -29,9 +29,9 @@ func main() {
 	r.HandleFunc("/rejectjob/{id}", controller.RejectedJobs).Methods("POST")
 	r.HandleFunc("/appliedjob/{id}", controller.AppliedJobs).Methods("POST")
 	// get applied, saved, rejected jobs
-	r.HandleFunc("/getsavedjobs", controller.GetSavedJobs).Methods("GET")
-	r.HandleFunc("/getappliedjobs", controller.GetAppliedJobs).Methods("GET")
-	r.HandleFunc("/getrejectedjobs", controller.GetRejectedJobs).Methods("GET")
+	r.HandleFunc("/getsavedjobs/{id}", controller.GetSavedJobs).Methods("GET")
+	r.HandleFunc("/getappliedjobs/{id}", controller.GetAppliedJobs).Methods("GET")
+	r.HandleFunc("/getrejectedjobs/{id}", controller.GetRejectedJobs).Methods("GET")
 	// filterjobs
 	r.HandleFunc("/filterjobs", controller.FilterJobs).Methods("POST")
 	// upload files

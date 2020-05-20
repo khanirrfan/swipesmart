@@ -352,6 +352,7 @@ func GetAppliedJobs(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-ype", "application/json")
 	var jobs []model.SavedJobs
 	var response model.ResponseResult
+	id := mux.Vars(r)["id"]
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -368,19 +369,12 @@ func GetAppliedJobs(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		id, ok := claims["id"].(string)
-		if !ok {
-			log.Fatal(ok)
-		}
+	if token.Valid {
 		userID, err := primitive.ObjectIDFromHex(id)
-		if err != nil {
-			log.Fatal(err)
-		}
 		fmt.Println("user id:", userID)
 		// batch size can be used for pagination in future
-		opts := options.Find().SetSnapshot(true)
-		filter := bson.D{{"_id", userID}}
+		opts := options.Find()
+		filter := bson.D{{"_uid", userID}}
 		// update := bson.D{{"$set", &job}}
 		cursor, err := collection.Find(context.Background(), filter, opts)
 		if err != nil {
@@ -405,30 +399,14 @@ func GetAppliedJobs(w http.ResponseWriter, r *http.Request) {
 		response.Error = err.Error()
 		json.NewEncoder(w).Encode(response)
 	}
-	// _, err = collection.Find(context.Background(), bson.M{})
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// defer cursor.Close(context.Background())
-	// for cursor.Next(context.Background()) {
-	// 	if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-	// 		var job model.SavedJobs
-	// 		cursor.Decode(&job)
-	// 		jobs = append(jobs, job)
-	// 	}
-	// }
-	// if err := cursor.Err(); err != nil {
-	// 	w.WriteHeader(http.StatusInternalServerError)
-	// 	w.Write([]byte(`{"message":"` + err.Error() + `"}`))
-	// 	return
-	// }
-	// json.NewEncoder(w).Encode(jobs)
 }
 
 // GetSavedJobs ...
 func GetSavedJobs(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-ype", "application/json")
 	var jobs []model.SavedJobs
+	var response model.ResponseResult
+	id := mux.Vars(r)["id"]
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -444,30 +422,45 @@ func GetSavedJobs(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	cursor, err := collection.Find(context.Background(), bson.M{})
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer cursor.Close(context.Background())
-	for cursor.Next(context.Background()) {
-		if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-			var job model.SavedJobs
-			cursor.Decode(&job)
-			jobs = append(jobs, job)
+	if token.Valid {
+		userID, err := primitive.ObjectIDFromHex(id)
+		fmt.Println("user id:", userID)
+		// batch size can be used for pagination in future
+		opts := options.Find()
+		filter := bson.D{{"_uid", userID}}
+		// update := bson.D{{"$set", &job}}
+		cursor, err := collection.Find(context.Background(), filter, opts)
+		if err != nil {
+			fmt.Println("3")
+			log.Fatal(err)
 		}
+
+		defer cursor.Close(context.Background())
+		for cursor.Next(context.Background()) {
+			if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+				var job model.SavedJobs
+				cursor.Decode(&job)
+				jobs = append(jobs, job)
+			}
+		}
+		if err := cursor.Err(); err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(`{"message":"` + err.Error() + `"}`))
+			return
+		}
+		json.NewEncoder(w).Encode(jobs)
+	} else {
+		response.Error = err.Error()
+		json.NewEncoder(w).Encode(response)
 	}
-	if err := cursor.Err(); err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(`{"message":"` + err.Error() + `"}`))
-		return
-	}
-	json.NewEncoder(w).Encode(jobs)
 }
 
 // GetRejectedJobs ...
 func GetRejectedJobs(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-ype", "application/json")
 	var jobs []model.SavedJobs
+	var response model.ResponseResult
+	id := mux.Vars(r)["id"]
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -483,24 +476,37 @@ func GetRejectedJobs(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	cursor, err := collection.Find(context.Background(), bson.M{})
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer cursor.Close(context.Background())
-	for cursor.Next(context.Background()) {
-		if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-			var job model.SavedJobs
-			cursor.Decode(&job)
-			jobs = append(jobs, job)
+	if token.Valid {
+		userID, err := primitive.ObjectIDFromHex(id)
+		fmt.Println("user id:", userID)
+		// batch size can be used for pagination in future
+		opts := options.Find()
+		filter := bson.D{{"_uid", userID}}
+		// update := bson.D{{"$set", &job}}
+		cursor, err := collection.Find(context.Background(), filter, opts)
+		if err != nil {
+			fmt.Println("3")
+			log.Fatal(err)
 		}
+		defer cursor.Close(context.Background())
+		for cursor.Next(context.Background()) {
+			if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+				var job model.SavedJobs
+				cursor.Decode(&job)
+				jobs = append(jobs, job)
+			}
+		}
+		if err := cursor.Err(); err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(`{"message":"` + err.Error() + `"}`))
+			return
+		}
+		json.NewEncoder(w).Encode(jobs)
+	} else {
+		response.Error = err.Error()
+		json.NewEncoder(w).Encode(response)
 	}
-	if err := cursor.Err(); err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(`{"message":"` + err.Error() + `"}`))
-		return
-	}
-	json.NewEncoder(w).Encode(jobs)
+
 }
 
 // FilterJobs ...
