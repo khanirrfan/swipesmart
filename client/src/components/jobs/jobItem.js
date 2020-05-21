@@ -28,7 +28,7 @@ if(user === null) {
   return (
 
     <div className="jobs bg-white p-1 my-1">
-      <div key={ item._id }>
+      <div className="jobDetails" key={ item._id }>
         <p>jobtitle - { item.jobtitle }</p>
         <p>country - { item.country }</p>
         <p>salary - { item.salary }</p>
@@ -39,6 +39,13 @@ if(user === null) {
         <button className="btn btn-primary my-1" onClick={e=> handleReject(e)}>Reject</button>
         <button className="btn btn-primary my-1" onClick={ toggle }>View JD</button>
       </div>
+      {item.status === 'applied' &&
+      <div className="docsRequired">
+      <Button className="btn btn-secondary my-1"> Upload Cover Letter</Button>
+      <Button className="btn btn-secondary my-1"> Complete Profile</Button>
+      <Button className="btn btn-secondary my-1"> Upload Docs</Button>
+      </div>
+}
       <div>
         <Modal job= {item} isOpen={ modal } >
           <ModalHeader toggle={ toggle }>
