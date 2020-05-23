@@ -63,11 +63,6 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// CreateProfile ...
-func CreateProfile(w http.ResponseWriter, r *http.Request) {
-
-}
-
 // GetProfiles ...
 func GetProfiles(w http.ResponseWriter, r *http.Request) {
 	var result []model.Getuser
@@ -184,10 +179,8 @@ func UpdateProfile(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// profile creation
-
-// AddProfileExperience ...
-func AddProfileExperience(w http.ResponseWriter, r *http.Request) {
+// AddProfileDetails ...
+func AddProfileDetails(w http.ResponseWriter, r *http.Request) {
 	var personalProfle model.PersonalProfile
 	body, _ := ioutil.ReadAll(r.Body)
 	err := json.Unmarshal(body, &personalProfle)
@@ -211,6 +204,38 @@ func AddProfileExperience(w http.ResponseWriter, r *http.Request) {
 	col := conn.Collection("userProfiles")
 	if token.Valid {
 		cursor, err := col.InsertOne(context.TODO(), personalProfle)
+		if err != nil {
+			log.Fatal(err)
+		}
+		json.NewEncoder(w).Encode(cursor)
+	}
+}
+
+// AddProfileExperience ...
+func AddProfileExperience(w http.ResponseWriter, r *http.Request) {
+	var experience model.UserExperience
+	body, _ := ioutil.ReadAll(r.Body)
+	err := json.Unmarshal(body, &experience)
+	if err != nil {
+		log.Fatal(err)
+	}
+	tokenString := r.Header.Get("Authorization")
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method")
+		}
+		return []byte("secret"), nil
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	conn, err := db.GetDBCollection()
+	if err != nil {
+		log.Fatal(err)
+	}
+	col := conn.Collection("userProfiles")
+	if token.Valid {
+		cursor, err := col.InsertOne(context.TODO(), experience)
 		if err != nil {
 			log.Fatal(err)
 		}
