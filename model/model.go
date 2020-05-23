@@ -16,13 +16,20 @@ type User struct {
 
 // Getuser ...
 type Getuser struct {
-	ID        primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
-	Username  string             `json:"username,omitempty" bson:"username,omitempty"`
-	FirstName string             `json:"firstname,omitempty" bson:"firstname,omitempty"`
-	LastName  string             `json:"lastname,omitempty" bson:"lastname,omitempty"`
-	Email     string             `json:"email,omitempty" bson:"email,omitempty"`
-	Type      string             `json:"type,omitempty" bson:"type,omitempty"`
-	About     string             `json:"about,omitempty" bson:"about,omitempty"`
+	ID         primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	Username   string             `json:"username,omitempty" bson:"username,omitempty"`
+	FirstName  string             `json:"firstname,omitempty" bson:"firstname,omitempty"`
+	LastName   string             `json:"lastname,omitempty" bson:"lastname,omitempty"`
+	Email      string             `json:"email,omitempty" bson:"email,omitempty"`
+	Type       string             `json:"type,omitempty" bson:"type,omitempty"`
+	Role       string             `json:"role,omitempty" bson:"role,omitempty"`
+	Company    string             `json:"company,omitempty" bson:"company,omitempty"`
+	Location   string             `json:"location,omitempty" bson:"location,omitempty"`
+	Skills     []string           `json:"skills,omitempty" bson:"skills,omitempty"`
+	Portfolio  string             `json:"portfolio,omitempty" bson:"portfolio,omitempty"`
+	About      string             `json:"about,omitempty" bson:"about,omitempty"`
+	Experience []*Experience      `json:"experience,omitempty" bson:"experience,omitempty"`
+	Education  Education          `json:"education,omitempty" bson:"education,omitempty"`
 }
 
 // ResponseResult ...

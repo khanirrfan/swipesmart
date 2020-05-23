@@ -201,13 +201,22 @@ func AddProfileDetails(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	col := conn.Collection("userProfiles")
+	col := conn.Collection("users")
+	id := "5e9b39f107d1e9d3e8a91411"
+	userID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		log.Fatal(err)
+	}
+	opts := options.FindOneAndUpdate().SetUpsert(true)
+	filter := bson.D{{"_id", userID}}
+	update := bson.D{{"$set", personalProfle}}
+	var profileDetails model.PersonalProfile
 	if token.Valid {
-		cursor, err := col.InsertOne(context.TODO(), personalProfle)
+		err = col.FindOneAndUpdate(context.TODO(), filter, update, opts).Decode(&profileDetails)
 		if err != nil {
 			log.Fatal(err)
 		}
-		json.NewEncoder(w).Encode(cursor)
+		json.NewEncoder(w).Encode(profileDetails)
 	}
 }
 
