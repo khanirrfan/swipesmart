@@ -41,8 +41,10 @@ func main() {
 	// matchPercent
 	r.HandleFunc("/matchPercent/{userId}/{jobId}", controller.MatchPercent).Methods("GET")
 	// add/edit profile experience / education
-	r.HandleFunc("/experience", controller.AddProfileExperience).Methods("POST")
-	r.HandleFunc("/education", controller.AddProfileEducation).Methods("POST")
+
+	r.HandleFunc("/create-profile", controller.AddProfileDetails).Methods("POST")
+	r.HandleFunc("/profile/experience", controller.AddProfileExperience).Methods("POST")
+	r.HandleFunc("/profile/education", controller.AddProfileEducation).Methods("POST")
 	r.HandleFunc("/protected", controller.TokenVerifyMiddleWare(controller.ProtectedEndPoint))
 	log.Fatal(http.ListenAndServe(":8080", r))
 
