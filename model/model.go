@@ -36,15 +36,29 @@ type JWT struct {
 	Token string `bson:"token,omitempty"`
 }
 
-// ProfileExperience ...
-type ProfileExperience struct {
-	Experience UserExperience `json:"experience,omitempty" bson:"experience,omitempty"`
+// PersonalProfile ...
+type PersonalProfile struct {
+	Role       string        `json:"role,omitempty" bson:"role,omitempty"`
+	Company    string        `json:"company,omitempty" bson:"company,omitempty"`
+	Location   string        `json:"location,omitempty" bson:"location,omitempty"`
+	Skills     []string      `json:"skills,omitempty" bson:"skills,omitempty"`
+	Portfolio  string        `json:"portfolio,omitempty" bson:"portfolio,omitempty"`
+	About      string        `json:"about,omitempty" bson:"about,omitempty"`
+	Experience []*Experience `json:"experience,omitempty" bson:"experience,omitempty"`
+	Education  Education     `json:"education,omitempty" bson:"education,omitempty"`
 }
+
+// ProfileExperience ...
+// type ProfileExperience struct {
+// 	Experience UserExperience `json:"experience,omitempty" bson:"experience,omitempty"`
+// }
 
 // ProfileEducation ...
 type ProfileEducation struct {
 	Education Education `json:"education,omitempty" bson:"education,omitempty"`
 }
+
+// UserExperience ...
 type UserExperience struct {
 	Experience []*Experience `json:"experience,omitempty" bson:"experience,omitempty"`
 }

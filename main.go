@@ -39,7 +39,7 @@ func main() {
 	r.HandleFunc("/fetchFiles", controller.FetchCVFiles).Methods("GET")
 	// r.HandleFunc("/download-files", controller.DownloadFile).Methods("GET")
 	// matchPercent
-	// r.HandleFunc("/matchPercent", controller.MatchPercent).Methods("GET")
+	r.HandleFunc("/matchPercent/{userId}/{jobId}", controller.MatchPercent).Methods("GET")
 	// add/edit profile experience / education
 	r.HandleFunc("/experience", controller.AddProfileExperience).Methods("POST")
 	r.HandleFunc("/education", controller.AddProfileEducation).Methods("POST")

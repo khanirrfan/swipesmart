@@ -63,6 +63,11 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// CreateProfile ...
+func CreateProfile(w http.ResponseWriter, r *http.Request) {
+
+}
+
 // GetProfiles ...
 func GetProfiles(w http.ResponseWriter, r *http.Request) {
 	var result []model.Getuser
@@ -136,38 +141,6 @@ func GetProfileByID(w http.ResponseWriter, r *http.Request) {
 
 // UpdateProfile ...
 func UpdateProfile(w http.ResponseWriter, r *http.Request) {
-	// w.Header().Set("Content-Type", "application/json")
-	// var profile model.Getuser
-	// profileID := mux.Vars(r)["id"]
-	// w.Write([]byte(profileID))
-	// updProfile, _ := ioutil.ReadAll(r.Body)
-	// json.Unmarshal(updProfile, &profile)
-	// tokenString := r.Header.Get("Authorization")
-	// token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-	// 	if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-	// 		return nil, fmt.Errorf("Unexpected signing method")
-	// 	}
-	// 	return []byte("secret"), nil
-	// })
-
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// dbConnection, err := db.GetDBCollection()
-	// collection := dbConnection.Collection("users")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// profileByID, err := primitive.ObjectIDFromHex(profileID)
-
-	// if token.Valid {
-	// 	result, err := collection.UpdateOne(context.TODO(), bson.M{"_id": profileByID}, bson.M{"$set": &profile})
-	// 	fmt.Println("err", err, "result", result.UpsertedCount, result.UpsertedID, result.MatchedCount, result.ModifiedCount)
-	// 	if err != nil {
-	// 		w.WriteHeader(http.StatusInternalServerError)
-	// 		w.Write([]byte(err.Error()))
-	// 	}
-	// }
 	w.Header().Set("Content-Type", "application/json")
 	pID := mux.Vars(r)["id"]
 	var profile model.Getuser
@@ -211,12 +184,13 @@ func UpdateProfile(w http.ResponseWriter, r *http.Request) {
 
 }
 
-//AddProfileEducation ...
+// profile creation
 
+// AddProfileExperience ...
 func AddProfileExperience(w http.ResponseWriter, r *http.Request) {
-	var experience model.UserExperience
+	var personalProfle model.PersonalProfile
 	body, _ := ioutil.ReadAll(r.Body)
-	err := json.Unmarshal(body, &experience)
+	err := json.Unmarshal(body, &personalProfle)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -236,7 +210,7 @@ func AddProfileExperience(w http.ResponseWriter, r *http.Request) {
 	}
 	col := conn.Collection("userProfiles")
 	if token.Valid {
-		cursor, err := col.InsertOne(context.TODO(), experience)
+		cursor, err := col.InsertOne(context.TODO(), personalProfle)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -244,6 +218,7 @@ func AddProfileExperience(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// AddProfileEducation ...
 func AddProfileEducation(w http.ResponseWriter, r *http.Request) {
 	var education model.ProfileEducation
 	body, _ := ioutil.ReadAll(r.Body)

@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { saveJob, rejectJob, applyJob } from '../../actions/jobs'; 
+import { saveJob, rejectJob, applyJob, getMatchPercent } from '../../actions/jobs'; 
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
-const JobItem = ({ item, item:{jobType}, auth: {user}, saveJob, rejectJob, applyJob }) => {
+const JobItem = ({ item, item:{jobType}, auth: {user}, saveJob, rejectJob, applyJob, getMatchPercent }) => {
   const [modal, setModal] = useState(false);
-  const toggle = () => setModal(!modal);
+  const toggle = async e => {
+    e.preventDefault();
+    setModal(!modal)
+    getMatchPercent({item, user})
+  };
   const handlesave = async e => {
     e.preventDefault();
     saveJob({item, user});
@@ -37,7 +41,7 @@ if(user === null) {
         <p>jd - { item.jobdescription }</p>
         <button type="button" className="btn btn-primary my-1" onClick={e=> handlesave(e)}>Save</button>
         <button className="btn btn-primary my-1" onClick={e=> handleReject(e)}>Reject</button>
-        <button className="btn btn-primary my-1" onClick={ toggle }>View JD</button>
+        <button className="btn btn-primary my-1" onClick={e => toggle(e) }>View JD</button>
       </div>
       {item.status === 'applied' &&
       <div className="docsRequired">
@@ -85,10 +89,12 @@ if(user === null) {
 JobItem.propTypes ={
 saveJob: PropTypes.func.isRequired,
 rejectJob: PropTypes.func.isRequired,
+getMatchPercent:PropTypes.func.isRequired,
+applyJob:PropTypes.func.isRequired,
 auth: PropTypes.object.isRequired,
 }
 const mapStateToProps = state => ({
   auth: state.auth
 })
 
-export default connect(mapStateToProps, {saveJob, rejectJob, applyJob})(JobItem);
+export default connect(mapStateToProps, {saveJob, rejectJob, applyJob, getMatchPercent})(JobItem);
