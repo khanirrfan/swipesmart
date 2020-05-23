@@ -23,7 +23,6 @@ import CreateJobs from '../jobs/createJobs';
 import { connect } from 'react-redux';
 
 const Routes = ({auth:{user}}) => {
-  console.log('user:', user);
   return (
     <section className='container'>
       <Alert />
@@ -41,9 +40,9 @@ const Routes = ({auth:{user}}) => {
         <PrivateRoute exact path='/posts' component={Posts} />
         <PrivateRoute exact path='/posts/:id' component={Post} />
         <PrivateRoute exact path='/jobs' component={Jobs} />
-         <PrivateRoute exact path ='/appliedJobs' component ={ AppliedJobsPage}/>
-        <PrivateRoute exact path ='/rejectedJobs' component = { RejectedJobs} />
-        <PrivateRoute exact path ='/savedJobs' component = { SavedJobs} />
+         <PrivateRoute exact path ='/appliedJobs/:id' component ={ AppliedJobsPage}/>
+        <PrivateRoute exact path ='/rejectedJobs/:id' component = { RejectedJobs} />
+        <PrivateRoute exact path ='/savedJobs/:id' component = { SavedJobs} />
         <PrivateRoute exact path ='/createJobs' component = {CreateJobs} /> 
         <Route component={NotFound} />
         

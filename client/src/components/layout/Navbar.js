@@ -10,15 +10,15 @@ const Navbar = ({ auth: { isAuthenticated, loading, user}, logout }) => {
       <li>
         <Link to='/jobs'>Jobs</Link>
       </li>
-      <li>
-        <Link to='/savedJobs'>Saved Jobs</Link>
-      </li>
-      <li>
-        <Link to='/appliedJobs'>Applied Jobs</Link>
-      </li>
-      <li>
-        <Link to='/rejectedJobs'>Rejected Jobs</Link>
-      </li>
+      { user &&    <li>
+        <Link to={`/savedJobs/${user._id}`}>Saved Jobs</Link>
+      </li>}
+      { user &&   <li>
+        <Link to={`/appliedJobs/${user._id}`}>Applied Jobs</Link>
+      </li>}
+{ user &&     <li>
+        <Link to={`/rejectedJobs/${user._id}`}>Rejected Jobs</Link>
+      </li>}
 
       <li>
         <Link to='/dashboard'>

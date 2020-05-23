@@ -179,6 +179,7 @@ func UpdateJob(w http.ResponseWriter, r *http.Request) {
 func AppliedJobs(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var job model.Getjobs
+	id := mux.Vars(r)["id"]
 	updJob, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(updJob, &job)
 	// currentJobID := job.JobID
@@ -201,22 +202,25 @@ func AppliedJobs(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		id, ok := claims["id"].(string)
-		if !ok {
-			log.Fatal(ok)
-		}
-		userID, err := primitive.ObjectIDFromHex(id)
-		if err != nil {
-			log.Fatal(err)
-		}
-		// err = collection.FindOne(context.TODO(), bson.M{"_id": currentJobID}).Decode(&job)
-		// if err != nil {
-		// 	fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
-		// }
-		newSavedJobs.UserID = userID
-		newSavedJobs.Jobs = job
-		fmt.Println("savedJobs:", newSavedJobs)
+
+	// if  token.Valid {
+	// 	// id, ok := claims["id"].(string)
+	// 	if !ok {
+	// 		log.Fatal(ok)
+	// 	}
+	userID, err := primitive.ObjectIDFromHex(id)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// err = collection.FindOne(context.TODO(), bson.M{"_id": currentJobID}).Decode(&job)
+	// if err != nil {
+	// 	fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
+	// }
+	newSavedJobs.UserID = userID
+	newSavedJobs.Jobs = job
+
+	fmt.Println("savedJobs:", newSavedJobs)
+	if token.Valid {
 		cursor, err := saveCollection.InsertOne(context.TODO(), newSavedJobs)
 		if err != nil {
 			log.Fatal(err)
@@ -233,6 +237,7 @@ func AppliedJobs(w http.ResponseWriter, r *http.Request) {
 func RejectedJobs(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var job model.Getjobs
+	id := mux.Vars(r)["id"]
 	updJob, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(updJob, &job)
 	// currentJobID := job.JobID
@@ -255,22 +260,24 @@ func RejectedJobs(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		id, ok := claims["id"].(string)
-		if !ok {
-			log.Fatal(ok)
-		}
-		userID, err := primitive.ObjectIDFromHex(id)
-		if err != nil {
-			log.Fatal(err)
-		}
-		// err = collection.FindOne(context.TODO(), bson.M{"_id": currentJobID}).Decode(&job)
-		// if err != nil {
-		// 	fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
-		// }
-		newSavedJobs.UserID = userID
-		newSavedJobs.Jobs = job
-		fmt.Println("savedJobs:", newSavedJobs)
+
+	// id, ok := claims["id"].(string)
+	// if !ok {
+	// 	log.Fatal(ok)
+	// }
+
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// err = collection.FindOne(context.TODO(), bson.M{"_id": currentJobID}).Decode(&job)
+	// if err != nil {
+	// 	fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
+	// }
+	userID, err := primitive.ObjectIDFromHex(id)
+	newSavedJobs.UserID = userID
+	newSavedJobs.Jobs = job
+	fmt.Println("savedJobs:", newSavedJobs)
+	if token.Valid {
 		cursor, err := saveCollection.InsertOne(context.TODO(), newSavedJobs)
 		if err != nil {
 			log.Fatal(err)
@@ -287,6 +294,7 @@ func RejectedJobs(w http.ResponseWriter, r *http.Request) {
 func SaveJobs(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var job model.Getjobs
+	id := mux.Vars(r)["id"]
 	updJob, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(updJob, &job)
 	// currentJobID := job.JobID
@@ -309,22 +317,24 @@ func SaveJobs(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		id, ok := claims["id"].(string)
-		if !ok {
-			log.Fatal(ok)
-		}
-		userID, err := primitive.ObjectIDFromHex(id)
-		if err != nil {
-			log.Fatal(err)
-		}
-		// err = collection.FindOne(context.TODO(), bson.M{"_id": currentJobID}).Decode(&job)
-		// if err != nil {
-		// 	fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
-		// }
-		newSavedJobs.UserID = userID
-		newSavedJobs.Jobs = job
-		fmt.Println("savedJobs:", newSavedJobs)
+
+	// id, ok := claims["id"].(string)
+	// if !ok {
+	// 	log.Fatal(ok)
+	// }
+	// userID, err := primitive.ObjectIDFromHex(id)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// // err = collection.FindOne(context.TODO(), bson.M{"_id": currentJobID}).Decode(&job)
+	// // if err != nil {
+	// // 	fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
+	// // }
+	userID, err := primitive.ObjectIDFromHex(id)
+	newSavedJobs.UserID = userID
+	newSavedJobs.Jobs = job
+	fmt.Println("savedJobs:", newSavedJobs)
+	if token.Valid {
 		cursor, err := saveCollection.InsertOne(context.TODO(), newSavedJobs)
 		if err != nil {
 			log.Fatal(err)
@@ -341,6 +351,8 @@ func SaveJobs(w http.ResponseWriter, r *http.Request) {
 func GetAppliedJobs(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-ype", "application/json")
 	var jobs []model.SavedJobs
+	var response model.ResponseResult
+	id := mux.Vars(r)["id"]
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -351,35 +363,50 @@ func GetAppliedJobs(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println("token:", token)
 	dbConnection, err := db.GetDBCollection()
 	collection := dbConnection.Collection("appliedJobs")
 	if err != nil {
 		log.Fatal(err)
 	}
-	cursor, err := collection.Find(context.Background(), bson.M{})
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer cursor.Close(context.Background())
-	for cursor.Next(context.Background()) {
-		if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-			var job model.SavedJobs
-			cursor.Decode(&job)
-			jobs = append(jobs, job)
+	if token.Valid {
+		userID, err := primitive.ObjectIDFromHex(id)
+		fmt.Println("user id:", userID)
+		// batch size can be used for pagination in future
+		opts := options.Find()
+		filter := bson.D{{"_uid", userID}}
+		// update := bson.D{{"$set", &job}}
+		cursor, err := collection.Find(context.Background(), filter, opts)
+		if err != nil {
+			fmt.Println("3")
+			log.Fatal(err)
 		}
+		defer cursor.Close(context.Background())
+		for cursor.Next(context.Background()) {
+			if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+				var job model.SavedJobs
+				cursor.Decode(&job)
+				jobs = append(jobs, job)
+			}
+		}
+		if err := cursor.Err(); err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(`{"message":"` + err.Error() + `"}`))
+			return
+		}
+		json.NewEncoder(w).Encode(jobs)
+	} else {
+		response.Error = err.Error()
+		json.NewEncoder(w).Encode(response)
 	}
-	if err := cursor.Err(); err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(`{"message":"` + err.Error() + `"}`))
-		return
-	}
-	json.NewEncoder(w).Encode(jobs)
 }
 
 // GetSavedJobs ...
 func GetSavedJobs(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-ype", "application/json")
 	var jobs []model.SavedJobs
+	var response model.ResponseResult
+	id := mux.Vars(r)["id"]
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -395,30 +422,45 @@ func GetSavedJobs(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	cursor, err := collection.Find(context.Background(), bson.M{})
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer cursor.Close(context.Background())
-	for cursor.Next(context.Background()) {
-		if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-			var job model.SavedJobs
-			cursor.Decode(&job)
-			jobs = append(jobs, job)
+	if token.Valid {
+		userID, err := primitive.ObjectIDFromHex(id)
+		fmt.Println("user id:", userID)
+		// batch size can be used for pagination in future
+		opts := options.Find()
+		filter := bson.D{{"_uid", userID}}
+		// update := bson.D{{"$set", &job}}
+		cursor, err := collection.Find(context.Background(), filter, opts)
+		if err != nil {
+			fmt.Println("3")
+			log.Fatal(err)
 		}
+
+		defer cursor.Close(context.Background())
+		for cursor.Next(context.Background()) {
+			if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+				var job model.SavedJobs
+				cursor.Decode(&job)
+				jobs = append(jobs, job)
+			}
+		}
+		if err := cursor.Err(); err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(`{"message":"` + err.Error() + `"}`))
+			return
+		}
+		json.NewEncoder(w).Encode(jobs)
+	} else {
+		response.Error = err.Error()
+		json.NewEncoder(w).Encode(response)
 	}
-	if err := cursor.Err(); err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(`{"message":"` + err.Error() + `"}`))
-		return
-	}
-	json.NewEncoder(w).Encode(jobs)
 }
 
 // GetRejectedJobs ...
 func GetRejectedJobs(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-ype", "application/json")
 	var jobs []model.SavedJobs
+	var response model.ResponseResult
+	id := mux.Vars(r)["id"]
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -434,24 +476,37 @@ func GetRejectedJobs(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	cursor, err := collection.Find(context.Background(), bson.M{})
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer cursor.Close(context.Background())
-	for cursor.Next(context.Background()) {
-		if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-			var job model.SavedJobs
-			cursor.Decode(&job)
-			jobs = append(jobs, job)
+	if token.Valid {
+		userID, err := primitive.ObjectIDFromHex(id)
+		fmt.Println("user id:", userID)
+		// batch size can be used for pagination in future
+		opts := options.Find()
+		filter := bson.D{{"_uid", userID}}
+		// update := bson.D{{"$set", &job}}
+		cursor, err := collection.Find(context.Background(), filter, opts)
+		if err != nil {
+			fmt.Println("3")
+			log.Fatal(err)
 		}
+		defer cursor.Close(context.Background())
+		for cursor.Next(context.Background()) {
+			if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+				var job model.SavedJobs
+				cursor.Decode(&job)
+				jobs = append(jobs, job)
+			}
+		}
+		if err := cursor.Err(); err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(`{"message":"` + err.Error() + `"}`))
+			return
+		}
+		json.NewEncoder(w).Encode(jobs)
+	} else {
+		response.Error = err.Error()
+		json.NewEncoder(w).Encode(response)
 	}
-	if err := cursor.Err(); err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(`{"message":"` + err.Error() + `"}`))
-		return
-	}
-	json.NewEncoder(w).Encode(jobs)
+
 }
 
 // FilterJobs ...

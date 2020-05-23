@@ -35,6 +35,6 @@ export const ADD_JOB = 'ADD_JOB';
 export const GET_JOBS = 'GET_JOBS';
 
 export const SAVED_JOBS = 'SAVED_JOBS';
-// export const GET_APPLIED_JOBS = 'GET_APPLIED_JOBS';
-// export const GET_REJECTED_JOBS = 'GET_REJECTED_JOBS'
+export const MATCH_PERCENT = 'MATCH_PERCENT';
+export const MATCH_ERROR = 'MATCH_ERROR'
 export const JOB_ERROR ='JOB_ERROR';

@@ -25,13 +25,13 @@ func main() {
 	r.HandleFunc("/delete-job/{id}", controller.DeleteJobByID).Methods("DELETE")
 	r.HandleFunc("/update-job/{id}", controller.UpdateJob).Methods("PUT")
 	// applied, saved, rejected
-	r.HandleFunc("/savejob", controller.SaveJobs).Methods("POST")
-	r.HandleFunc("/rejectjob", controller.RejectedJobs).Methods("POST")
-	r.HandleFunc("/appliedjob", controller.AppliedJobs).Methods("POST")
+	r.HandleFunc("/savejob/{id}", controller.SaveJobs).Methods("POST")
+	r.HandleFunc("/rejectjob/{id}", controller.RejectedJobs).Methods("POST")
+	r.HandleFunc("/appliedjob/{id}", controller.AppliedJobs).Methods("POST")
 	// get applied, saved, rejected jobs
-	r.HandleFunc("/getsavedjobs", controller.GetSavedJobs).Methods("GET")
-	r.HandleFunc("/getappliedjobs", controller.GetAppliedJobs).Methods("GET")
-	r.HandleFunc("/getrejectedjobs", controller.GetRejectedJobs).Methods("GET")
+	r.HandleFunc("/getsavedjobs/{id}", controller.GetSavedJobs).Methods("GET")
+	r.HandleFunc("/getappliedjobs/{id}", controller.GetAppliedJobs).Methods("GET")
+	r.HandleFunc("/getrejectedjobs/{id}", controller.GetRejectedJobs).Methods("GET")
 	// filterjobs
 	r.HandleFunc("/filterjobs", controller.FilterJobs).Methods("POST")
 	// upload files
@@ -39,7 +39,7 @@ func main() {
 	r.HandleFunc("/fetchFiles", controller.FetchCVFiles).Methods("GET")
 	// r.HandleFunc("/download-files", controller.DownloadFile).Methods("GET")
 	// matchPercent
-	// r.HandleFunc("/matchPercent", controller.MatchPercent).Methods("GET")
+	r.HandleFunc("/matchPercent/{userId}/{jobId}", controller.MatchPercent).Methods("GET")
 	// add/edit profile experience / education
 	r.HandleFunc("/experience", controller.AddProfileExperience).Methods("POST")
 	r.HandleFunc("/education", controller.AddProfileEducation).Methods("POST")

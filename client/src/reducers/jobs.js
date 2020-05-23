@@ -4,7 +4,9 @@ import {
 	APPLIED_JOB,
 	REJECTED_JOB,
 	SAVED_JOBS,
-	ADD_JOB
+	ADD_JOB,
+	MATCH_PERCENT,
+	MATCH_ERROR
 	// CLEAR_PROFILE,
 	// UPDATE_PROFILE,
 	// GET_PROFILES,
@@ -16,7 +18,7 @@ const initialState = {
 	jobsApplied: null,
 	jobsRejected:null,
 	jobsSaved:null,
-
+	matchPercent: null,
 	jobsList: [],
 	repos: [],
 	loading: true,
@@ -41,6 +43,7 @@ export default function(state = initialState, action) {
 				loading: false
 			};
 		case JOB_ERROR:
+		case MATCH_ERROR:	
 			return {
 				...state,
 				error: payload,
@@ -66,6 +69,12 @@ export default function(state = initialState, action) {
 				repos: payload,
 				loading: false
 			};
+		case MATCH_PERCENT:
+			return {
+				...state,
+				matchPercent: payload,
+				loading: false
+			}	
 		default:
 			return state;
 	}

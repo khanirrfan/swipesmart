@@ -5,10 +5,11 @@ import  JobItem  from './jobItem';
 import Spinner from '../layout/Spinner';
 import { getRejectedJobs} from '../../actions/jobs';
 
-const RejectedJobs = ({getRejectedJobs, jobs:{jobsRejected, loading} }) => {
+const RejectedJobs = ({getRejectedJobs, jobs:{jobsRejected, loading}, match}) => {
+  console.log(match)
     useEffect(() => {
-        getRejectedJobs();
-    }, [getRejectedJobs]);
+        getRejectedJobs(match.params.id);
+    }, [getRejectedJobs, match.params.id]);
     return (
         <div>
         <Fragment>
@@ -39,11 +40,13 @@ const RejectedJobs = ({getRejectedJobs, jobs:{jobsRejected, loading} }) => {
 
 RejectedJobs.propTypes = {
     getRejectedJobs: PropTypes.func.isRequired,
-    jobs: PropTypes.object.isRequired
+    jobs: PropTypes.object.isRequired,
+    // auth: PropTypes.object.isRequired
   };
   
   const mapStateToProps = state => ({
-    jobs: state.jobs
+    jobs: state.jobs,
+    // auth: state.auth
   });
 
 export default  connect(mapStateToProps, {getRejectedJobs})(RejectedJobs)
