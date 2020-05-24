@@ -19,13 +19,16 @@ const Navbar = ({ auth: { isAuthenticated, loading, user}, logout }) => {
 { user &&     <li>
         <Link to={`/rejectedJobs/${user._id}`}>Rejected Jobs</Link>
       </li>}
+{
+  user && 
 
       <li>
-        <Link to='/dashboard'>
+        <Link to={`/getProfileByID/${user._id}`}>
           <i className='fas fa-user' />{ ' ' }
           <span className='hide-sm'>Account</span>
         </Link>
       </li>
+}
       <li>
         <Link to="/" onClick={ logout } >
           <i className='fas fa-sign-out-alt' />{ ' ' }

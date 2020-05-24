@@ -17,7 +17,7 @@ func main() {
 	// user profile
 	r.HandleFunc("/profile", controller.ProfileHandler).Methods("GET")
 	r.HandleFunc("/profiles", controller.GetProfiles).Methods("GET")
-	r.HandleFunc("/profile/{id}", controller.GetProfileByID).Methods("GET")
+	r.HandleFunc("/getProfileByID/{id}", controller.GetProfileByID).Methods("GET")
 	r.HandleFunc("/update-profile/{id}", controller.UpdateProfile).Methods("POST")
 
 	// jobs
@@ -47,7 +47,7 @@ func main() {
 	r.HandleFunc("/matchPercent/{userId}/{jobId}", controller.MatchPercent).Methods("GET")
 
 	// add/edit profile experience / education
-	r.HandleFunc("/create-profile", controller.AddProfileDetails).Methods("POST")
+	r.HandleFunc("/create-profile", controller.AddProfileDetails).Methods("PUT")
 	r.HandleFunc("/profile/experience", controller.AddProfileExperience).Methods("POST")
 	r.HandleFunc("/profile/education", controller.AddProfileEducation).Methods("POST")
 

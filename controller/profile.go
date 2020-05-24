@@ -201,7 +201,7 @@ func AddProfileDetails(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	col := conn.Collection("users")
+	col := conn.Collection("user")
 	id := "5e9b39f107d1e9d3e8a91411"
 	userID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {

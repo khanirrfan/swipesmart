@@ -72,9 +72,12 @@ type UserExperience struct {
 
 // Experience ...
 type Experience struct {
-	Company  string `json:"company,omitempty" bson:"company,omitempty"`
-	Position string `json:"position,omitempty" bson:"position,omitempty"`
-	Period   string `json:"period,omitempty" bson:"period,omitempty"`
+	Company string `json:"company,omitempty" bson:"company,omitempty"`
+	// Position    string `json:"position,omitempty" bson:"position,omitempty"`
+	Location    string `json:"location,omitempty" bson:"location,omitempty"`
+	Title       string `json:"title,omitempty" bson:"title,omitempty"`
+	Description string `json:"description,omitempty" bson:"description,omitempty"`
+	Period      string `json:"period,omitempty" bson:"period,omitempty"`
 }
 
 // Search -
