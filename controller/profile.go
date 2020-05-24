@@ -18,7 +18,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// ProfileHandler ...
+// ProfileHandler ... calls when application loads first time or every time
 func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	tokenString := r.Header.Get("Authorization")
@@ -63,7 +63,7 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// GetProfiles ...
+// GetProfiles ... get all profiles
 func GetProfiles(w http.ResponseWriter, r *http.Request) {
 	var result []model.Getuser
 	w.Header().Set("Content-Type", "application/json")
@@ -99,7 +99,7 @@ func GetProfiles(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(result)
 }
 
-// GetProfileByID ...
+// GetProfileByID ... get profile by id
 func GetProfileByID(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
@@ -179,7 +179,7 @@ func UpdateProfile(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// AddProfileDetails ...
+// AddProfileDetails ... when user will create profile first time in user collection by ID it will get updated
 func AddProfileDetails(w http.ResponseWriter, r *http.Request) {
 	var personalProfle model.PersonalProfile
 	body, _ := ioutil.ReadAll(r.Body)
@@ -220,7 +220,7 @@ func AddProfileDetails(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// AddProfileExperience ...
+// AddProfileExperience ... update profile experience for existing profile
 func AddProfileExperience(w http.ResponseWriter, r *http.Request) {
 	var experience model.UserExperience
 	body, _ := ioutil.ReadAll(r.Body)
@@ -252,7 +252,7 @@ func AddProfileExperience(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// AddProfileEducation ...
+// AddProfileEducation ... update profile education for existing profile
 func AddProfileEducation(w http.ResponseWriter, r *http.Request) {
 	var education model.ProfileEducation
 	body, _ := ioutil.ReadAll(r.Body)

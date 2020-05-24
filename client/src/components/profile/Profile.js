@@ -42,6 +42,7 @@ const Profile = ({
           <div className='profile-grid my-1'>
             <ProfileTop profile={profile} />
             <ProfileAbout profile={profile} />
+            
             <div className='profile-exp bg-white p-2'>
               <h2 className='text-primary'>Experience</h2>
               {profile.experience.length > 0 ? (
@@ -59,17 +60,47 @@ const Profile = ({
             </div>
 
             <div className='profile-edu bg-white p-2'>
-              <h2 className='text-primary'>Education</h2>
-              {profile.education !== null ? (
+              <h2 className='text-primary'>Bachelors</h2>
+              {profile.education.bachelors.length > 0 ? (
                 <Fragment>
-                    <ProfileEducation
-                      education={profile.education}
-                    />
+                { profile.education.bachelors.map(item => (
+                  <ProfileEducation
+                  education={item}
+                />
+                ))}
+                  
                 </Fragment>
               ) : (
                 <h4>No education credentials</h4>
               )}
-            </div>
+
+            <h2 className='text-primary'>Masters</h2>
+            {profile.education.masters.length > 0 ? (
+              <Fragment>
+              { profile.education.masters.map(item => (
+                <ProfileEducation
+                education={item}
+              />
+              ))}
+                
+              </Fragment>
+            ) : (
+              <h4>No education credentials</h4>
+            )}
+          <h2 className='text-primary'>Doctorate</h2>
+          {profile.education.doctorate.length > 0 ? (
+            <Fragment>
+            { profile.education.doctorate.map(item => (
+              <ProfileEducation
+              education={item}
+            />
+            ))}
+              
+            </Fragment>
+          ) : (
+            <h4>No education credentials</h4>
+          )}
+        </div>
 
             {profile.githubusername && (
               <ProfileGithub username={profile.githubusername} />

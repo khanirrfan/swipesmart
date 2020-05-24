@@ -4,24 +4,18 @@ import Moment from 'react-moment';
 import moment from 'moment';
 
 const ProfileEducation = ({
-  education: { bachelors, masters, doctorate}
+  education: { stream, collegename, graduationyear, to, from, current}
 }) => (
   <div>
-  
-   { /*<h3 className="text-dark">{school}</h3>
+    <h3 className="text-dark">{collegename}</h3>
     <p>
       <Moment format="YYYY/MM/DD">{moment.utc(from)}</Moment> -{' '}
       {!to ? ' Now' : <Moment format="YYYY/MM/DD">{moment.utc(to)}</Moment>}
     </p>
+  
     <p>
-      <strong>Degree: </strong> {degree}
+      <strong>Field Of Study: </strong> {stream}
     </p>
-    <p>
-      <strong>Field Of Study: </strong> {fieldofstudy}
-    </p>
-    <p>
-      <strong>Description: </strong> {description}
-</p>*/}
   </div>
 );
 

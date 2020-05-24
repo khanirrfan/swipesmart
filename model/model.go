@@ -26,8 +26,8 @@ type Getuser struct {
 	Company    string             `json:"company,omitempty" bson:"company,omitempty"`
 	Location   string             `json:"location,omitempty" bson:"location,omitempty"`
 	Skills     []string           `json:"skills,omitempty" bson:"skills,omitempty"`
-	Portfolio  string             `json:"portfolio,omitempty" bson:"portfolio,omitempty"`
-	About      string             `json:"about,omitempty" bson:"about,omitempty"`
+	Portfolio  string             `json:"portfolio,omitempty" bson:"portfolio,omitempty"` //linke social platform like github
+	About      string             `json:"about,omitempty" bson:"about,omitempty"`         // about your self objective
 	Experience []*Experience      `json:"experience,omitempty" bson:"experience,omitempty"`
 	Education  Education          `json:"education,omitempty" bson:"education,omitempty"`
 }
@@ -62,7 +62,7 @@ type PersonalProfile struct {
 
 // ProfileEducation ...
 type ProfileEducation struct {
-	Education Education `json:"education,omitempty" bson:"education,omitempty"`
+	Education []*Education `json:"education,omitempty" bson:"education,omitempty"`
 }
 
 // UserExperience ...
