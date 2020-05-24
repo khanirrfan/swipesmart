@@ -24,14 +24,14 @@ type Getuser struct {
 	LastName   string             `json:"lastname,omitempty" bson:"lastname,omitempty"`
 	Email      string             `json:"email,omitempty" bson:"email,omitempty"`
 	Type       string             `json:"type,omitempty" bson:"type,omitempty"`
-	Role       string             `json:"role" bson:"role"`
-	Company    string             `json:"company" bson:"company"`
-	Location   string             `json:"location" bson:"location"`
-	Skills     []string           `json:"skills" bson:"skills"`
+	Role       string             `json:"role,omitempty" bson:"role,omitempty"`
+	Company    string             `json:"company,omitempty" bson:"company,omitempty"`
+	Location   string             `json:"location,omitempty" bson:"location,omitempty"`
+	Skills     []string           `json:"skills,omitempty" bson:"skills,omitempty"`
 	Portfolio  string             `json:"portfolio,omitempty" bson:"portfolio,omitempty"` //linke social platform like github
-	About      string             `json:"about" bson:"about"`                             // about your self objective
-	Experience []*Experience      `json:"experience" bson:"experience"`
-	Education  Education          `json:"education" bson:"education"`
+	About      string             `json:"about,omitempty" bson:"about,omitempty"`         // about your self objective
+	Experience []*Experience      `json:"experience,omitempty" bson:"experience,omitempty"`
+	Education  Education          `json:"education,omitempty" bson:"education,omitempty"`
 }
 
 // ResponseResult ...
