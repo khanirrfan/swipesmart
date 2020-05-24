@@ -1,6 +1,8 @@
 package model
 
 import (
+	"time"
+
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -22,14 +24,14 @@ type Getuser struct {
 	LastName   string             `json:"lastname,omitempty" bson:"lastname,omitempty"`
 	Email      string             `json:"email,omitempty" bson:"email,omitempty"`
 	Type       string             `json:"type,omitempty" bson:"type,omitempty"`
-	Role       string             `json:"role,omitempty" bson:"role,omitempty"`
-	Company    string             `json:"company,omitempty" bson:"company,omitempty"`
-	Location   string             `json:"location,omitempty" bson:"location,omitempty"`
-	Skills     []string           `json:"skills,omitempty" bson:"skills,omitempty"`
+	Role       string             `json:"role" bson:"role"`
+	Company    string             `json:"company" bson:"company"`
+	Location   string             `json:"location" bson:"location"`
+	Skills     []string           `json:"skills" bson:"skills"`
 	Portfolio  string             `json:"portfolio,omitempty" bson:"portfolio,omitempty"` //linke social platform like github
-	About      string             `json:"about,omitempty" bson:"about,omitempty"`         // about your self objective
-	Experience []*Experience      `json:"experience,omitempty" bson:"experience,omitempty"`
-	Education  Education          `json:"education,omitempty" bson:"education,omitempty"`
+	About      string             `json:"about" bson:"about"`                             // about your self objective
+	Experience []*Experience      `json:"experience" bson:"experience"`
+	Education  Education          `json:"education" bson:"education"`
 }
 
 // ResponseResult ...
@@ -72,12 +74,14 @@ type UserExperience struct {
 
 // Experience ...
 type Experience struct {
-	Company string `json:"company,omitempty" bson:"company,omitempty"`
-	// Position    string `json:"position,omitempty" bson:"position,omitempty"`
-	Location    string `json:"location,omitempty" bson:"location,omitempty"`
-	Title       string `json:"title,omitempty" bson:"title,omitempty"`
-	Description string `json:"description,omitempty" bson:"description,omitempty"`
-	Period      string `json:"period,omitempty" bson:"period,omitempty"`
+	Company     string    `json:"company,omitempty" bson:"company,omitempty"`
+	Location    string    `json:"location,omitempty" bson:"location,omitempty"`
+	Title       string    `json:"title,omitempty" bson:"title,omitempty"`
+	Description string    `json:"description,omitempty" bson:"description,omitempty"`
+	Period      string    `json:"period,omitempty" bson:"period,omitempty"`
+	from        time.Time `json:"from,omitempty" bson:"from,omitempty"`
+	to          time.Time `json:"to,omitempty" bson:"to,omitempty"`
+	current     bool      `json:"current,omitempty" bson:"current,omitempty"`
 }
 
 // Search -

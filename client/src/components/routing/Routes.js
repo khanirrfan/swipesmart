@@ -34,9 +34,9 @@ const Routes = ({auth:{user}}) => {
         <Route exact path='/profile/:id' component={Profile} />
         <PrivateRoute exact path='/getProfileByID/:id' component={Profile} />
         <PrivateRoute exact path='/create-profile' component={CreateProfile} />
-        <PrivateRoute exact path='/edit-profile' component={EditProfile} />
-        <PrivateRoute exact path='/add-experience' component={AddExperience} />
-        <PrivateRoute exact path='/add-education' component={AddEducation} />
+        <PrivateRoute exact path='/edit-profile/:id' component={EditProfile} />
+        <PrivateRoute exact path='/add-experience/:id' component={AddExperience} />
+        <PrivateRoute exact path='/add-education/:id' component={AddEducation} />
         <PrivateRoute exact path='/posts' component={Posts} />
         <PrivateRoute exact path='/posts/:id' component={Post} />
         <PrivateRoute exact path='/jobs' component={Jobs} />

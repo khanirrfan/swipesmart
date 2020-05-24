@@ -1,10 +1,10 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addExperience } from '../../actions/profile';
 
-const AddExperience = ({ addExperience, history }) => {
+const AddExperience = ({auth:{user}, addExperience, history, match }) => {
   const [formData, setFormData] = useState({
     company: '',
     title: '',
@@ -21,10 +21,16 @@ const AddExperience = ({ addExperience, history }) => {
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+useEffect(() => {
 
+},[ addExperience, match.params.id])
+const handleAddExperience = async e => {
+  e.preventDefault();
+addExperience(formData, history, user)
+}
   return (
     <Fragment>
-      <h1 className='large text-primary'>Add An Experience</h1>
+      <h1 className='large text-primary'>Add/Update An Experience</h1>
       <p className='lead'>
         <i className='fas fa-code-branch' /> Add any developer/programming positions
         that you have had in the past
@@ -32,10 +38,7 @@ const AddExperience = ({ addExperience, history }) => {
       <small>* = required field</small>
       <form
         className='form'
-        onSubmit={e => {
-          e.preventDefault();
-          addExperience(formData, history);
-        }}
+        onSubmit={e => handleAddExperience(e) }
       >
         <div className='form-group'>
           <input
@@ -120,10 +123,14 @@ const AddExperience = ({ addExperience, history }) => {
 };
 
 AddExperience.propTypes = {
-  addExperience: PropTypes.func.isRequired
+  addExperience: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
+const mapStateToProps = state => ({
+  auth:state.auth
+})
 export default connect(
-  null,
+  mapStateToProps,
   { addExperience }
 )(withRouter(AddExperience));

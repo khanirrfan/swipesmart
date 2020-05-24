@@ -8,10 +8,10 @@ const initialState = {
   company: '',
   website: '',
   location: '',
-  status: '',
+  role: '',
   skills: '',
-  githubusername: '',
-  bio: '',
+  portfolio: '',
+  about: '',
   twitter: '',
   facebook: '',
   linkedin: '',
@@ -23,6 +23,7 @@ const EditProfile = ({
   profile: { profile, loading },
   createProfile,
   getCurrentProfile,
+  match,
   history
 }) => {
   const [formData, setFormData] = useState(initialState);
@@ -41,16 +42,16 @@ const EditProfile = ({
       }
       setFormData(profileData);
     }
-  }, [loading, getCurrentProfile, profile]);
+  }, [loading, getCurrentProfile, createProfile,match.params.id, profile]);
 
   const {
     company,
     website,
     location,
-    status,
+    role,
     skills,
-    githubusername,
-    bio,
+    portfolio,
+    about,
     twitter,
     facebook,
     linkedin,
@@ -75,8 +76,8 @@ const EditProfile = ({
       <small>* = required field</small>
       <form className="form" onSubmit={onSubmit}>
         <div className="form-group">
-          <select name="status" value={status} onChange={onChange}>
-            <option>* Select Professional Status</option>
+          <select name="role" value={role} onChange={onChange}>
+            <option>* Select Professional role</option>
             <option value="Developer">Developer</option>
             <option value="Junior Developer">Junior Developer</option>
             <option value="Senior Developer">Senior Developer</option>
@@ -141,9 +142,9 @@ const EditProfile = ({
         <div className="form-group">
           <input
             type="text"
-            placeholder="Github Username"
-            name="githubusername"
-            value={githubusername}
+            placeholder="portfolio"
+            name="portfolio"
+            value={portfolio}
             onChange={onChange}
           />
           <small className="form-text">
@@ -153,9 +154,9 @@ const EditProfile = ({
         </div>
         <div className="form-group">
           <textarea
-            placeholder="A short bio of yourself"
-            name="bio"
-            value={bio}
+            placeholder="A short about of yourself"
+            name="about"
+            value={about}
             onChange={onChange}
           />
           <small className="form-text">Tell us a little about yourself</small>
@@ -243,11 +244,13 @@ const EditProfile = ({
 EditProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  // auth:PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile
+  profile: state.profile,
+  // auth: state.auth
 });
 
 export default connect(mapStateToProps, { createProfile, getCurrentProfile })(

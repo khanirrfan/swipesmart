@@ -202,7 +202,8 @@ func AddProfileDetails(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	col := conn.Collection("user")
-	id := "5e9b39f107d1e9d3e8a91411"
+	id := mux.Vars(r)["id"]
+	fmt.Println("id:", id)
 	userID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		log.Fatal(err)
@@ -228,6 +229,7 @@ func AddProfileExperience(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	id := mux.Vars(r)["id"]
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -242,13 +244,22 @@ func AddProfileExperience(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	col := conn.Collection("userProfiles")
+	col := conn.Collection("user")
+	fmt.Println("id:", id)
+	userID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		log.Fatal(err)
+	}
+	opts := options.FindOneAndUpdate().SetUpsert(true)
+	filter := bson.D{{"_id", userID}}
+	update := bson.D{{"$set", experience}}
+	var profileExperience model.UserExperience
 	if token.Valid {
-		cursor, err := col.InsertOne(context.TODO(), experience)
+		err = col.FindOneAndUpdate(context.TODO(), filter, update, opts).Decode(&profileExperience)
 		if err != nil {
 			log.Fatal(err)
 		}
-		json.NewEncoder(w).Encode(cursor)
+		json.NewEncoder(w).Encode(profileExperience)
 	}
 }
 
@@ -260,6 +271,7 @@ func AddProfileEducation(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	id := mux.Vars(r)["id"]
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -274,12 +286,21 @@ func AddProfileEducation(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	col := conn.Collection("userProfiles")
+	col := conn.Collection("user")
+	fmt.Println("id:", id)
+	userID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		log.Fatal(err)
+	}
+	opts := options.FindOneAndUpdate().SetUpsert(true)
+	filter := bson.D{{"_id", userID}}
+	update := bson.D{{"$set", education}}
+	var profileEducation model.ProfileEducation
 	if token.Valid {
-		cursor, err := col.InsertOne(context.TODO(), &education)
+		err = col.FindOneAndUpdate(context.TODO(), filter, update, opts).Decode(&profileEducation)
 		if err != nil {
 			log.Fatal(err)
 		}
-		json.NewEncoder(w).Encode(cursor)
+		json.NewEncoder(w).Encode(profileEducation)
 	}
 }
