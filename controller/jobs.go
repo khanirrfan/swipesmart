@@ -373,10 +373,10 @@ func GetAppliedJobs(w http.ResponseWriter, r *http.Request) {
 		userID, err := primitive.ObjectIDFromHex(id)
 		fmt.Println("user id:", userID)
 		// batch size can be used for pagination in future
-		opts := options.Find()
+		// opts := options.Find()
 		filter := bson.D{{"_uid", userID}}
 		// update := bson.D{{"$set", &job}}
-		cursor, err := collection.Find(context.Background(), filter, opts)
+		cursor, err := collection.Find(context.Background(), filter)
 		if err != nil {
 			fmt.Println("3")
 			log.Fatal(err)

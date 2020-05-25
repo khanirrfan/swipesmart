@@ -48,10 +48,8 @@ func MatchPercent(w http.ResponseWriter, r *http.Request) {
 		wg.Add(2) // number of go routines runnig
 		go getJobByID(jid, oneJob)
 		go getUserByID(uid, oneUser)
-		// var params model.Getjobs
 		jobParams := <-oneJob
 		userParams := <-oneUser
-		// json.Unmarshal(<-oneJob, &params)
 		fmt.Println("found document", userParams.Skills)
 		fmt.Println("found document", jobParams.Skills)
 		wg.Wait()
