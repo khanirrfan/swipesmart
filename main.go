@@ -51,6 +51,14 @@ func main() {
 	r.HandleFunc("/profile/experience/{id}", controller.AddProfileExperience).Methods("PUT")
 	r.HandleFunc("/profile/education/{id}", controller.AddProfileEducation).Methods("PUT")
 
+	// success story apis
+
+	r.HandleFunc("/post/create/{id}", controller.CreatePost).Methods("POST")
+	r.HandleFunc("/posts/get", controller.GetPost).Methods("GEt")
+	r.HandleFunc("/post/edit", controller.EditPost).Methods("PUT")
+	r.HandleFunc("/post/delete", controller.DeletePost).Methods("POST")
+	// r.HandleFunc("/posts/")
+
 	r.HandleFunc("/protected", controller.TokenVerifyMiddleWare(controller.ProtectedEndPoint))
 	log.Fatal(http.ListenAndServe(":8080", r))
 

@@ -50,10 +50,21 @@ func MatchPercent(w http.ResponseWriter, r *http.Request) {
 		go getUserByID(uid, oneUser)
 		jobParams := <-oneJob
 		userParams := <-oneUser
-		fmt.Println("found document", userParams.Skills)
-		fmt.Println("found document", jobParams.Skills)
 		wg.Wait()
-		json.NewEncoder(w).Encode(jobParams)
+		var count = 0
+		for i := 0; i < len(jobParams.Skills); i++ {
+
+			for j := 0; j < len(userParams.Skills); j++ {
+				if jobParams.Skills[i] == userParams.Skills[j] {
+					count++
+				}
+
+			}
+
+		}
+		jobMatchPercenat := float64(float64(count)/float64(len(jobParams.Skills))) * 100
+		fmt.Println(jobMatchPercenat)
+		json.NewEncoder(w).Encode(jobMatchPercenat)
 	}
 
 }

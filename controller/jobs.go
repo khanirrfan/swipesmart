@@ -38,10 +38,11 @@ func CreateJobs(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	dbConnection, err := db.GetDBCollection()
-	collection := dbConnection.Collection("jobs")
 	if err != nil {
 		log.Fatal(err)
 	}
+	collection := dbConnection.Collection("jobs")
+
 	if token.Valid {
 		cursor, err := collection.InsertOne(context.TODO(), jobs)
 		if err != nil {
