@@ -85,7 +85,6 @@ func EditPost(w http.ResponseWriter, r *http.Request) {
 	var post model.Post
 	editablePost, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(editablePost, &post)
-	fmt.Println(post.UID)
 
 	dbConnection, err := db.GetDBCollection()
 	if err != nil {
@@ -98,8 +97,6 @@ func EditPost(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Updated successfully")
-	fmt.Println(post)
 }
 
 // DeletePost ...
