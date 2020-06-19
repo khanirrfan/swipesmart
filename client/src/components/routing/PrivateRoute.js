@@ -8,9 +8,6 @@ const PrivateRoute = ({
   auth: { isAuthenticated, user, loading },
   ...rest
 }) => {
-  // if (user && user.type==='employe'){
-  // console.log(user.type)
-
   return (
   <Route
     {...rest}
@@ -19,9 +16,6 @@ const PrivateRoute = ({
     }
   />
 );
-// } else {
-//   return null
-// }
 }
 PrivateRoute.propTypes = {
   auth: PropTypes.object.isRequired

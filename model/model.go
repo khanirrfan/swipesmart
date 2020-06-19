@@ -1,6 +1,8 @@
 package model
 
 import (
+	"time"
+
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -26,8 +28,8 @@ type Getuser struct {
 	Company    string             `json:"company,omitempty" bson:"company,omitempty"`
 	Location   string             `json:"location,omitempty" bson:"location,omitempty"`
 	Skills     []string           `json:"skills,omitempty" bson:"skills,omitempty"`
-	Portfolio  string             `json:"portfolio,omitempty" bson:"portfolio,omitempty"`
-	About      string             `json:"about,omitempty" bson:"about,omitempty"`
+	Portfolio  string             `json:"portfolio,omitempty" bson:"portfolio,omitempty"` //linke social platform like github
+	About      string             `json:"about,omitempty" bson:"about,omitempty"`         // about your self objective
 	Experience []*Experience      `json:"experience,omitempty" bson:"experience,omitempty"`
 	Education  Education          `json:"education,omitempty" bson:"education,omitempty"`
 }
@@ -62,7 +64,7 @@ type PersonalProfile struct {
 
 // ProfileEducation ...
 type ProfileEducation struct {
-	Education Education `json:"education,omitempty" bson:"education,omitempty"`
+	Education []*Education `json:"education,omitempty" bson:"education,omitempty"`
 }
 
 // UserExperience ...
@@ -72,9 +74,14 @@ type UserExperience struct {
 
 // Experience ...
 type Experience struct {
-	Company  string `json:"company,omitempty" bson:"company,omitempty"`
-	Position string `json:"position,omitempty" bson:"position,omitempty"`
-	Period   string `json:"period,omitempty" bson:"period,omitempty"`
+	Company     string    `json:"company,omitempty" bson:"company,omitempty"`
+	Location    string    `json:"location,omitempty" bson:"location,omitempty"`
+	Title       string    `json:"title,omitempty" bson:"title,omitempty"`
+	Description string    `json:"description,omitempty" bson:"description,omitempty"`
+	Period      string    `json:"period,omitempty" bson:"period,omitempty"`
+	from        time.Time `json:"from,omitempty" bson:"from,omitempty"`
+	to          time.Time `json:"to,omitempty" bson:"to,omitempty"`
+	current     bool      `json:"current,omitempty" bson:"current,omitempty"`
 }
 
 // Search -

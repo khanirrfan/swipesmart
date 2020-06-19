@@ -8,17 +8,17 @@ import (
 
 // Jobs ...
 type Jobs struct {
-	JobTitle       string    `json:"jobtitle,omitempty" bson:"jobtitle,omitempty"`
-	JobDescription string    `json:"jobdescription,omitempty" bson:"jobdescription,omitempty"`
-	Skills         []string  `json:"skills,omitempty" bson:"skills,omitempty"`
-	Experience     string    `json:"experience,omitempty" bson:"experience,omitempty"`
-	Visa           string    `json:"visa,omitempty" bson:"visa,omitempty"`
-	Salary         string    `json:"salary,omitempty" bson:"salary,omitempty"`
-	Language       []string  `json:"language,omitempty" bson:"language,omitempty"`
-	Education      Education `json:"education,omitempty" bson:"education,omitempty"`
-	Country        string    `json:"country,omitempty" bson:"country,omitempty"`
-	JobCategory    []string  `json:"jobCategory,omitempty" bson:"jobCategory,omitempty"`
-	JobTypes       Fields    `json:"jobtypes,omitempty" bson:"jobtypes,omitempty"`
+	JobTitle       string       `json:"jobtitle,omitempty" bson:"jobtitle,omitempty"`
+	JobDescription string       `json:"jobdescription,omitempty" bson:"jobdescription,omitempty"`
+	Skills         []string     `json:"skills,omitempty" bson:"skills,omitempty"`
+	Experience     string       `json:"experience,omitempty" bson:"experience,omitempty"`
+	Visa           string       `json:"visa,omitempty" bson:"visa,omitempty"`
+	Salary         string       `json:"salary,omitempty" bson:"salary,omitempty"`
+	Language       []string     `json:"language,omitempty" bson:"language,omitempty"`
+	Education      []*Education `json:"education,omitempty" bson:"education,omitempty"`
+	Country        string       `json:"country,omitempty" bson:"country,omitempty"`
+	JobCategory    []string     `json:"jobCategory,omitempty" bson:"jobCategory,omitempty"`
+	JobTypes       Fields       `json:"jobtypes,omitempty" bson:"jobtypes,omitempty"`
 	CreationDate   time.Time
 	Status         string `json:"status,omitempty" bson:"status,omitempty"`
 }

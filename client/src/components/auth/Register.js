@@ -30,7 +30,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 
   if (isAuthenticated) {
     console.log('isAuthenticated:', isAuthenticated);
-    return <Redirect to='/dashboard' />;
+    return <Redirect to='/jobs' />;
   }
 
   return (
@@ -41,7 +41,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
       </p>
       <form className='formContainer form' onSubmit={e => onSubmit(e)}>
       <div className="form-check">
-      <input className="form-check-input" type="checkbox" name="type" id="employer" value="employer" onChange={e => onChange(e)} />
+      <input className="form-check-input" type="checkbox" name="type" id="employer" value="employe" onChange={e => onChange(e)} />
       <label className="form-check-label" htmlFor="employer">
         Default radio
       </label>

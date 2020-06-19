@@ -8,38 +8,46 @@ import ProfileAbout from './ProfileAbout';
 import ProfileExperience from './ProfileExperience';
 import ProfileEducation from './ProfileEducation';
 import ProfileGithub from './ProfileGithub';
-import { getProfileById } from '../../actions/profile';
+import DashboardActions from '../dashboard/DashboardActions';
+import { getProfileByID } from '../../actions/profile';
 
 const Profile = ({
-  getProfileById,
+
   profile: { profile, loading },
-  auth,
-  match
+  auth:{user},
+  match,
+  getProfileByID
 }) => {
-
+  console.log("auth:", user);
+  console.log("profile:", profile);
   useEffect(() => {
-    getProfileById(match.params.id);
-  }, [getProfileById, match.params.id]);
-
+    getProfileByID(match.params.id);
+  }, [getProfileByID, match.params.id]);
+if (user && user.experience === null) {
+  return (
+    <DashboardActions />
+  )
+} else
   return (
     <Fragment>
-      {profile === null || loading ? (
-        <Spinner />
+      {profile === null ? (
+       <p>Please create profile</p>
       ) : (
         <Fragment>
-          <Link to='/profiles' className='btn btn-light'>
+          {/*<Link to='/profiles' className='btn btn-light'>
             Back To Profiles
-          </Link>
-          {auth.isAuthenticated &&
+      </Link>*/}
+          {/*auth.isAuthenticated &&
             auth.loading === false &&
-            auth.user._id === profile.user._id && (
+            auth.user._id === profile._id && (
               <Link to='/edit-profile' className='btn btn-dark'>
                 Edit Profile
               </Link>
-            )}
+            )*/}
           <div className='profile-grid my-1'>
             <ProfileTop profile={profile} />
             <ProfileAbout profile={profile} />
+            
             <div className='profile-exp bg-white p-2'>
               <h2 className='text-primary'>Experience</h2>
               {profile.experience.length > 0 ? (
@@ -57,20 +65,47 @@ const Profile = ({
             </div>
 
             <div className='profile-edu bg-white p-2'>
-              <h2 className='text-primary'>Education</h2>
-              {profile.education.length > 0 ? (
+              <h2 className='text-primary'>Bachelors</h2>
+              {profile.education.bachelors.length > 0 ? (
                 <Fragment>
-                  {profile.education.map(education => (
-                    <ProfileEducation
-                      key={education._id}
-                      education={education}
-                    />
-                  ))}
+                { profile.education.bachelors.map(item => (
+                  <ProfileEducation
+                  education={item}
+                />
+                ))}
+                  
                 </Fragment>
               ) : (
                 <h4>No education credentials</h4>
               )}
-            </div>
+
+            <h2 className='text-primary'>Masters</h2>
+            {profile.education.masters.length > 0 ? (
+              <Fragment>
+              { profile.education.masters.map(item => (
+                <ProfileEducation
+                education={item}
+              />
+              ))}
+                
+              </Fragment>
+            ) : (
+              <h4>No education credentials</h4>
+            )}
+          <h2 className='text-primary'>Doctorate</h2>
+          {profile.education.doctorate.length > 0 ? (
+            <Fragment>
+            { profile.education.doctorate.map(item => (
+              <ProfileEducation
+              education={item}
+            />
+            ))}
+              
+            </Fragment>
+          ) : (
+            <h4>No education credentials</h4>
+          )}
+        </div>
 
             {profile.githubusername && (
               <ProfileGithub username={profile.githubusername} />
@@ -83,7 +118,7 @@ const Profile = ({
 };
 
 Profile.propTypes = {
-  getProfileById: PropTypes.func.isRequired,
+  getProfileByID: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired
 };
@@ -95,5 +130,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getProfileById }
+  { getProfileByID }
 )(Profile);

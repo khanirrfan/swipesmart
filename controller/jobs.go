@@ -38,10 +38,11 @@ func CreateJobs(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	dbConnection, err := db.GetDBCollection()
-	collection := dbConnection.Collection("jobs")
 	if err != nil {
 		log.Fatal(err)
 	}
+	collection := dbConnection.Collection("jobs")
+
 	if token.Valid {
 		cursor, err := collection.InsertOne(context.TODO(), jobs)
 		if err != nil {
@@ -373,10 +374,10 @@ func GetAppliedJobs(w http.ResponseWriter, r *http.Request) {
 		userID, err := primitive.ObjectIDFromHex(id)
 		fmt.Println("user id:", userID)
 		// batch size can be used for pagination in future
-		opts := options.Find()
+		// opts := options.Find()
 		filter := bson.D{{"_uid", userID}}
 		// update := bson.D{{"$set", &job}}
-		cursor, err := collection.Find(context.Background(), filter, opts)
+		cursor, err := collection.Find(context.Background(), filter)
 		if err != nil {
 			fmt.Println("3")
 			log.Fatal(err)

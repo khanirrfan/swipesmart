@@ -17,7 +17,7 @@ func main() {
 	// user profile
 	r.HandleFunc("/profile", controller.ProfileHandler).Methods("GET")
 	r.HandleFunc("/profiles", controller.GetProfiles).Methods("GET")
-	r.HandleFunc("/profile/{id}", controller.GetProfileByID).Methods("GET")
+	r.HandleFunc("/getProfileByID/{id}", controller.GetProfileByID).Methods("GET")
 	r.HandleFunc("/update-profile/{id}", controller.UpdateProfile).Methods("POST")
 
 	// jobs
@@ -47,9 +47,17 @@ func main() {
 	r.HandleFunc("/matchPercent/{userId}/{jobId}", controller.MatchPercent).Methods("GET")
 
 	// add/edit profile experience / education
-	r.HandleFunc("/create-profile", controller.AddProfileDetails).Methods("POST")
-	r.HandleFunc("/profile/experience", controller.AddProfileExperience).Methods("POST")
-	r.HandleFunc("/profile/education", controller.AddProfileEducation).Methods("POST")
+	r.HandleFunc("/create-profile/{id}", controller.AddProfileDetails).Methods("PUT")
+	r.HandleFunc("/profile/experience/{id}", controller.AddProfileExperience).Methods("PUT")
+	r.HandleFunc("/profile/education/{id}", controller.AddProfileEducation).Methods("PUT")
+
+	// success story apis
+
+	r.HandleFunc("/post/create/{id}", controller.CreatePost).Methods("POST")
+	r.HandleFunc("/posts/get", controller.GetPost).Methods("GEt")
+	r.HandleFunc("/post/edit", controller.EditPost).Methods("PUT")
+	r.HandleFunc("/post/delete", controller.DeletePost).Methods("POST")
+	// r.HandleFunc("/posts/")
 
 	r.HandleFunc("/protected", controller.TokenVerifyMiddleWare(controller.ProtectedEndPoint))
 	log.Fatal(http.ListenAndServe(":8080", r))

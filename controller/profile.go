@@ -18,7 +18,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// ProfileHandler ...
+// ProfileHandler ... calls when application loads first time or every time
 func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	tokenString := r.Header.Get("Authorization")
@@ -63,7 +63,7 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// GetProfiles ...
+// GetProfiles ... get all profiles
 func GetProfiles(w http.ResponseWriter, r *http.Request) {
 	var result []model.Getuser
 	w.Header().Set("Content-Type", "application/json")
@@ -99,7 +99,7 @@ func GetProfiles(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(result)
 }
 
-// GetProfileByID ...
+// GetProfileByID ... get profile by id
 func GetProfileByID(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
@@ -179,7 +179,7 @@ func UpdateProfile(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// AddProfileDetails ...
+// AddProfileDetails ... when user will create profile first time in user collection by ID it will get updated
 func AddProfileDetails(w http.ResponseWriter, r *http.Request) {
 	var personalProfle model.PersonalProfile
 	body, _ := ioutil.ReadAll(r.Body)
@@ -201,8 +201,9 @@ func AddProfileDetails(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	col := conn.Collection("users")
-	id := "5e9b39f107d1e9d3e8a91411"
+	col := conn.Collection("user")
+	id := mux.Vars(r)["id"]
+	fmt.Println("id:", id)
 	userID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		log.Fatal(err)
@@ -220,7 +221,7 @@ func AddProfileDetails(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// AddProfileExperience ...
+// AddProfileExperience ... update profile experience for existing profile
 func AddProfileExperience(w http.ResponseWriter, r *http.Request) {
 	var experience model.UserExperience
 	body, _ := ioutil.ReadAll(r.Body)
@@ -228,6 +229,7 @@ func AddProfileExperience(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	id := mux.Vars(r)["id"]
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -242,17 +244,26 @@ func AddProfileExperience(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	col := conn.Collection("userProfiles")
+	col := conn.Collection("user")
+	fmt.Println("id:", id)
+	userID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		log.Fatal(err)
+	}
+	opts := options.FindOneAndUpdate().SetUpsert(true)
+	filter := bson.D{{"_id", userID}}
+	update := bson.D{{"$set", experience}}
+	var profileExperience model.UserExperience
 	if token.Valid {
-		cursor, err := col.InsertOne(context.TODO(), experience)
+		err = col.FindOneAndUpdate(context.TODO(), filter, update, opts).Decode(&profileExperience)
 		if err != nil {
 			log.Fatal(err)
 		}
-		json.NewEncoder(w).Encode(cursor)
+		json.NewEncoder(w).Encode(profileExperience)
 	}
 }
 
-// AddProfileEducation ...
+// AddProfileEducation ... update profile education for existing profile
 func AddProfileEducation(w http.ResponseWriter, r *http.Request) {
 	var education model.ProfileEducation
 	body, _ := ioutil.ReadAll(r.Body)
@@ -260,6 +271,7 @@ func AddProfileEducation(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	id := mux.Vars(r)["id"]
 	tokenString := r.Header.Get("Authorization")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -274,12 +286,21 @@ func AddProfileEducation(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	col := conn.Collection("userProfiles")
+	col := conn.Collection("user")
+	fmt.Println("id:", id)
+	userID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		log.Fatal(err)
+	}
+	opts := options.FindOneAndUpdate().SetUpsert(true)
+	filter := bson.D{{"_id", userID}}
+	update := bson.D{{"$set", education}}
+	var profileEducation model.ProfileEducation
 	if token.Valid {
-		cursor, err := col.InsertOne(context.TODO(), &education)
+		err = col.FindOneAndUpdate(context.TODO(), filter, update, opts).Decode(&profileEducation)
 		if err != nil {
 			log.Fatal(err)
 		}
-		json.NewEncoder(w).Encode(cursor)
+		json.NewEncoder(w).Encode(profileEducation)
 	}
 }

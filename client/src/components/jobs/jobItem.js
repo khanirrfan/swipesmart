@@ -77,7 +77,7 @@ if(user === null) {
           </p>
         </ModalBody>
           <ModalFooter>
-            <Button color="primary" disabled = {item.status === 'applied' } onClick= {e => handleApply(e)}>Apply {item.status}</Button>{ ' ' }
+            <Button color="primary" disabled = {item.status === 'applied' } onClick= {e => handleApply(e)}>Apply</Button>{ ' ' }
             <Button color="secondary" onClick={ toggle }>Close</Button>
           </ModalFooter>
         </Modal>

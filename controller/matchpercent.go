@@ -31,7 +31,6 @@ func MatchPercent(w http.ResponseWriter, r *http.Request) {
 	jid := mux.Vars(r)["jobId"]
 	uid := mux.Vars(r)["userId"]
 	var res model.ResponseResult
-	// var jobs []model.Getjobs
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method")
@@ -49,31 +48,41 @@ func MatchPercent(w http.ResponseWriter, r *http.Request) {
 		wg.Add(2) // number of go routines runnig
 		go getJobByID(jid, oneJob)
 		go getUserByID(uid, oneUser)
-		fmt.Println("found document", <-oneUser)
-		fmt.Println("found document", <-oneJob)
+		jobParams := <-oneJob
+		userParams := <-oneUser
 		wg.Wait()
+		var count = 0
+		for i := 0; i < len(jobParams.Skills); i++ {
+
+			for j := 0; j < len(userParams.Skills); j++ {
+				if jobParams.Skills[i] == userParams.Skills[j] {
+					count++
+				}
+
+			}
+
+		}
+		jobMatchPercenat := float64(float64(count)/float64(len(jobParams.Skills))) * 100
+		fmt.Println(jobMatchPercenat)
+		json.NewEncoder(w).Encode(jobMatchPercenat)
 	}
 
 }
 
 func getJobByID(jjid string, oneJob chan model.Getjobs) {
 	defer wg.Done()
-	//
-	// var jobs []model.Getjobs
 	jobID, err := primitive.ObjectIDFromHex(jjid)
 	if err != nil {
 		log.Fatal(err)
 	}
 	dbConnection, err := db.GetDBCollection()
 	collection := dbConnection.Collection("jobs")
-	fmt.Println("job id:", jobID)
 	if err != nil {
 		log.Fatal(err)
 	}
 	var job model.Getjobs
 	err = collection.FindOne(context.TODO(), bson.D{{"_id", jobID}}).Decode(&job)
 	if err != nil {
-		fmt.Println("error line")
 		if err == mongo.ErrNoDocuments {
 			return
 		}
@@ -98,7 +107,6 @@ func getUserByID(uuid string, oneUser chan model.Getuser) {
 	var user model.Getuser
 	err = collection.FindOne(context.TODO(), bson.D{{"_id", userID}}).Decode(&user)
 	if err != nil {
-		fmt.Println("error line")
 		if err == mongo.ErrNoDocuments {
 			return
 		}

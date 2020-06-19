@@ -1,10 +1,10 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addEducation } from '../../actions/profile';
 
-const AddEducation = ({ addEducation, history }) => {
+const AddEducation = ({auth:{user}, addEducation, history, match }) => {
   const [formData, setFormData] = useState({
     school: '',
     degree: '',
@@ -29,7 +29,9 @@ const AddEducation = ({ addEducation, history }) => {
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+useEffect(()=>{
 
+}, [addEducation, match.params.id])
   return (
     <Fragment>
       <h1 className='large text-primary'>Add Your Education</h1>
@@ -128,10 +130,13 @@ const AddEducation = ({ addEducation, history }) => {
 };
 
 AddEducation.propTypes = {
-  addEducation: PropTypes.func.isRequired
+  addEducation: PropTypes.func.isRequired,
+  auth:PropTypes.object.isRequired,
 };
-
+const mapStateToProps = state => ({
+  auth: state.auth
+})
 export default connect(
-  null,
+  mapStateToProps,
   { addEducation }
 )(withRouter(AddEducation));
