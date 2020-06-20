@@ -8,8 +8,11 @@ import (
 	"log"
 	"net/http"
 
+	"go.mongodb.org/mongo-driver/mongo/options"
+
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 
 	"github.com/swipesmart/config/db"
 	"go.mongodb.org/mongo-driver/bson"
@@ -101,5 +104,30 @@ func EditPost(w http.ResponseWriter, r *http.Request) {
 
 // DeletePost ...
 func DeletePost(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("delete Post")
+	w.Header().Set("Content-Type", "application/json")
+	pid := mux.Vars(r)["id"]
+
+	// token authorization
+
+	dbConnection, err := db.GetDBCollection()
+	if err != nil {
+		log.Fatal(err)
+	}
+	collection := dbConnection.Collection("success_story")
+	id, err := primitive.ObjectIDFromHex(pid)
+
+	fmt.Println("pid", id)
+	if err != nil {
+		fmt.Println("error1")
+		log.Fatal(err)
+	}
+	var post bson.M
+	err = collection.FindOneAndDelete(context.TODO(), bson.D{{"_id", id}}, options.FindOneAndDelete()).Decode(&post)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return
+		}
+		log.Fatal(err)
+	}
+	json.NewEncoder(w).Encode(post)
 }

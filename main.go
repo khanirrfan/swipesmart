@@ -54,9 +54,9 @@ func main() {
 	// success story apis
 
 	r.HandleFunc("/post/create/{id}", controller.CreatePost).Methods("POST")
-	r.HandleFunc("/posts/get", controller.GetPost).Methods("GEt")
+	r.HandleFunc("/posts/get", controller.GetPost).Methods("GET")
 	r.HandleFunc("/post/edit", controller.EditPost).Methods("PUT")
-	r.HandleFunc("/post/delete", controller.DeletePost).Methods("POST")
+	r.HandleFunc("/post/delete/{id}", controller.DeletePost).Methods("DELETE")
 	// r.HandleFunc("/posts/")
 
 	r.HandleFunc("/protected", controller.TokenVerifyMiddleWare(controller.ProtectedEndPoint))
