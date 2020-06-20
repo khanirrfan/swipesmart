@@ -13,3 +13,7 @@ type Post struct {
 	Post string             `json:"post,omitempty" bson:"post,omitempty"`
 	Date time.Time          `json:"date,omitempty" bson:"date,omitempty"`
 }
+
+// Comment ...
+type Comment struct {
+}

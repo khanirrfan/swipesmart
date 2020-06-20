@@ -116,9 +116,7 @@ func DeletePost(w http.ResponseWriter, r *http.Request) {
 	collection := dbConnection.Collection("success_story")
 	id, err := primitive.ObjectIDFromHex(pid)
 
-	fmt.Println("pid", id)
 	if err != nil {
-		fmt.Println("error1")
 		log.Fatal(err)
 	}
 	var post bson.M
@@ -130,4 +128,30 @@ func DeletePost(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	json.NewEncoder(w).Encode(post)
+}
+
+// LikePost ...
+func LikePost(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Like")
+}
+
+// UnlikePost ...
+func UnlikePost(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("un like")
+}
+
+// Comment ...
+func Comment(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("commnet")
+}
+
+// DeleteComment ...
+func DeleteComment(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("delete comment")
+}
+
+// EditComment ...
+func EditComment(w http.ResponseWriter, r *http.Request) {
+
+	fmt.Println("edit comment")
 }

@@ -53,11 +53,18 @@ func main() {
 
 	// success story apis
 
+	// post CRUD
 	r.HandleFunc("/post/create/{id}", controller.CreatePost).Methods("POST")
 	r.HandleFunc("/posts/get", controller.GetPost).Methods("GET")
 	r.HandleFunc("/post/edit", controller.EditPost).Methods("PUT")
 	r.HandleFunc("/post/delete/{id}", controller.DeletePost).Methods("DELETE")
-	// r.HandleFunc("/posts/")
+
+	// like, comment on post
+	r.HandleFunc("/post/like/{id}", controller.LikePost).Methods("PUT")
+	r.HandleFunc("/post/unlike/{id}", controller.UnlikePost).Methods("PUT")
+	r.HandleFunc("/post/comment/{id}", controller.Comment).Methods("POST")
+	r.HandleFunc("/post/comment/delete/{id}", controller.DeleteComment).Methods("DELETE")
+	r.HandleFunc("/post/comment/edit/{id}", controller.EditComment).Methods("PUT")
 
 	r.HandleFunc("/protected", controller.TokenVerifyMiddleWare(controller.ProtectedEndPoint))
 	log.Fatal(http.ListenAndServe(":8080", r))
