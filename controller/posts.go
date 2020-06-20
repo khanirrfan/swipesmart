@@ -132,7 +132,30 @@ func DeletePost(w http.ResponseWriter, r *http.Request) {
 
 // LikePost ...
 func LikePost(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Like")
+	w.Header().Set("ContentType", "application/json")
+	pid := mux.Vars(r)["id"]
+
+	// token authentication
+	dbConnection, err := db.GetDBCollection()
+	if err != nil {
+		log.Fatal(err)
+	}
+	collection := dbConnection.Collection("success_story")
+	id, err := primitive.ObjectIDFromHex(pid)
+	fmt.Println(id)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var result bson.M
+	err = collection.FindOne(context.TODO(), bson.D{{"_id", id}}).Decode(&result)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return
+		}
+		log.Fatal(err)
+	}
+
+	json.NewEncoder(w).Encode(result)
 }
 
 // UnlikePost ...
