@@ -136,13 +136,13 @@ func LikePost(w http.ResponseWriter, r *http.Request) {
 	pid := mux.Vars(r)["id"]
 
 	// token authentication
+
 	dbConnection, err := db.GetDBCollection()
 	if err != nil {
 		log.Fatal(err)
 	}
 	collection := dbConnection.Collection("success_story")
 	id, err := primitive.ObjectIDFromHex(pid)
-	fmt.Println(id)
 	if err != nil {
 		log.Fatal(err)
 	}
