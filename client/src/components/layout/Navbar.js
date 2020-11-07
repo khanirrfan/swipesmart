@@ -7,6 +7,18 @@ import { logout } from '../../actions/auth';
 const Navbar = ({ auth: { isAuthenticated, loading, user}, logout }) => {
   const authLinks = (
     <ul>
+<li>
+        <Link>
+	{ '90 ' }
+          <span className='hide-sm'>J-score</span>
+        </Link>
+      </li>
+      <li>
+        <Link>
+          { '84 ' }
+          <span className='hide-sm'>S-score</span>
+        </Link>
+      </li>
       <li>
         <Link to='/jobs'>Jobs</Link>
       </li>

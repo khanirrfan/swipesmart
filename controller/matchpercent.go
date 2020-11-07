@@ -2,7 +2,6 @@ package controller
 
 import (
 	"context"
-
 	"encoding/json"
 	"fmt"
 	"log"
@@ -10,14 +9,13 @@ import (
 	"sync"
 
 	"github.com/gorilla/mux"
-
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/swipesmart/config/db"
-	"github.com/swipesmart/model"
-
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+
+	"github.com/swipesmart/config/db"
+	"github.com/swipesmart/model"
 )
 
 var wg sync.WaitGroup
@@ -37,6 +35,7 @@ func MatchPercent(w http.ResponseWriter, r *http.Request) {
 		}
 		return []byte("secret"), nil
 	})
+	
 	if err != nil {
 		log.Fatal(err)
 		res.Error = "Token Not valid"

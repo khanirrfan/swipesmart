@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+
 	"github.com/swipesmart/controller"
 )
 
@@ -65,6 +66,10 @@ func main() {
 	r.HandleFunc("/post/comment/{id}", controller.Comment).Methods("POST")
 	r.HandleFunc("/post/comment/delete/{id}", controller.DeleteComment).Methods("DELETE")
 	r.HandleFunc("/post/comment/edit/{id}", controller.EditComment).Methods("PUT")
+
+	// get cover letters and save them
+	r.HandleFunc("/getCoverLetters/{userId}/{jobId}", controller.GetCoverLetters).Methods("GET")
+
 
 	r.HandleFunc("/protected", controller.TokenVerifyMiddleWare(controller.ProtectedEndPoint))
 	log.Fatal(http.ListenAndServe(":8080", r))
