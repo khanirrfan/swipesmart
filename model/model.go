@@ -84,6 +84,13 @@ type Experience struct {
 	current     bool      `json:"current,omitempty" bson:"current,omitempty"`
 }
 
+// GridfsFile ...
+type GridfsFile struct {
+	id     primitive.ObjectID `bson:"_id`
+	Name   string             `bson:"filename"`
+	Length int64              `bson:"length"`
+}
+
 // Search -
 // 		field,
 // 		lookingfor[jobTpe]

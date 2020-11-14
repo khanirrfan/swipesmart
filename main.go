@@ -69,7 +69,7 @@ func main() {
 
 	// get cover letters and save them
 	r.HandleFunc("/getCoverLetters/{userId}/{jobId}", controller.GetCoverLetters).Methods("GET")
-
+	r.HandleFunc("/readFileByname/{name}", controller.ReadFileByName).Methods("GET")
 
 	r.HandleFunc("/protected", controller.TokenVerifyMiddleWare(controller.ProtectedEndPoint))
 	log.Fatal(http.ListenAndServe(":8080", r))

@@ -42,7 +42,7 @@ const EditProfile = ({
       }
       setFormData(profileData);
     }
-  }, [loading, getCurrentProfile, createProfile,match.params.id, profile]);
+  }, [loading, getCurrentProfile, createProfile, match.params.id, profile]);
 
   const {
     company,
@@ -74,9 +74,9 @@ const EditProfile = ({
         <i className="fas fa-user" /> Add some changes to your profile
       </p>
       <small>* = required field</small>
-      <form className="form" onSubmit={onSubmit}>
+      <form className="form" onSubmit={ onSubmit }>
         <div className="form-group">
-          <select name="role" value={role} onChange={onChange}>
+          <select name="role" value={ role } onChange={ onChange }>
             <option>* Select Professional role</option>
             <option value="Developer">Developer</option>
             <option value="Junior Developer">Junior Developer</option>
@@ -96,8 +96,8 @@ const EditProfile = ({
             type="text"
             placeholder="Company"
             name="company"
-            value={company}
-            onChange={onChange}
+            value={ company }
+            onChange={ onChange }
           />
           <small className="form-text">
             Could be your own company or one you work for
@@ -108,8 +108,8 @@ const EditProfile = ({
             type="text"
             placeholder="Website"
             name="website"
-            value={website}
-            onChange={onChange}
+            value={ website }
+            onChange={ onChange }
           />
           <small className="form-text">
             Could be your own or a company website
@@ -120,8 +120,8 @@ const EditProfile = ({
             type="text"
             placeholder="Location"
             name="location"
-            value={location}
-            onChange={onChange}
+            value={ location }
+            onChange={ onChange }
           />
           <small className="form-text">
             City & state suggested (eg. Boston, MA)
@@ -132,8 +132,8 @@ const EditProfile = ({
             type="text"
             placeholder="* Skills"
             name="skills"
-            value={skills}
-            onChange={onChange}
+            value={ skills }
+            onChange={ onChange }
           />
           <small className="form-text">
             Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
@@ -144,8 +144,8 @@ const EditProfile = ({
             type="text"
             placeholder="portfolio"
             name="portfolio"
-            value={portfolio}
-            onChange={onChange}
+            value={ portfolio }
+            onChange={ onChange }
           />
           <small className="form-text">
             If you want your latest repos and a Github link, include your
@@ -156,15 +156,15 @@ const EditProfile = ({
           <textarea
             placeholder="A short about of yourself"
             name="about"
-            value={about}
-            onChange={onChange}
+            value={ about }
+            onChange={ onChange }
           />
           <small className="form-text">Tell us a little about yourself</small>
         </div>
 
         <div className="my-2">
           <button
-            onClick={() => toggleSocialInputs(!displaySocialInputs)}
+            onClick={ () => toggleSocialInputs(!displaySocialInputs) }
             type="button"
             className="btn btn-light"
           >
@@ -173,7 +173,7 @@ const EditProfile = ({
           <span>Optional</span>
         </div>
 
-        {displaySocialInputs && (
+        { displaySocialInputs && (
           <Fragment>
             <div className="form-group social-input">
               <i className="fab fa-twitter fa-2x" />
@@ -181,8 +181,8 @@ const EditProfile = ({
                 type="text"
                 placeholder="Twitter URL"
                 name="twitter"
-                value={twitter}
-                onChange={onChange}
+                value={ twitter }
+                onChange={ onChange }
               />
             </div>
 
@@ -192,8 +192,8 @@ const EditProfile = ({
                 type="text"
                 placeholder="Facebook URL"
                 name="facebook"
-                value={facebook}
-                onChange={onChange}
+                value={ facebook }
+                onChange={ onChange }
               />
             </div>
 
@@ -203,8 +203,8 @@ const EditProfile = ({
                 type="text"
                 placeholder="YouTube URL"
                 name="youtube"
-                value={youtube}
-                onChange={onChange}
+                value={ youtube }
+                onChange={ onChange }
               />
             </div>
 
@@ -214,8 +214,8 @@ const EditProfile = ({
                 type="text"
                 placeholder="Linkedin URL"
                 name="linkedin"
-                value={linkedin}
-                onChange={onChange}
+                value={ linkedin }
+                onChange={ onChange }
               />
             </div>
 
@@ -225,12 +225,12 @@ const EditProfile = ({
                 type="text"
                 placeholder="Instagram URL"
                 name="instagram"
-                value={instagram}
-                onChange={onChange}
+                value={ instagram }
+                onChange={ onChange }
               />
             </div>
           </Fragment>
-        )}
+        ) }
 
         <input type="submit" className="btn btn-primary my-1" />
         <Link className="btn btn-light my-1" to="/dashboard">

@@ -786,6 +786,14 @@ button {
   flex-direction: column;
   width:20%
 }
+/* .asideComponent{
+  position: fixed;
+  top: 20%;
+  left: 65%;
+  z-index: 1050;
+  height: auto;
+  outline: 0;
+} */
 
 /* Mobile Styles */
 @media (max-width: 700px) {

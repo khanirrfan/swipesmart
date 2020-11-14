@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/gorilla/mux"
 	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -35,7 +35,6 @@ func MatchPercent(w http.ResponseWriter, r *http.Request) {
 		}
 		return []byte("secret"), nil
 	})
-	
 	if err != nil {
 		log.Fatal(err)
 		res.Error = "Token Not valid"

@@ -9,25 +9,25 @@ const ProfileTop = ({
     location,
     website,
     social,
-    firstname, 
-    lastname 
+    firstname,
+    lastname
   }
 }) => {
   return (
     <div className='profile-top bg-primary p-2'>
-{/*      <img className='round-img my-1' src={avatar} alt='' />*/}
-      <h1 className='large'>{firstname } {lastname}</h1>
+      {/*      <img className='round-img my-1' src={avatar} alt='' />*/ }
+      <h1 className='large'>{ firstname } { lastname }</h1>
       <p className='lead'>
-        {role} {company && <span> at {company}</span>}
+        { role } { company && <span> at { company }</span> }
       </p>
-      <p>{location && <span>{location}</span>}</p>
+      <p>{ location && <span>{ location }</span> }</p>
       <div className='icons my-1'>
-        {website && (
-          <a href={website} target='_blank' rel='noopener noreferrer'>
+        { website && (
+          <a href={ website } target='_blank' rel='noopener noreferrer'>
             <i className='fas fa-globe fa-2x' />
           </a>
-        )}
-{/*        {social && social.twitter && (
+        ) }
+        {/*        {social && social.twitter && (
           <a href={social.twitter} target='_blank' rel='noopener noreferrer'>
             <i className='fab fa-twitter fa-2x' />
           </a>

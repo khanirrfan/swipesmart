@@ -26,95 +26,75 @@ const Login = ({ login, isAuthenticated, auth: { user } }) => {
     if (isAuthenticated && user) {
         switch (user.type) {
             case 'org':
-                return <Redirect to = '/createJobs' / > ;
+                return <Redirect to = '/createJobs'/> ;
             default:
-                return <Redirect to = '/jobs' / > ;
+                return <Redirect to = '/jobs' /> ;
         }
 
         // return <Redirect to='/jobs' />;
     }
 
-    return ( <
-        Fragment >
-        <
-        div className = "authBox" > { /*      <h1 className='large text-primary'>Sign In</h1> */ } <
-        p className = 'text-center lead' >
-        <
-        i className = 'fas fa-user' / > Sign Into Your Account <
-        /p> <
-        form className = 'form formContainer'
-        onSubmit = { e => onSubmit(e) } >
-        <
-        div className = "form-check" >
-        <
-        input className = "form-check-input"
+    return ( 
+        <Fragment>
+        <div className = "authBox" > { /*      <h1 className='large text-primary'>Sign In</h1> */ } 
+        <p className = 'text-center lead' >
+        <i className = 'fas fa-user' /> Sign Into Your Account </p> 
+        <form className = 'form formContainer'
+        onSubmit = { e => onSubmit(e) }>
+        <div className = "form-check" >
+        <input className = "form-check-input"
         type = "checkbox"
         name = "type"
         id = "employer"
         value = "employe"
-        onChange = { e => onChange(e) }
-        /> <
-        label className = "form-check-label"
-        htmlFor = "employer" >
-        Login As job seeker <
-        /label> <
-        input className = "form-check-input"
+        onChange = { e => onChange(e) }/>
+        <label className = "form-check-label"
+        htmlFor = "employer">
+        Login As job seeker </label>
+        <input className = "form-check-input"
         type = "checkbox"
         name = "type"
         id = "organisation"
         value = "org"
-        onChange = { e => onChange(e) }
-        /> <
-        label className = "form-check-label"
+        onChange = { e => onChange(e) }/>
+        <label className = "form-check-label"
         htmlFor = "organisation" >
-        Login as an organisation <
-        /label> <
-        /div> <
-        div className = 'form-group' >
-        <
-        input type = 'text'
+        Login as an organisation </label>
+        </div>
+        <div className = 'form-group' >
+        <input type = 'text'
         placeholder = 'Username'
         name = 'username'
         value = { username }
         onChange = { e => onChange(e) }
-        required /
-        >
-        <
-        /div>
+        required />
+        </div>
 
-        <
-        div className = 'form-group' >
-        <
-        input type = 'email'
+        <div className = 'form-group' >
+        <input type = 'email'
         placeholder = 'Email Address'
         name = 'email'
         value = { email }
         onChange = { e => onChange(e) }
-        required /
-        >
-        <
-        /div> <
-        div className = 'form-group' >
-        <
-        input type = 'password'
+        required />
+        </div> 
+        <div className = 'form-group' >
+        <input type = 'password'
         placeholder = 'Password'
         name = 'password'
         value = { password }
         onChange = { e => onChange(e) }
-        minLength = '6' /
-        >
-        <
-        /div> <
-        input type = 'submit'
+        minLength = '6' />
+        </div> 
+        <input type = 'submit'
         className = 'btn btn-primary'
-        value = 'Login' / >
-        <
-        /form> <
-        p className = 'my-1 text-center' >
-        Don 't have an account? <Link to=' / register '>Sign Up</Link> <
-        /p> <
-        /div> <
-        /Fragment>
+        value = 'Login' />
+        </form> 
+        <p className = 'my-1 text-center' >
+        Don 't have an account? <Link to='/register '>Sign Up</Link> 
+        </p>
+        </div>
+        </Fragment>
     );
 };
 

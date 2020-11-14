@@ -22,30 +22,30 @@ import PrivateRoute from '../routing/PrivateRoute';
 import CreateJobs from '../jobs/createJobs';
 import { connect } from 'react-redux';
 
-const Routes = ({auth:{user}}) => {
+const Routes = ({ auth: { user } }) => {
   return (
     <section className='container'>
       <Alert />
       <Switch>
 
-        <Route exact path='/register' component={Register} />
-        <Route exact path='/login' component={Login} />
-        <Route exact path='/profiles' component={Profiles} />
-        <Route exact path='/profile/:id' component={Profile} />
-        <PrivateRoute exact path='/getProfileByID/:id' component={Profile} />
-        <PrivateRoute exact path='/create-profile' component={CreateProfile} />
-        <PrivateRoute exact path='/edit-profile/:id' component={EditProfile} />
-        <PrivateRoute exact path='/add-experience/:id' component={AddExperience} />
-        <PrivateRoute exact path='/add-education/:id' component={AddEducation} />
-        <PrivateRoute exact path='/posts' component={Posts} />
-        <PrivateRoute exact path='/posts/:id' component={Post} />
-        <PrivateRoute exact path='/jobs' component={Jobs} />
-         <PrivateRoute exact path ='/appliedJobs/:id' component ={ AppliedJobsPage}/>
-        <PrivateRoute exact path ='/rejectedJobs/:id' component = { RejectedJobs} />
-        <PrivateRoute exact path ='/savedJobs/:id' component = { SavedJobs} />
-        <PrivateRoute exact path ='/createJobs' component = {CreateJobs} /> 
-        <Route component={NotFound} />
-        
+        <Route exact path='/register' component={ Register } />
+        <Route exact path='/login' component={ Login } />
+        <Route exact path='/profiles' component={ Profiles } />
+        <Route exact path='/profile/:id' component={ Profile } />
+        <PrivateRoute exact path='/getProfileByID/:id' component={ Profile } />
+        <PrivateRoute exact path='/create-profile' component={ CreateProfile } />
+        <PrivateRoute exact path='/edit-profile/:id' component={ EditProfile } />
+        <PrivateRoute exact path='/add-experience/:id' component={ AddExperience } />
+        <PrivateRoute exact path='/add-education/:id' component={ AddEducation } />
+        <PrivateRoute exact path='/posts' component={ Posts } />
+        <PrivateRoute exact path='/posts/:id' component={ Post } />
+        <PrivateRoute exact path='/jobs' component={ Jobs } />
+        <PrivateRoute exact path='/appliedJobs/:id' component={ AppliedJobsPage } />
+        <PrivateRoute exact path='/rejectedJobs/:id' component={ RejectedJobs } />
+        <PrivateRoute exact path='/savedJobs/:id' component={ SavedJobs } />
+        <PrivateRoute exact path='/createJobs' component={ CreateJobs } />
+        <Route component={ NotFound } />
+
       </Switch>
     </section>
   );

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addEducation } from '../../actions/profile';
 
-const AddEducation = ({auth:{user}, addEducation, history, match }) => {
+const AddEducation = ({ auth: { user }, addEducation, history, match }) => {
   const [formData, setFormData] = useState({
     school: '',
     degree: '',
@@ -29,9 +29,9 @@ const AddEducation = ({auth:{user}, addEducation, history, match }) => {
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-useEffect(()=>{
+  useEffect(() => {
 
-}, [addEducation, match.params.id])
+  }, [addEducation, match.params.id])
   return (
     <Fragment>
       <h1 className='large text-primary'>Add Your Education</h1>
@@ -42,18 +42,18 @@ useEffect(()=>{
       <small>* = required field</small>
       <form
         className='form'
-        onSubmit={e => {
+        onSubmit={ e => {
           e.preventDefault();
           addEducation(formData, history);
-        }}
+        } }
       >
         <div className='form-group'>
           <input
             type='text'
             placeholder='* School or Bootcamp'
             name='school'
-            value={school}
-            onChange={e => onChange(e)}
+            value={ school }
+            onChange={ e => onChange(e) }
             required
           />
         </div>
@@ -62,8 +62,8 @@ useEffect(()=>{
             type='text'
             placeholder='* Degree or Certificate'
             name='degree'
-            value={degree}
-            onChange={e => onChange(e)}
+            value={ degree }
+            onChange={ e => onChange(e) }
             required
           />
         </div>
@@ -72,8 +72,8 @@ useEffect(()=>{
             type='text'
             placeholder='Field of Study'
             name='fieldofstudy'
-            value={fieldofstudy}
-            onChange={e => onChange(e)}
+            value={ fieldofstudy }
+            onChange={ e => onChange(e) }
           />
         </div>
         <div className='form-group'>
@@ -81,8 +81,8 @@ useEffect(()=>{
           <input
             type='date'
             name='from'
-            value={from}
-            onChange={e => onChange(e)}
+            value={ from }
+            onChange={ e => onChange(e) }
           />
         </div>
         <div className='form-group'>
@@ -90,13 +90,13 @@ useEffect(()=>{
             <input
               type='checkbox'
               name='current'
-              checked={current}
-              value={current}
-              onChange={() => {
+              checked={ current }
+              value={ current }
+              onChange={ () => {
                 setFormData({ ...formData, current: !current });
                 toggleDisabled(!toDateDisabled);
-              }}
-            />{' '}
+              } }
+            />{ ' ' }
             Current School
           </p>
         </div>
@@ -105,9 +105,9 @@ useEffect(()=>{
           <input
             type='date'
             name='to'
-            value={to}
-            onChange={e => onChange(e)}
-            disabled={toDateDisabled ? 'disabled' : ''}
+            value={ to }
+            onChange={ e => onChange(e) }
+            disabled={ toDateDisabled ? 'disabled' : '' }
           />
         </div>
         <div className='form-group'>
@@ -116,8 +116,8 @@ useEffect(()=>{
             cols='30'
             rows='5'
             placeholder='Program Description'
-            value={description}
-            onChange={e => onChange(e)}
+            value={ description }
+            onChange={ e => onChange(e) }
           />
         </div>
         <input type='submit' className='btn btn-primary my-1' />
@@ -131,7 +131,7 @@ useEffect(()=>{
 
 AddEducation.propTypes = {
   addEducation: PropTypes.func.isRequired,
-  auth:PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 const mapStateToProps = state => ({
   auth: state.auth

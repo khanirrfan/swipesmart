@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addExperience } from '../../actions/profile';
 
-const AddExperience = ({auth:{user}, addExperience, history, match }) => {
+const AddExperience = ({ auth: { user }, addExperience, history, match }) => {
   const [formData, setFormData] = useState({
     company: '',
     title: '',
@@ -21,13 +21,13 @@ const AddExperience = ({auth:{user}, addExperience, history, match }) => {
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-useEffect(() => {
+  useEffect(() => {
 
-},[ addExperience, match.params.id])
-const handleAddExperience = async e => {
-  e.preventDefault();
-addExperience(formData, history, user)
-}
+  }, [addExperience, match.params.id])
+  const handleAddExperience = async e => {
+    e.preventDefault();
+    addExperience(formData, history, user)
+  }
   return (
     <Fragment>
       <h1 className='large text-primary'>Add/Update An Experience</h1>
@@ -38,15 +38,15 @@ addExperience(formData, history, user)
       <small>* = required field</small>
       <form
         className='form'
-        onSubmit={e => handleAddExperience(e) }
+        onSubmit={ e => handleAddExperience(e) }
       >
         <div className='form-group'>
           <input
             type='text'
             placeholder='* Job Title'
             name='title'
-            value={title}
-            onChange={e => onChange(e)}
+            value={ title }
+            onChange={ e => onChange(e) }
             required
           />
         </div>
@@ -55,8 +55,8 @@ addExperience(formData, history, user)
             type='text'
             placeholder='* Company'
             name='company'
-            value={company}
-            onChange={e => onChange(e)}
+            value={ company }
+            onChange={ e => onChange(e) }
             required
           />
         </div>
@@ -65,8 +65,8 @@ addExperience(formData, history, user)
             type='text'
             placeholder='Location'
             name='location'
-            value={location}
-            onChange={e => onChange(e)}
+            value={ location }
+            onChange={ e => onChange(e) }
           />
         </div>
         <div className='form-group'>
@@ -74,8 +74,8 @@ addExperience(formData, history, user)
           <input
             type='date'
             name='from'
-            value={from}
-            onChange={e => onChange(e)}
+            value={ from }
+            onChange={ e => onChange(e) }
           />
         </div>
         <div className='form-group'>
@@ -83,13 +83,13 @@ addExperience(formData, history, user)
             <input
               type='checkbox'
               name='current'
-              checked={current}
-              value={current}
-              onChange={() => {
+              checked={ current }
+              value={ current }
+              onChange={ () => {
                 setFormData({ ...formData, current: !current });
                 toggleDisabled(!toDateDisabled);
-              }}
-            />{' '}
+              } }
+            />{ ' ' }
             Current Job
           </p>
         </div>
@@ -98,9 +98,9 @@ addExperience(formData, history, user)
           <input
             type='date'
             name='to'
-            value={to}
-            onChange={e => onChange(e)}
-            disabled={toDateDisabled ? 'disabled' : ''}
+            value={ to }
+            onChange={ e => onChange(e) }
+            disabled={ toDateDisabled ? 'disabled' : '' }
           />
         </div>
         <div className='form-group'>
@@ -109,8 +109,8 @@ addExperience(formData, history, user)
             cols='30'
             rows='5'
             placeholder='Job Description'
-            value={description}
-            onChange={e => onChange(e)}
+            value={ description }
+            onChange={ e => onChange(e) }
           />
         </div>
         <input type='submit' className='btn btn-primary my-1' />
@@ -128,7 +128,7 @@ AddExperience.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  auth:state.auth
+  auth: state.auth
 })
 export default connect(
   mapStateToProps,

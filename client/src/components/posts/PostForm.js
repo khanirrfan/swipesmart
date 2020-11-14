@@ -17,8 +17,7 @@ const PostForm = ({ addPost }) => {
           e.preventDefault();
           addPost({ text });
           setText('');
-        }}
-      >
+        }}>
         <textarea
           name='text'
           cols='30'
@@ -26,9 +25,8 @@ const PostForm = ({ addPost }) => {
           placeholder='Create a post'
           value={text}
           onChange={e => setText(e.target.value)}
-          required
-        />
-        <input type='submit' className='btn btn-dark my-1' value='Submit' />
+          required/>
+        <input type='submit' className='btn btn-dark my-1' value='Submit'/>
       </form>
     </div>
   );

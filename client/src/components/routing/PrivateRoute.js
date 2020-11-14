@@ -9,13 +9,13 @@ const PrivateRoute = ({
   ...rest
 }) => {
   return (
-  <Route
-    {...rest}
-    render={props =>
-      isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
-    }
-  />
-);
+    <Route
+      { ...rest }
+      render={ props =>
+        isAuthenticated ? <Component { ...props } /> : <Redirect to="/login" />
+      }
+    />
+  );
 }
 PrivateRoute.propTypes = {
   auth: PropTypes.object.isRequired
