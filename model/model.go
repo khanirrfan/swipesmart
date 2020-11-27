@@ -90,6 +90,9 @@ type GridfsFile struct {
 	Name   string             `bson:"filename"`
 	Length int64              `bson:"length"`
 }
+type Match struct {
+	jobMatchPercent string `bson:"jobMatchPercent`
+}
 
 // Search -
 // 		field,

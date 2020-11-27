@@ -8,6 +8,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -17,6 +18,7 @@ import (
 
 	"github.com/swipesmart/config/db"
 	"github.com/swipesmart/model"
+	"github.com/swipesmart/utils"
 )
 
 // GetCoverLetters ...
@@ -61,21 +63,17 @@ func GetCoverLetters(w http.ResponseWriter, r *http.Request) {
 // fetchFiles ...
 func fetchFiles(files chan []model.GridfsFile) {
 	defer wg.Done()
-	fmt.Println("Hello")
 	var bucket *gridfs.Bucket
 	dbConnection, err := db.GetDBCollection()
 	if err != nil {
-		fmt.Println("Hello1")
 		log.Fatal(err)
 	}
 	bucket, err = gridfs.NewBucket(dbConnection)
 	if err != nil {
-		fmt.Println("Hello2")
 		log.Fatal(err)
 	}
 	cursor, err := bucket.Find(bson.M{})
 	if err != nil {
-		fmt.Println("Hello3")
 		log.Fatal(err)
 	}
 	defer func() {
@@ -86,7 +84,6 @@ func fetchFiles(files chan []model.GridfsFile) {
 
 	var foundFiles []model.GridfsFile
 	if err = cursor.All(context.TODO(), &foundFiles); err != nil {
-		fmt.Println("Hello4")
 		log.Fatal(err)
 	}
 	files <- foundFiles
@@ -127,4 +124,22 @@ func ReadFileByName(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	_, err = fileBuffer.WriteTo(w)
+}
+
+// SaveCoverLetter ...
+func SaveCoverLetter(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var userID = mux.Vars(r)["userId"]
+	var jobID = mux.Vars(r)["jobId"]
+	fmt.Println(userID)
+	fmt.Println(jobID)
+
+	filenamePrefix := time.Now().Format("20060102150405")
+	var fileName string
+	fileName = userID + "_" + filenamePrefix + ".txt"
+	println(fileName)
+
+	file, err := os.Create(fileName)
+	utils.CheckError(err)
+	fmt.Println(file)
 }

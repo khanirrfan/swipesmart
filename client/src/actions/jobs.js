@@ -104,17 +104,14 @@ export const getSavedJobs = userId => async dispatch => {
         })
     }
 }
-// getMatchPercent
 
+// getMatchPercent
 export const getMatchPercent = ({item, user}) => async dispatch => {
-    console.log(user._id);
-    console.log(item._id);
  try {
     const res = await axios.get(`/matchPercent/${user._id}/${item._id}`);
-    
     dispatch({
         type:MATCH_PERCENT,
-        PAYLOAD:res.data
+        payload:res.data
     })
  } catch (err) {
     dispatch({

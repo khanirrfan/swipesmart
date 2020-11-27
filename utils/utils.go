@@ -7,8 +7,16 @@ import (
 	"net/http"
 
 	"github.com/dgrijalva/jwt-go"
+
 	"github.com/swipesmart/model"
 )
+
+// CheckError ...
+func CheckError(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
 
 // RespondWithError ...
 func RespondWithError(w http.ResponseWriter, status int, error model.ResponseResult) {
