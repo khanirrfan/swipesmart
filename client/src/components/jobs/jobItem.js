@@ -4,7 +4,7 @@ import { saveJob, rejectJob, applyJob, getMatchPercent } from '../../actions/job
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
-const JobItem = ({ item, item: { jobType }, auth: { user }, jobs, saveJob, rejectJob, applyJob, getMatchPercent }) => {
+const JobItem = ({ item,  showDescription , auth: { user }, jobs, saveJob, rejectJob, applyJob, getMatchPercent }) => {
     const [modal, setModal] = useState(false);
     const toggle = async e => {
         e.preventDefault();
@@ -28,14 +28,15 @@ const JobItem = ({ item, item: { jobType }, auth: { user }, jobs, saveJob, rejec
     } else {
         return (
             <div className="jobs bg-white p-1 my-2">
-                <div className="jobDetails" key={ item._id }>
-
+                <div className="jobDetails" onClick={ showDescription } key={ item._id }>
+                    <a href={ '#' + item._id } role="tab" data-toggle="tab">
                     <div className="row p-1">
                         <div className="company-logo">
-                            company-logo
+                           <img href="" alt="logo">
+                           </img>
                     </div>
                         <div className="jobTitle">
-                            <a className="font-size-6">{ item.jobtitle } </a>
+                            <p className="font-size-6">{ item.jobtitle } </p>
                             <br></br>
                             <span>company name</span>
                         </div>
@@ -64,7 +65,8 @@ const JobItem = ({ item, item: { jobType }, auth: { user }, jobs, saveJob, rejec
                             }
 
                         </div>
-                    </div>
+                        </div>
+                    </a>
                 </div>
             </div>
             //     <div className="jobs bg-white p-1 my-1">

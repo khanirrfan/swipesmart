@@ -1,28 +1,19 @@
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Spinner from '../layout/Spinner';
-import ProfileTop from './ProfileTop';
-import ProfileAbout from './ProfileAbout';
-import ProfileExperience from './ProfileExperience';
-import ProfileEducation from './ProfileEducation';
-import ProfileGithub from './ProfileGithub';
 import DashboardActions from '../dashboard/DashboardActions';
 import { getProfileByID } from '../../actions/profile';
 
 const Profile = ({
-
   profile: { profile, loading },
   auth: { user },
   match,
   getProfileByID
 }) => {
-  console.log("auth:", user);
-  console.log("profile:", profile);
   useEffect(() => {
     getProfileByID(match.params.id);
   }, [getProfileByID, match.params.id]);
+
   if (user && user.experience === null) {
     return (
       <DashboardActions />
@@ -30,87 +21,147 @@ const Profile = ({
   } else
     return (
       <Fragment>
-        {profile === null ? (
-          <p>Please create profile</p>
-        ) : (
-            <Fragment>
-              {/*<Link to='/profiles' className='btn btn-light'>
-            Back To Profiles
-      </Link>*/}
-              {/*auth.isAuthenticated &&
-            auth.loading === false &&
-            auth.user._id === profile._id && (
-              <Link to='/edit-profile' className='btn btn-dark'>
-                Edit Profile
-              </Link>
-            )*/}
-              <div className='profile-grid my-1'>
-                <ProfileTop profile={ profile } />
-                <ProfileAbout profile={ profile } />
-
-                <div className='profile-exp bg-white p-2'>
-                  <h2 className='text-primary'>Experience</h2>
-                  { profile.experience.length > 0 ? (
-                    <Fragment>
-                      {profile.experience.map(experience => (
-                        <ProfileExperience
-                          key={ experience._id }
-                          experience={ experience }
-                        />
-                      )) }
-                    </Fragment>
-                  ) : (
-                      <h4>No experience credentials</h4>
-                    ) }
+        { profile !== null ?
+          (<div className="container row">
+            <div className="profileLeftPane bg-white shadow-9 rounded-4">
+              <div className="px-5 py-11 text-center border-bottom border-mercury">
+                <div style={ { display: "inline-block" } } className="mb-4">
+                  <img className="circle-54" src="" alt="profile" />
                 </div>
-
-                <div className='profile-edu bg-white p-2'>
-                  <h2 className='text-primary'>Bachelors</h2>
-                  { profile.education.bachelors.length > 0 ? (
-                    <Fragment>
-                      { profile.education.bachelors.map(item => (
-                        <ProfileEducation
-                          education={ item }
-                        />
-                      )) }
-
-                    </Fragment>
-                  ) : (
-                      <h4>No education credentials</h4>
-                    ) }
-
-                  <h2 className='text-primary'>Masters</h2>
-                  { profile.education.masters.length > 0 ? (
-                    <Fragment>
-                      { profile.education.masters.map(item => (
-                        <ProfileEducation
-                          education={ item }
-                        />
-                      )) }
-
-                    </Fragment>
-                  ) : (
-                      <h4>No education credentials</h4>
-                    ) }
-                  <h2 className='text-primary'>Doctorate</h2>
-                  { profile.education.doctorate.length > 0 ? (
-                    <Fragment>
-                      { profile.education.doctorate.map(item => (
-                        <ProfileEducation
-                          education={ item }
-                        />
-                      )) }
-
-                    </Fragment>
-                  ) : (
-                      <h4>No education credentials</h4>
-                    ) }
+                <h4 className="mb-0">{ profile.firstname } { profile.lastname }</h4>
+                <p className="mb-8">
+                  <a className="text-gray font-size-4"> { profile.role }</a>
+                </p>
+                <div className="icon-link d-flex align-items-center justify-content-center flex-wrap">
+                  <a className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green">
+                    <i className="fab fa-linkedin-in" ></i>
+                  </a>
+                  <a className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green">
+                    <i className="fab fa-facebook-f" ></i>
+                  </a>
+                  <a className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green">
+                    <i className="fab fa-twitter" ></i>
+                  </a>
+                  <a className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green">
+                    <i className="fab fa-dribbble" ></i>
+                  </a>
+                  <a className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green">
+                    <i className="fab fa-behance" ></i>
+                  </a>
                 </div>
-
-                { profile.githubusername && (
-                  <ProfileGithub username={ profile.githubusername } />
-                ) }
               </div>
+              <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-5">
+                <h5 className="text-black-2 mb-8 font-size-5">Contact Info</h5>
+                <div className="mb-7">
+                  <p className="font-size-4 mb-0">Location</p>
+                  <h5 className=""> { profile.location }</h5>
+                </div>
+                <div className="mb-7">
+                  <p className="font-size-4 mb-0">E-mail</p>
+                  <h5 className=""> { profile.email }</h5>
+                </div>
+                <div className="mb-7">
+                  <p className="font-size-4 mb-0">Phone</p>
+                  <h5 className=""> { profile.phone ? profile.phone : '000000' }</h5>
+                </div>
+                <div className="mb-7">
+                  <p className="font-size-4 mb-0">Website</p>
+                  <h5 className=""> { profile.website ? profile.website : '' }</h5>
+                </div>
+              </div>
+            </div>
+            <div className="profileMiddlePane bg-white rounded-4 shadow-9">
+              <div className="tab-content">
+                <div className="tab-pane fade show active">
+                  <div className="pr-xl-0 pr-xxl-14 p-5 px-xs-12 pt-7 pb-5">
+                    <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">About</h4>
+                    <p className="font-size-4 mb-8">{ profile.about }</p>
+                  </div>
+                  <div className="border-top pr-xl-0 pr-xxl-14 p-5 pl-xs-12 pt-7 pb-5">
+                    <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">Skills</h4>
+                    <ul className="list-unstyled d-flex align-items-center flex-wrap">
+                      { profile.skills.map((item, index) => {
+                        return (
+                          <li className="" key={ index }>
+                            <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">{ item }
+                            </a>
+                          </li>
+                        )
+                      })
+
+                      }
+                    </ul>
+                  </div>
+                  <div className="border-top p-5 pl-xs-12 pt-7 pb-5">
+                    <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">Experience</h4>
+                    {
+                      profile.experience.map((item, index) => {
+                        return (
+                          <div className="w-100" key={ index }>
+                            <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
+                              <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
+                                <img src="" alt="logo" />
+                              </div>
+                              <div className="w-100 mt-n2">
+                                <h3 className="mb-0">
+                                  <a className="font-size-6 text-black-2 font-weight-semibold">
+                                    { item.title }
+                                  </a>
+                                </h3>
+                                <a className="font-size-4 text-default-color line-height-2">{ item.company }</a>
+                                <div className="d-flex align-items-center justify-content-md-between flex-wrap">
+                                  <a href="" className="font-size-4 text-gray mr-5">{ item.period }</a>
+                                  <a href="" className="font-size-3 text-gray"><span className="mr-4" style={ { marginTop: '2px' } }>
+                                    <img src="" />
+                                    { item.location }
+                                  </span></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>)
+                      })
+
+                    }
+                  </div>
+                  {/* change experience with education */ }
+                  <div className="border-top p-5 pl-xs-12 pt-7 pb-5">
+                    <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">Education</h4>
+                    {
+                      profile.experience.map((item, index) => {
+                        return (
+                          <div className="w-100" key={ index }>
+                            <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
+                              <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
+                                <img src="" alt="logo" />
+                              </div>
+                              <div className="w-100 mt-n2">
+                                <h3 className="mb-0">
+                                  <a className="font-size-6 text-black-2 font-weight-semibold">
+                                    { item.title }
+                                  </a>
+                                </h3>
+                                <a className="font-size-4 text-default-color line-height-2">{ item.company }</a>
+                                <div className="d-flex align-items-center justify-content-md-between flex-wrap">
+                                  <a className="font-size-4 text-gray mr-5">{ item.period }</a>
+                                  <a className="font-size-3 text-gray"><span className="mr-4" style={ { marginTop: '2px' } }>
+                                    <img src="" />
+                                    { item.location }
+                                  </span></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>)
+                      })
+
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="profileRightPane">hello 3 test</div>
+          </div>) : (
+            <Fragment>
+              Profile not found
             </Fragment>
           ) }
       </Fragment>

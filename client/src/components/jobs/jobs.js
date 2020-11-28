@@ -5,7 +5,6 @@ import Spinner from '../layout/Spinner';
 import JobItem from './jobItem';
 import { getJobs, getMatchPercent } from '../../actions/jobs';
 import CheckBox from '../shared/Checkbox.js';
-// import Search from '../search/search';
 
 const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
   useEffect(() => {
@@ -63,12 +62,15 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
     console.log(durations);
     setposted({ duration: durations })
   }
-  const showDescription = e => {
-    console.log(e);
+  const [show, setShow] = useState(false);
+  const showDescription = (item, e) => {
+    e.preventDefault();
+    setShow( true);
   }
   return (
     <div className="row">
       <div className="leftpane ">
+      <div className="container-left">
         <h4 className=" m-1"> Job Types </h4>
         <ul className="m-1">
           {
@@ -95,55 +97,56 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
             })
           }
         </ul>
+        </div>
       </div>
       <div className="middlepane">
         { loading ? (
           <Spinner />
         ) : (
             <Fragment>
-              <div className='profiles'>
                 {
                   jobs && jobs.length > 0 ? (
-                    jobs.map(item => (
-                      <JobItem onClick={ e => showDescription(e) } key={ item._id } item={ item } />
-                    ))
+                    jobs.map(item => {
+                      return (<JobItem showDescription={ (e) => showDescription(item,e) } key={ item._id } item={ item } />)
+                    })
                   ) : (
                       <h4>No jobs found...</h4>
                     ) }
-              </div>
             </Fragment>
           ) }
       </div>
-      <div className="rightpane">
-        <div className="jobs bg-white p-1 my-2">
-          <div className="jobDetails" >
-            <div className="row p-1">
-              <div className="company-logo">
-                company-logo
+      { show && <div className="rightpane">
+          <div className="jobs bg-white p-1 my-2" >
+            <div className="jobDetails" >
+              <div className="row p-1">
+                <div className="company-logo">
+                  company-logo
                       </div>
-              <div className="jobTitle">
-                <a className="font-size-6">jobTitle </a>
-                <br></br>
-                <span>company name</span>
-              </div>
-              <div className="jobSalary">
-                <span className="font-size-5">
-                  Job relevant: 50%
+                <div className="jobTitle">
+                  <a className="font-size-6">jobTitle </a>
+                  <br></br>
+                  <span>company name</span>
+                </div>
+                <div className="jobSalary">
+                  <span className="font-size-5">
+                    Job relevant: 50%
                 </span>
+                </div>
               </div>
-            </div>
-            <div className="row p-1">
-              <button style={ { width: "30%", marginRight: "1%" } }>
-                Apply to this job
+              <div className="row p-1">
+                <button style={ { width: "30%", marginRight: "1%" } }>
+                  Apply to this job
               </button>
-              <button style={ { width: "20%", marginLeft: "1%" } }>
-                Save Job
+                <button style={ { width: "20%", marginLeft: "1%" } }>
+                  Save Job
               </button>
+              </div>
+              <hr></hr>
             </div>
-            <hr></hr>
-          </div>
-        </div>
-      </div>
+          </div>          
+        
+      </div> 
+    }
     </div>
   );
 };
