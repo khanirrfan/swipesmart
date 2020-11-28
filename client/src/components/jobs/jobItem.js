@@ -4,7 +4,7 @@ import { saveJob, rejectJob, applyJob, getMatchPercent } from '../../actions/job
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
-const JobItem = ({ item,  showDescription , auth: { user }, jobs, saveJob, rejectJob, applyJob, getMatchPercent }) => {
+const JobItem = ({ item, showDescription, auth: { user }, jobs, saveJob, rejectJob, applyJob, getMatchPercent }) => {
     const [modal, setModal] = useState(false);
     const toggle = async e => {
         e.preventDefault();
@@ -30,104 +30,44 @@ const JobItem = ({ item,  showDescription , auth: { user }, jobs, saveJob, rejec
             <div className="jobs bg-white p-1 my-2">
                 <div className="jobDetails" onClick={ showDescription } key={ item._id }>
                     <a href={ '#' + item._id } role="tab" data-toggle="tab">
-                    <div className="row p-1">
-                        <div className="company-logo">
-                           <img href="" alt="logo">
-                           </img>
-                    </div>
-                        <div className="jobTitle">
-                            <p className="font-size-6">{ item.jobtitle } </p>
-                            <br></br>
-                            <span>company name</span>
-                        </div>
-                        <div className="jobSalary">
-                            <span className="font-size-7">
-                                { item.salary }
-                            </span>
-                        </div>
-                    </div>
-                    <div className="row p-1">
-                        <div style={ { width: "50%" } }>
-                            { item.skills.map((skill, index) => {
-                                return (
-                                    <span style={ {
-                                        margin: "1%",
-                                        padding: ".5rem",
-                                        backgroundColor: "#eee",
-                                        borderRadius: "5px",
-                                        width: "100%"
-                                    } }
-                                        key={ index }>
-                                        { skill }
-                                    </span>
-                                )
-                            })
-                            }
+                        <div className="row p-1">
+                            <div className="company-logo">
+                                <img href="" alt="logo">
+                                </img>
+                            </div>
+                            <div className="jobTitle">
+                                <p className="font-size-6">{ item.jobtitle } </p>
 
+                                <span>company name</span>
+                            </div>
+                            <div className="jobSalary">
+                                <span className="font-size-7">
+                                    { item.salary }
+                                </span>
+                            </div>
                         </div>
+                        <div className="row p-1">
+                            <div style={ { width: "50%" } }>
+                                { item.skills.map((skill, index) => {
+                                    return (
+                                        <span style={ {
+                                            margin: "1%",
+                                            padding: ".5rem",
+                                            backgroundColor: "#eee",
+                                            borderRadius: "5px",
+                                            width: "100%"
+                                        } }
+                                            key={ index }>
+                                            { skill }
+                                        </span>
+                                    )
+                                })
+                                }
+                            </div>
                         </div>
                     </a>
                 </div>
             </div>
-            //     <div className="jobs bg-white p-1 my-1">
-            //         <div className="jobDetails" key={ item._id }>
-            //             <p> jobtitle - { item.jobtitle } </p>
-            //             <p> country - { item.country } </p>
-            //             <p> salary - { item.salary } </p>
-            //             <p> experience - { item.experience } </p>
-            //             <p> visa - { item.visa } </p>
-            //             <p> jd - { item.jobdescription } </p>
-            //             <button type="button" className="btn btn-primary my-1"
-            //                 onClick={ e => handlesave(e) }> Save </button>
-            //             <button className="btn btn-primary my-1"
-            //                 onClick={ e => handleReject(e) }> Reject </button>
-            //             <button className="btn btn-primary my-1"
-            //                 onClick={ e => toggle(e) }> View JD </button>
-            //         </div>
-            //         {
-            //             item.status === 'applied' &&
-            //             <div className="docsRequired">
-            //                 <Button className="btn btn-secondary my-1"> Upload Cover Letter </Button>
-            //                 <Button className="btn btn-secondary my-1"> Complete Profile </Button>
-            //                 <Button className="btn btn-secondary my-1"> Upload Docs </Button>
-            //             </div>
-            //         }
-            //         <Modal job={ item }
-            //             isOpen={ modal }>
-            //             <ModalHeader toggle={ toggle }>
-            //                 <p> { item.jobtitle } </p>
-            //                 <p> { item.country } </p>
-            //             </ModalHeader>
-            //             <ModalBody className="modal-dialog">
-            //                 <p> { item.country } </p>
-            //                 <p> Jobtype - { jobType } </p>
-            //                 <p> { item.salary } </p>
-            //                 <p> { item.jobdescription } </p>
-            //                 <div> Experience:
-            // <ul>
-            //                         <li> 1. Experience 1 </li>
-            //                         <li> 2. Experience 2 </li>
-            //                         <li> 3. Experience 3 </li>
-            //                     </ul>
-            //                 </div>
-            //                 <div> Education:
-            //     <ul>
-            //                         <li> 1. Education 1 </li>
-            //                         <li> 2. Education 2 </li>
-            //                         <li> 3. Education 3 </li>
-            //                     </ul>
-            //                 </div>
-            //             </ModalBody>
-            //             <ModalFooter>
-            //                 <p> Job relevant : {jobs.matchPercent}</p>
-            //                 <Button color="primary"
-            //                     disabled={ item.status === 'applied' }
-            //                     onClick={ e => handleApply(e) }> Apply </Button>{ ' ' }
-            //                 <Button color="secondary"
-            //                     onClick={ toggle }> Close </Button>
-            //             </ModalFooter> </Modal>
-            //     </div>
-
         )
     }
 }

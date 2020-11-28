@@ -124,12 +124,11 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
                       </div>
                 <div className="jobTitle">
                   <a className="font-size-6">jobTitle </a>
-                  <br></br>
                   <span>company name</span>
                 </div>
                 <div className="jobSalary">
                   <span className="font-size-5">
-                    Job relevant: 50%
+                    Job relevant:50%
                 </span>
                 </div>
               </div>

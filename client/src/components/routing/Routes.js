@@ -21,14 +21,16 @@ import NotFound from '../layout/NotFound';
 import PrivateRoute from '../routing/PrivateRoute';
 import CreateJobs from '../jobs/createJobs';
 import { connect } from 'react-redux';
+import CompanyProfile from '../company/companyProfile';
 
 const Routes = ({ auth: { user } }) => {
   return (
-    <section className='container'>
+    <section className='container1'>
       <Alert />
       <Switch>
 
         <Route exact path='/register' component={ Register } />
+        <Route exact path='/companyProfile' component={CompanyProfile} />
         <Route exact path='/login' component={ Login } />
         <Route exact path='/profiles' component={ Profiles } />
         <Route exact path='/profile/:id' component={ Profile } />
