@@ -14,6 +14,22 @@ const Profile = ({
     getProfileByID(match.params.id);
   }, [getProfileByID, match.params.id]);
 
+  const changeAbout = e => {
+    console.log(e);
+    console.log('about edit button clicked');
+  }
+  const changeSkill = e => {
+    console.log(e);
+    console.log('skills edit button changed');
+  }
+  const changeExperience = e => {
+    console.log(e);
+    console.log('experience edit button clicked');
+  }
+  const changeEducation = e => {
+    console.log(e);
+    console.log('education edit button changed');
+  }
   if (user && user.experience === null) {
     return (
       <DashboardActions />
@@ -22,7 +38,7 @@ const Profile = ({
     return (
       <Fragment>
         { profile !== null ?
-          (<div className="container row">
+          (<div className="container1 row">
             <div className="profileLeftPane bg-white shadow-9 rounded-4">
               <div className="px-5 py-11 text-center border-bottom border-mercury">
                 <div style={ { display: "inline-block" } } className="mb-4">
@@ -74,11 +90,14 @@ const Profile = ({
               <div className="tab-content">
                 <div className="tab-pane fade show active">
                   <div className="pr-xl-0 pr-xxl-14 p-5 px-xs-12 pt-7 pb-5">
-                    <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">About</h4>
+                    <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">About 
+                      <span onClick={ e => changeAbout(e) } style={ { marginLeft: '10px', cursor: "pointer" } }><i className="fas fa-edit" ></i></span></h4>
                     <p className="font-size-4 mb-8">{ profile.about }</p>
                   </div>
                   <div className="border-top pr-xl-0 pr-xxl-14 p-5 pl-xs-12 pt-7 pb-5">
-                    <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">Skills</h4>
+                    <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">Skills
+                      <span onClick = {e => changeSkill(e)} style={ { marginLeft: '10px', cursor:"pointer" } }><i className="fas fa-edit"></i></span>
+                    </h4>
                     <ul className="list-unstyled d-flex align-items-center flex-wrap">
                       { profile.skills.map((item, index) => {
                         return (
@@ -93,7 +112,9 @@ const Profile = ({
                     </ul>
                   </div>
                   <div className="border-top p-5 pl-xs-12 pt-7 pb-5">
-                    <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">Experience</h4>
+                    <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">Experience
+                      <span onClick={ e => changeExperience(e) } style={ { marginLeft: '10px', cursor: "pointer" } }><i className="fas fa-edit"></i></span>
+                    </h4>
                     {
                       profile.experience.map((item, index) => {
                         return (
@@ -125,7 +146,9 @@ const Profile = ({
                   </div>
                   {/* change experience with education */ }
                   <div className="border-top p-5 pl-xs-12 pt-7 pb-5">
-                    <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">Education</h4>
+                    <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">Education
+                      <span onClick={ e => changeEducation(e) } style={ { marginLeft: '10px', cursor: "pointer" } }><i className="fas fa-edit"></i></span>
+                    </h4>
                     {
                       profile.experience.map((item, index) => {
                         return (

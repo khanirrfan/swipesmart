@@ -2,8 +2,8 @@ import React from 'react'
 
 const CompanyProfile = () => {
     return (
-        <div className="bg-default-2 pt-16 pt-lg-22 pb-lg-27">
-            <div className="container">
+        <div className=" pt-16 pt-lg-22 pb-lg-27">
+            <div className="container1">
                 <div className="row">
                     <div className="col-12 col-xl-9 col-lg-8">
                         <div className="bg-white rounded-4 pt-11 shadow-9">

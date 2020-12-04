@@ -5,6 +5,7 @@ import Spinner from '../layout/Spinner';
 import JobItem from './jobItem';
 import { getJobs, getMatchPercent } from '../../actions/jobs';
 import CheckBox from '../shared/Checkbox.js';
+import Select from 'react-select'
 
 const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
   useEffect(() => {
@@ -65,59 +66,96 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
   const [show, setShow] = useState(false);
   const showDescription = (item, e) => {
     e.preventDefault();
-    setShow( true);
+    setShow(true);
   }
+  const aquaticCreatures = [
+    { label: 'Shark', value: 'Shark' },
+    { label: 'Dolphin', value: 'Dolphin' },
+    { label: 'Whale', value: 'Whale' },
+    { label: 'Octopus', value: 'Octopus' },
+    { label: 'Crab', value: 'Crab' },
+    { label: 'Lobster', value: 'Lobster' },
+  ];
   return (
-    <div className="row">
-      <div className="leftpane ">
-      <div className="container-left">
-        <h4 className=" m-1"> Job Types </h4>
-        <ul className="m-1">
-          {
-            jobTypes.types.map((jobType, index) => {
-              return (<CheckBox key={ index } handleCheckChieldElement={ e => handleCheckTypeElement(e) }  { ...jobType } />)
-            })
-          }
-        </ul>
+    <div className="">
+   {/* <div className="row" style={{marginLeft:'20%', marginBottom:'1%'}}>
+    <div className="Select">
+          <Select options={ aquaticCreatures } onChange={ opt => console.log(opt.label, opt.value) } />
+    </div>
+        <div className="Select">
+          <Select options={ aquaticCreatures } onChange={ opt => console.log(opt.label, opt.value) } />
+        </div>
+        <div className="Select">
+          <Select options={ aquaticCreatures } onChange={ opt => console.log(opt.label, opt.value) } />
+        </div>
+        <div className="Select">
+          <Select options={ aquaticCreatures } onChange={ opt => console.log(opt.label, opt.value) } />
+        </div>
+  </div>*/}
+       <div className="leftpane ">
+        <div className="container-left">
+          <h4 className=" m-1"> Job Types </h4>
+          <ul className="m-1">
+            {
+              jobTypes.types.map((jobType, index) => {
+                return (<CheckBox key={ index } handleCheckChieldElement={ e => handleCheckTypeElement(e) }  { ...jobType } />)
+              })
+            }
+          </ul>
 
-        <h4 className="m-1"> Salary Range</h4>
-        <h4 className="m-1"> Experience Level</h4>
-        <ul className="m-1">
-          {
-            expLevel.level.map((level, index) => {
-              return (<CheckBox key={ index } handleCheckChieldElement={ e => handleCheckExpElement(e) }  { ...level } />)
-            })
-          }
-        </ul>
-        <h4 className="m-1">Posted time</h4>
-        <ul className="m-1">
-          {
-            posted.duration.map((duration, index) => {
-              return (<CheckBox key={ index } handleCheckChieldElement={ e => handleCheckdurationElement(e) }  { ...duration } />)
-            })
-          }
-        </ul>
+          <h4 className="m-1"> Salary Range</h4>
+          <h4 className="m-1"> Experience Level</h4>
+          <ul className="m-1">
+            {
+              expLevel.level.map((level, index) => {
+                return (<CheckBox key={ index } handleCheckChieldElement={ e => handleCheckExpElement(e) }  { ...level } />)
+              })
+            }
+          </ul>
+          <h4 className="m-1">Posted time</h4>
+          <ul className="m-1">
+            {
+              posted.duration.map((duration, index) => {
+                return (<CheckBox key={ index } handleCheckChieldElement={ e => handleCheckdurationElement(e) }  { ...duration } />)
+              })
+            }
+          </ul>
         </div>
       </div>
       <div className="middlepane">
+        <div className="row" >
+          <div className="Select">
+            <Select options={ aquaticCreatures } onChange={ opt => console.log(opt.label, opt.value) } />
+          </div>
+          <div className="Select">
+            <Select options={ aquaticCreatures } onChange={ opt => console.log(opt.label, opt.value) } />
+          </div>
+          <div className="Select">
+            <Select options={ aquaticCreatures } onChange={ opt => console.log(opt.label, opt.value) } />
+          </div>
+          <div className="Select">
+            <Select options={ aquaticCreatures } onChange={ opt => console.log(opt.label, opt.value) } />
+          </div>
+        </div>
         { loading ? (
           <Spinner />
         ) : (
             <Fragment>
-                {
-                  jobs && jobs.length > 0 ? (
-                    jobs.map(item => {
-                      return (<JobItem showDescription={ (e) => showDescription(item,e) } key={ item._id } item={ item } />)
-                    })
-                  ) : (
-                      <h4>No jobs found...</h4>
-                    ) }
+              {
+                jobs && jobs.length > 0 ? (
+                  jobs.map(item => {
+                    return (<JobItem showDescription={ (e) => showDescription(item, e) } key={ item._id } item={ item } />)
+                  })
+                ) : (
+                    <h4>No jobs found...</h4>
+                  ) }
             </Fragment>
           ) }
       </div>
       { show && <div className="rightpane">
-          <div className="jobs bg-white p-1 my-2" >
-            <div className="jobDetails" >
+        <div className="jobs bg-white p-1 my-2" >
+          <div className="jobDetails" >
+            <div className="border-bottom border-width-1 border-default-color">
               <div className="row p-1">
                 <div className="company-logo">
                   company-logo
@@ -140,12 +178,12 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
                   Save Job
               </button>
               </div>
-              <hr></hr>
             </div>
-          </div>          
-        
-      </div> 
-    }
+          </div>
+        </div>
+
+      </div>
+      }
     </div>
   );
 };

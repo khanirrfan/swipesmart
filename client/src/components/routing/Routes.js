@@ -22,15 +22,18 @@ import PrivateRoute from '../routing/PrivateRoute';
 import CreateJobs from '../jobs/createJobs';
 import { connect } from 'react-redux';
 import CompanyProfile from '../company/companyProfile';
+import UserDashboard from '../dashboard/UserDashboard';
 
 const Routes = ({ auth: { user } }) => {
+  console.log(user);
   return (
     <section className='container1'>
       <Alert />
       <Switch>
 
         <Route exact path='/register' component={ Register } />
-        <Route exact path='/companyProfile' component={CompanyProfile} />
+        <Route exact path='/companyProfile' component={ CompanyProfile } />
+        <PrivateRoute exact path='/userDashboard' component={ UserDashboard } />
         <Route exact path='/login' component={ Login } />
         <Route exact path='/profiles' component={ Profiles } />
         <Route exact path='/profile/:id' component={ Profile } />

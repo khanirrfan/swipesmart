@@ -8,15 +8,13 @@ import (
 	"log"
 	"net/http"
 
-	"go.mongodb.org/mongo-driver/mongo/options"
-
 	"github.com/gorilla/mux"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 
 	"github.com/swipesmart/config/db"
-	"go.mongodb.org/mongo-driver/bson"
-
 	"github.com/swipesmart/model"
 )
 
@@ -42,6 +40,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	collection := dbConnection.Collection("success_story")
 	userID, err := primitive.ObjectIDFromHex(uID)
 	posts.UID = userID
+	fmt.Println(posts)
 	cursor, err := collection.InsertOne(context.Background(), posts)
 	if err != nil {
 		log.Fatal(err)
