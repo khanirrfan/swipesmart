@@ -15,19 +15,15 @@ const Profile = ({
   }, [getProfileByID, match.params.id]);
 
   const changeAbout = e => {
-    console.log(e);
     console.log('about edit button clicked');
   }
   const changeSkill = e => {
-    console.log(e);
     console.log('skills edit button changed');
   }
   const changeExperience = e => {
-    console.log(e);
     console.log('experience edit button clicked');
   }
   const changeEducation = e => {
-    console.log(e);
     console.log('education edit button changed');
   }
   if (user && user.experience === null) {
