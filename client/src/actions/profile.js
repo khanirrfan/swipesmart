@@ -55,6 +55,7 @@ export const getProfileByID = userId => async dispatch => {
     if(Object.keys(res.data).length === 0){
       return res.data = null;
     }
+    // debugger;
     dispatch({
       type: GET_USER_PROFILE,
       payload: res.data
@@ -88,8 +89,10 @@ export const getGithubRepos = username => async dispatch => {
 export const createProfile = (
   formData,
   history,
+  id,
   edit = false
 ) => async dispatch => {
+  console.log(formData);
   try {
     const config = {
       headers: {
@@ -97,7 +100,7 @@ export const createProfile = (
       }
     };
 
-    const res = await axios.post('/api/profile', formData, config);
+    const res = await axios.post(`/update-profile/${id}`, formData, config);
 
     dispatch({
       type: GET_PROFILE,
@@ -106,9 +109,9 @@ export const createProfile = (
 
     dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success'));
 
-    if (!edit) {
-      history.push('/dashboard');
-    }
+    // if (!edit) {
+    //   history.push('/dashboard');
+    // }
   } catch (err) {
     const errors = err.response.data.errors;
 

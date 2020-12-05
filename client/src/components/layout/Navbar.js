@@ -99,7 +99,8 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
         </Link>
       </h1>
       { !loading && (
-        <Fragment>{ (user && isAuthenticated && user.type === 'employe') ? authLinks : orgLinks }</Fragment>
+
+        <Fragment>{ (user && isAuthenticated && (user.type === 'employee')) ? authLinks : orgLinks }</Fragment>
       ) }
       { loading &&(
         <Fragment>

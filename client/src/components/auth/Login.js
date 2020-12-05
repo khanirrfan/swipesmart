@@ -9,18 +9,17 @@ const Login = ({ login, isAuthenticated, auth: { user } }) => {
     const [formData, setFormData] = useState({
         username: '',
         email: '',
-        password: '',
-        type: ''
+        password: ''
     });
 
-    const { username, email, password, type } = formData;
+    const { username, email, password } = formData;
 
     const onChange = e =>
         setFormData({...formData, [e.target.name]: e.target.value });
 
     const onSubmit = async e => {
         e.preventDefault();
-        login(username, email, password, type);
+        login(username, email, password);
     };
 
     if (isAuthenticated && user) {

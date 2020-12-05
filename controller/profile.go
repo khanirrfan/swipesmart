@@ -124,7 +124,7 @@ func GetProfileByID(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal("Invalid ObjectID")
 	}
-	var userProfile model.PersonalProfile
+	var userProfile model.Getuser
 	if token.Valid {
 		err = collection.FindOne(context.TODO(), bson.M{"_id": userID}).Decode(&userProfile)
 		if err != nil {

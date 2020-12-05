@@ -13,30 +13,29 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
   }, [getJobs]);
   const [jobTypes, setJobTypes] = useState({
     types: [
-      { id: 0, value: 'value0', isChecked: true },
-      { id: 1, value: 'value1', isChecked: false },
-      { id: 2, value: 'value2', isChecked: false },
-      { id: 3, value: 'value3', isChecked: false }
+      { id: 0, value: 'value0', label: 'Marketing', name: 'type', isChecked: true },
+      { id: 1, value: 'value1', label: 'Engineering', name:'type', isChecked: false },
+      { id: 2, value: 'value2', label: 'Humar resource', name:'type', isChecked: false },
+      { id: 3, value: 'value3', label: 'Executive', name: 'type', isChecked: false }
     ]
   })
   const [expLevel, setexpLevel] = useState({
     level: [
-      { id: 0, value: 'All', isChecked: true },
-      { id: 1, value: 'Senior', isChecked: false },
-      { id: 2, value: 'Mid', isChecked: false },
-      { id: 3, value: 'Junior', isChecked: false }
+      { id: 0, value: 'All', label: 'All', name: 'type',isChecked: true },
+      { id: 1, value: 'Senior', label: 'Senior', name: 'type', isChecked: false },
+      { id: 2, value: 'Mid', label: 'Mid', name: 'type',  isChecked: false },
+      { id: 3, value: 'Junior', label: 'Junior', name: 'type', isChecked: false }
     ]
   })
   const [posted, setposted] = useState({
     duration: [
-      { id: 0, value: 'All', isChecked: true },
-      { id: 1, value: 'Senior', isChecked: false },
-      { id: 2, value: 'Mid', isChecked: false },
-      { id: 3, value: 'Junior', isChecked: false }
+      { id: 0, value: 'All', label: '', name: 'type', isChecked: true },
+      { id: 1, value: 'Senior', label: '', name: 'type', isChecked: false },
+      { id: 2, value: 'Mid', label: '', name: 'type', isChecked: false },
+      { id: 3, value: 'Junior', label: '', name: 'type', isChecked: false }
     ]
   })
   const handleCheckTypeElement = (e) => {
-
     let types = jobTypes.types
     types.map(jobType => {
       if (jobType.value === e.target.value)

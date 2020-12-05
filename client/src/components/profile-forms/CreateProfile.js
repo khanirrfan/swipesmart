@@ -8,21 +8,12 @@ const CreateProfile = ({
   createProfile,
   // getCurrentProfile,
   profile: { profile, loading },
+  auth:{user},
   history
 }) => {
+  console.log(user._id);
   const [formData, setFormData] = useState({
-    company: '',
-    website: '',
-    location: '',
-    status: '',
-    skills: '',
-    githubusername: '',
-    bio: '',
-    twitter: '',
-    facebook: '',
-    linkedin: '',
-    youtube: '',
-    instagram: ''
+    About:'',
   });
 
   const onChange = e =>
@@ -30,26 +21,45 @@ const CreateProfile = ({
 
   const onSubmit = e => {
     e.preventDefault();
-    createProfile(formData, history);
+    console.log(formData, history);
+    createProfile(formData, history, user._id);
   };
 
   useEffect(() => {
     // getCurrentProfile();
   });
-
+  const [aboutField, setAboutField] = useState(false)
   const addAbout = () => {
     console.log('adding');
-
+    setAboutField(!aboutField)
   }
+
+
   return (
       <Fragment>
         <div className="profileMiddlePane bg-white rounded-4 shadow-9">
           <div className="tab-content">
             <div className="tab-pane fade show active">
               <div className="pr-xl-0 pr-xxl-14 p-5 px-xs-12 pt-7 pb-5">
-                <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">Add about yourself
-                  <span onClick={ () => addAbout() } style={ { marginLeft: '10px', cursor: "pointer" } }><i className="fa fa-plus-circle" aria-hidden="true" ></i></span>
-                </h4>
+                { !aboutField &&
+                  <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">Add about yourself
+                    <span onClick={ () => addAbout() } style={ { marginLeft: '10px', cursor: "pointer" } }><i className="fa fa-plus-circle" aria-hidden="true" ></i></span>
+                  </h4>
+                }
+                { aboutField &&
+                  <Fragment>
+                    <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">About</h4>
+                    <form onSubmit={ onSubmit }>
+                  <textarea 
+                    name='About'
+                    style={{ width:'-webkit-fill-available'}} 
+                    value={formData.About} 
+                    onChange={ e => onChange(e) } rows="10" 
+                    />
+                  <button type="submit" > Save </button>
+                    </form>
+                </Fragment>
+                }
               </div>
             </div>
           </div>
@@ -244,9 +254,11 @@ const CreateProfile = ({
 CreateProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
   // getCurrentProfile: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  auth:PropTypes.object.isRequired,
 };
 const mapStateToProps = state => ({
+  auth:state.auth,
   profile: state.profile
 });
 export default connect(mapStateToProps, { createProfile })(

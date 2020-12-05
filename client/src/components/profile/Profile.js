@@ -4,6 +4,10 @@ import { connect } from 'react-redux';
 import DashboardActions from '../dashboard/DashboardActions';
 import { getProfileByID } from '../../actions/profile';
 import CreateProfile from '../profile-forms/CreateProfile';
+import ProfileAbout from './ProfileAbout';
+import ProfileSkills from './ProfileSkills';
+import ProfileExperience from './ProfileExperience';
+import ProfileEducation from './ProfileEducation';
 
 const Profile = ({
   profile: { profile, loading },
@@ -12,7 +16,15 @@ const Profile = ({
   getProfileByID
 }) => {
   const [aboutEdit, setAboutEdit] = useState(true)
-  const [formData, setFormData] = useState(initialState);
+  const [addSkills, setAddSkills] = useState(true)
+  const [formData, setFormData] = useState({
+    profile:{
+    about:'',
+    skills:'',
+    education:[],
+    experience:[]
+  }
+  });
   useEffect(() => {
     getProfileByID(match.params.id);
   }, [getProfileByID, match.params.id]);
@@ -22,6 +34,7 @@ const Profile = ({
   }
   const changeSkill = e => {
     console.log('skills edit button changed');
+    setAddSkills(!addSkills)
   }
   const changeExperience = e => {
     console.log('experience edit button clicked');
@@ -31,9 +44,12 @@ const Profile = ({
   }
   const handleChange = e => {
     console.log('hello change')
+    setFormData({...formData, [e.target.name]:e.target.value});
   }
   const onSubmit = e => {
     e.preventDefault();
+    setAboutEdit(!aboutEdit)
+    setAddSkills(!addSkills)
   };
 
   // if (user === null) {
@@ -91,112 +107,64 @@ const Profile = ({
             </div>
           </div>
         </div>
-        { profile !== null ?
+        { profile !== null &&
           (
             <div className="profileMiddlePane bg-white rounded-4 shadow-9">
               <div className="tab-content">
                 <div className="tab-pane fade show active">
                   <div className="pr-xl-0 pr-xxl-14 p-5 px-xs-12 pt-7 pb-5">
                     <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">About
-                      <span onClick={ e => changeAbout(e) } style={ { marginLeft: '10px', cursor: "pointer" } }><i className="fas fa-edit" ></i></span></h4>
-                    { aboutEdit &&
-                      <p className="font-size-4 mb-8">{ profile.about }</p>
-                    }
-                    { !aboutEdit &&
-                      <form onSubmit={ onSubmit }>
-                        <input type="text" value={ profile.about } onChange={ handleChange } />
-                        <button type="button" > Save </button>
-                      </form>
-                    }
+                      <span onClick={ e => changeAbout(e) } style={ { marginLeft: '10px', cursor: "pointer" } }><i className="fas fa-edit" ></i></span>
+                      </h4>
+                      { aboutEdit &&
+                        <ProfileAbout profile ={profile}/>
+                      }
+                      { !aboutEdit &&
+                        <form onSubmit ={onSubmit}> 
+                          <textarea value={ profile.about } onChange={ handleChange } style={ {   width:'-webkit-fill-available'}} name = "about" rows="5"/>
+                          <input type="submit" value="Save"/>
+                        </form>
+                      }
                   </div>
+                  </div>
+              <div className="tab-pane fade show active">
                   <div className="border-top pr-xl-0 pr-xxl-14 p-5 pl-xs-12 pt-7 pb-5">
                     <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">Skills
                       <span onClick={ e => changeSkill(e) } style={ { marginLeft: '10px', cursor: "pointer" } }><i className="fas fa-edit"></i></span>
                     </h4>
                     <ul className="list-unstyled d-flex align-items-center flex-wrap">
-                      { profile.skills.map((item, index) => {
-                        return (
-                          <li className="" key={ index }>
-                            <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">{ item }
-                            </a>
-                          </li>
-                        )
-                      })
+                      { addSkills && 
+                        <ProfileSkills profile= { profile }/>
                       }
+                    { !addSkills &&
+                      <form onSubmit={ onSubmit }>
+                        <textarea value={ profile.skills } onChange={ handleChange } style={{ width: '-webkit-fill-available' }} name="skills" rows="5" />
+                        <input type="submit" value="Save" />
+                      </form>
+                    }
                     </ul>
                   </div>
+                  </div>
+              <div className="tab-pane fade show active">
                   <div className="border-top p-5 pl-xs-12 pt-7 pb-5">
                     <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">Experience
                       <span onClick={ e => changeExperience(e) } style={ { marginLeft: '10px', cursor: "pointer" } }><i className="fas fa-edit"></i></span>
                     </h4>
-                    {
-                      profile.experience.map((item, index) => {
-                        return (
-                          <div className="w-100" key={ index }>
-                            <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                              <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
-                                <img src="" alt="logo" />
-                              </div>
-                              <div className="w-100 mt-n2">
-                                <h3 className="mb-0">
-                                  <a className="font-size-6 text-black-2 font-weight-semibold">
-                                    { item.title }
-                                  </a>
-                                </h3>
-                                <a className="font-size-4 text-default-color line-height-2">{ item.company }</a>
-                                <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                                  <a href="" className="font-size-4 text-gray mr-5">{ item.period }</a>
-                                  <a href="" className="font-size-3 text-gray"><span className="mr-4" style={ { marginTop: '2px' } }>
-                                    <img src="" />
-                                    { item.location }
-                                  </span></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>)
-                      })
-
-                    }
+                      <ProfileExperience profile = {profile}/>
+                  </div>
                   </div>
                   {/* change experience with education */ }
+              <div className="tab-pane fade show active">
                   <div className="border-top p-5 pl-xs-12 pt-7 pb-5">
                     <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">Education
                       <span onClick={ e => changeEducation(e) } style={ { marginLeft: '10px', cursor: "pointer" } }><i className="fas fa-edit"></i></span>
                     </h4>
-                    {
-                      profile.experience.map((item, index) => {
-                        return (
-                          <div className="w-100" key={ index }>
-                            <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                              <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
-                                <img src="" alt="logo" />
-                              </div>
-                              <div className="w-100 mt-n2">
-                                <h3 className="mb-0">
-                                  <a className="font-size-6 text-black-2 font-weight-semibold">
-                                    { item.title }
-                                  </a>
-                                </h3>
-                                <a className="font-size-4 text-default-color line-height-2">{ item.company }</a>
-                                <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                                  <a className="font-size-4 text-gray mr-5">{ item.period }</a>
-                                  <a className="font-size-3 text-gray"><span className="mr-4" style={ { marginTop: '2px' } }>
-                                    <img src="" />
-                                    { item.location }
-                                  </span></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>)
-                      })
-
-                    }
+                      <ProfileEducation profile = {profile}/>
+                  </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ) : (
-            <CreateProfile />
+            // </div>
           )
         }
         <div className="profileRightPane">hello 3 test</div>
