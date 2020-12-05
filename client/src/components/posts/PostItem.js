@@ -10,18 +10,22 @@ const PostItem = ({
   removeLike,
   deletePost,
   auth,
-  post: { _id, text, name, avatar, user, likes, comments, date },
+  post: { _id, _uid, post,likes, comments, date },
   showActions
-}) => (
+}) => {
+  console.log(showActions);
+  console.log(likes);
+  console.log(comments);
+  return (
   <div className='post bg-white p-1 my-1'>
     <div>
-      <Link to={`/profile/${user}`}>
-        <img className='round-img' src={avatar} alt='' />
-        <h4>{name}</h4>
+      <Link to={`/profile/${auth.user.username}`}>
+        <img className='round-img' alt='' />
+        <h4>{auth.user.username}</h4>
       </Link>
     </div>
     <div>
-      <p className='my-1'>{text}</p>
+      <p className='my-1'>{post}</p>
       <p className='post-date'>
         Posted on <Moment format='YYYY/MM/DD'>{date}</Moment>
       </p>
@@ -34,7 +38,7 @@ const PostItem = ({
             className='btn btn-light'
           >
             <i className='fas fa-thumbs-up' />{' '}
-            <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
+            <span>{likes !== undefined && likes.length > 0 && <span>{likes.length}</span>}</span>
           </button>
           <button
             onClick={() => removeLike(_id)}
@@ -45,11 +49,11 @@ const PostItem = ({
           </button>
           <Link to={`/posts/${_id}`} className='btn btn-primary'>
             Discussion{' '}
-            {comments.length > 0 && (
+            {comments !== undefined && comments.length > 0 && (
               <span className='comment-count'>{comments.length}</span>
             )}
           </Link>
-          {!auth.loading && user === auth.user._id && (
+          {!auth.loading && _uid === auth.user._id && (
             <button
               onClick={() => deletePost(_id)}
               type='button'
@@ -59,10 +63,11 @@ const PostItem = ({
             </button>
           )}
         </Fragment>
-      )}
+          )}
     </div>
   </div>
-);
+)
+};
 
 PostItem.defaultProps = {
   showActions: true

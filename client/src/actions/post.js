@@ -14,7 +14,7 @@ import {
 // Get posts
 export const getPosts = () => async dispatch => {
   try {
-    const res = await axios.get('/api/posts');
+    const res = await axios.get('/posts/get');
 
     dispatch({
       type: GET_POSTS,
@@ -23,7 +23,7 @@ export const getPosts = () => async dispatch => {
   } catch (err) {
     dispatch({
       type: POST_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err.statusText, status: err.status }
     });
   }
 };
@@ -82,7 +82,8 @@ export const deletePost = id => async dispatch => {
 };
 
 // Add post
-export const addPost = formData => async dispatch => {
+export const addPost = (formData) => async dispatch => {
+  console.log(formData)
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -90,7 +91,7 @@ export const addPost = formData => async dispatch => {
   };
 
   try {
-    const res = await axios.post('/api/posts', formData, config);
+    const res = await axios.post(`/post/create/${formData.user._id}`, formData, config);
 
     dispatch({
       type: ADD_POST,
@@ -101,7 +102,7 @@ export const addPost = formData => async dispatch => {
   } catch (err) {
     dispatch({
       type: POST_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err.statusText, status: err.status }
     });
   }
 };

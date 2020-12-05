@@ -23,6 +23,7 @@ import CreateJobs from '../jobs/createJobs';
 import { connect } from 'react-redux';
 import CompanyProfile from '../company/companyProfile';
 import UserDashboard from '../dashboard/UserDashboard';
+import Community from '../Community/Community';
 
 const Routes = ({ auth: { user } }) => {
   console.log(user);
@@ -37,6 +38,7 @@ const Routes = ({ auth: { user } }) => {
         <Route exact path='/login' component={ Login } />
         <Route exact path='/profiles' component={ Profiles } />
         <Route exact path='/profile/:id' component={ Profile } />
+        <PrivateRoute exact path = '/community' component = {Community} />
         <PrivateRoute exact path='/getProfileByID/:id' component={ Profile } />
         <PrivateRoute exact path='/create-profile' component={ CreateProfile } />
         <PrivateRoute exact path='/edit-profile/:id' component={ EditProfile } />

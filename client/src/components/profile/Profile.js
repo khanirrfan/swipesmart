@@ -167,7 +167,7 @@ const Profile = ({
             // </div>
           )
         }
-        <div className="profileRightPane">hello 3 test</div>
+        <div className="profileRightPane bg-white rounded-4 shadow-9">hello 3 test</div>
       </div>
     </Fragment>
   );

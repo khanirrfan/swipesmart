@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addPost } from '../../actions/post';
 
-const PostForm = ({ addPost }) => {
-  const [text, setText] = useState('');
+const PostForm = ({ addPost, auth:{user} }) => {
+  console.log(user);
+  const [post, setPost] = useState('');
 
   return (
     <div className='post-form'>
@@ -15,16 +16,16 @@ const PostForm = ({ addPost }) => {
         className='form my-1'
         onSubmit={e => {
           e.preventDefault();
-          addPost({ text });
-          setText('');
+          addPost({ post, user });
+          setPost('');
         }}>
         <textarea
-          name='text'
+          name='post'
           cols='30'
           rows='5'
           placeholder='Create a post'
-          value={text}
-          onChange={e => setText(e.target.value)}
+          value={post}
+          onChange={e => setPost(e.target.value)}
           required/>
         <input type='submit' className='btn btn-dark my-1' value='Submit'/>
       </form>
@@ -33,10 +34,15 @@ const PostForm = ({ addPost }) => {
 };
 
 PostForm.propTypes = {
-  addPost: PropTypes.func.isRequired
+  addPost: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
+const mapStateToProps = state => ({
+  auth:state.auth
+})
+
 export default connect(
-  null,
+  mapStateToProps,
   { addPost }
 )(PostForm);
