@@ -8,18 +8,18 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gorilla/mux"
-
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/swipesmart/config/db"
-	"github.com/swipesmart/model"
+	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
+
+	"github.com/swipesmart/config/db"
+	"github.com/swipesmart/model"
 )
 
-// ProfileHandler ... calls when application loads first time or every time
-func ProfileHandler(w http.ResponseWriter, r *http.Request) {
+// GetProfile ... calls when application loads first time or every time
+func GetProfile(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	tokenString := r.Header.Get("Authorization")
 
@@ -124,7 +124,7 @@ func GetProfileByID(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal("Invalid ObjectID")
 	}
-	var userProfile model.Getuser
+	var userProfile model.PersonalProfile
 	if token.Valid {
 		err = collection.FindOne(context.TODO(), bson.M{"_id": userID}).Decode(&userProfile)
 		if err != nil {

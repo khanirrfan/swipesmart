@@ -49,6 +49,7 @@ const Routes = ({ auth: { user } }) => {
         <PrivateRoute exact path='/rejectedJobs/:id' component={ RejectedJobs } />
         <PrivateRoute exact path='/savedJobs/:id' component={ SavedJobs } />
         <PrivateRoute exact path='/createJobs' component={ CreateJobs } />
+        <PrivateRoute exact path='/createProfile' component={ CreateProfile } />
         <Route component={ NotFound } />
 
       </Switch>

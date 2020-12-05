@@ -16,7 +16,7 @@ func main() {
 	r.HandleFunc("/login", controller.LoginHandler).Methods("POST")
 
 	// user profile
-	r.HandleFunc("/profile", controller.ProfileHandler).Methods("GET")
+	r.HandleFunc("/profile", controller.GetProfile).Methods("GET")
 	r.HandleFunc("/profiles", controller.GetProfiles).Methods("GET")
 	r.HandleFunc("/getProfileByID/{id}", controller.GetProfileByID).Methods("GET")
 	r.HandleFunc("/update-profile/{id}", controller.UpdateProfile).Methods("POST")

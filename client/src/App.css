@@ -321,6 +321,7 @@ a.hover-bg-green {
 
 .profileMiddlePane {
   width: 60%;
+  min-height: 100vh;
   height: 100%;
   float: left;
   border: 1px solid;
@@ -352,6 +353,9 @@ a.hover-bg-green {
 /* .tab-content > .tab-pane {
     display: none;
 } */
+.tab-pane {
+  min-height: 25vh;
+}
 .fade {
   transition: opacity 0.15s linear;
 }

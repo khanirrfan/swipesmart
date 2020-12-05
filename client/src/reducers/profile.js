@@ -18,7 +18,14 @@ const initialState = {
 
 export default function(state = initialState, action) {
 	const { type, payload } = action;
-
+	// console.log('payload:', action);
+	// console.log(typeof(action.payload))
+	// for (var key in action.payload) {
+	// 	if (!hasOwnProperty.call(action.payload, key)) {
+	// 		console.log('empty')
+	// 		return action.payload = null;
+	// 	};
+	// }
 	switch (type) {
 		case GET_PROFILE:
 		case UPDATE_PROFILE:

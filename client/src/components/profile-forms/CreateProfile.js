@@ -6,7 +6,7 @@ import { createProfile, getCurrentProfile } from '../../actions/profile';
 
 const CreateProfile = ({
   createProfile,
-  getCurrentProfile,
+  // getCurrentProfile,
   profile: { profile, loading },
   history
 }) => {
@@ -25,23 +25,6 @@ const CreateProfile = ({
     instagram: ''
   });
 
-  const [displaySocialInputs, toggleSocialInputs] = useState(false);
-
-  const {
-    company,
-    website,
-    location,
-    status,
-    skills,
-    githubusername,
-    bio,
-    twitter,
-    facebook,
-    linkedin,
-    youtube,
-    instagram
-  } = formData;
-
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -51,20 +34,47 @@ const CreateProfile = ({
   };
 
   useEffect(() => {
-    getCurrentProfile();
-  }, [getCurrentProfile]);
+    // getCurrentProfile();
+  });
 
-  return loading && profile === null ? (
-    <Redirect to="/dashboard" />
-  ) : (
+  const addAbout = () => {
+    console.log('adding');
+
+  }
+  return (
       <Fragment>
-        <h1 className="large text-primary">Create Your Profile</h1>
-        <p className="lead">
-          <i className="fas fa-user" /> Let's get some information to make your
-        profile stand out
-      </p>
-        <small>* = required field</small>
-        <form className="form" onSubmit={ onSubmit }>
+        <div className="profileMiddlePane bg-white rounded-4 shadow-9">
+          <div className="tab-content">
+            <div className="tab-pane fade show active">
+              <div className="pr-xl-0 pr-xxl-14 p-5 px-xs-12 pt-7 pb-5">
+                <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">Add about yourself
+                  <span onClick={ () => addAbout() } style={ { marginLeft: '10px', cursor: "pointer" } }><i className="fa fa-plus-circle" aria-hidden="true" ></i></span>
+                </h4>
+              </div>
+            </div>
+          </div>
+        <div className="tab-pane fade show active">
+          <div className="border-top pr-xl-0 pr-xxl-14 p-5 pl-xs-12 pt-7 pb-5">
+            <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">Add your Skills
+              <span style={ { marginLeft: '10px', cursor: "pointer" } }><i className="fa fa-plus-circle" aria-hidden="true"></i></span>
+            </h4>
+          </div>
+          </div>
+        <div className="tab-pane fade show active">
+          <div className="border-top p-5 pl-xs-12 pt-7 pb-5">
+            <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">Experience
+                        <span style={ { marginLeft: '10px', cursor: "pointer" } }><i className="fa fa-plus-circle" aria-hidden="true"></i></span>
+            </h4>
+          </div>
+          </div>
+        <div className="tab-pane fade show active">
+          <div className="border-top p-5 pl-xs-12 pt-7 pb-5">
+            <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">Education
+                          <span style={ { marginLeft: '10px', cursor: "pointer" } }><i className="fa fa-plus-circle" aria-hidden="true"></i></span>
+            </h4>
+          </div>
+        </div>
+        {/*<form className="form" onSubmit={ onSubmit }>
           <div className="form-group">
             <select name="status" value={ status } onChange={ onChange }>
               <option value="0">* Select Professional Status</option>
@@ -224,20 +234,21 @@ const CreateProfile = ({
           <input type="submit" className="btn btn-primary my-1" />
           <Link className="btn btn-light my-1" to="/dashboard">
             Go Back
-        </Link>
-        </form>
+          </Link>
+          </form>*/}
+          </div>
       </Fragment>
     );
 };
 
 CreateProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
-  getCurrentProfile: PropTypes.func.isRequired,
+  // getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
   profile: state.profile
 });
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
+export default connect(mapStateToProps, { createProfile })(
   withRouter(CreateProfile)
 );
