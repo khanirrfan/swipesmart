@@ -18,12 +18,10 @@ const Profile = ({
   const [aboutEdit, setAboutEdit] = useState(true)
   const [addSkills, setAddSkills] = useState(true)
   const [formData, setFormData] = useState({
-    profile:{
     about:'',
     skills:'',
     education:[],
     experience:[]
-  }
   });
   useEffect(() => {
     getProfileByID(match.params.id);
@@ -42,8 +40,9 @@ const Profile = ({
   const changeEducation = e => {
     console.log('education edit button changed');
   }
-  const handleChange = e => {
-    console.log('hello change')
+  const onChange = e => {
+    // console.log('hello change', e.target.name, e.target.value)
+    console.log(formData);
     setFormData({...formData, [e.target.name]:e.target.value});
   }
   const onSubmit = e => {
@@ -121,7 +120,7 @@ const Profile = ({
                       }
                       { !aboutEdit &&
                         <form onSubmit ={onSubmit}> 
-                          <textarea value={ profile.about } onChange={ handleChange } style={ {   width:'-webkit-fill-available'}} name = "about" rows="5"/>
+                          <input type="text" value={ profile.about } onChange={ onChange } style={ {   width:'-webkit-fill-available'}} name = "about" rows={5}/>
                           <input type="submit" value="Save"/>
                         </form>
                       }
@@ -138,7 +137,7 @@ const Profile = ({
                       }
                     { !addSkills &&
                       <form onSubmit={ onSubmit }>
-                        <textarea value={ profile.skills } onChange={ handleChange } style={{ width: '-webkit-fill-available' }} name="skills" rows="5" />
+                        <textarea value = { profile.skills } onChange={ onChange } style={{ width: '-webkit-fill-available' }} name="skills" rows= {5} />
                         <input type="submit" value="Save" />
                       </form>
                     }

@@ -40,7 +40,16 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	collection := dbConnection.Collection("success_story")
 	userID, err := primitive.ObjectIDFromHex(uID)
 	posts.UID = userID
-	fmt.Println(posts)
+
+	// find the user by uiD
+	userCollection := dbConnection.Collection("user")
+	var userProfile model.Getuser
+	err = userCollection.FindOne(context.TODO(), bson.M{"_id": userID}).Decode(&userProfile)
+	if err != nil {
+		fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
+	}
+	posts.Name = userProfile.Username
+	// insert post
 	cursor, err := collection.InsertOne(context.Background(), posts)
 	if err != nil {
 		log.Fatal(err)

@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { getPosts } from '../../actions/post';
 import { connect } from 'react-redux';
 import PostItem from '../posts/PostItem';
-import PostForm  from '../posts/PostForm';
+import PostForm from '../posts/PostForm';
 
 
 const Community = ({
     getPosts,
-    post:{posts, loading}
+    post: { posts, loading }
 }) => {
-    console.log(posts);
     useEffect(() => {
         getPosts()
     }, [getPosts])
@@ -21,10 +20,11 @@ const Community = ({
             </div>
             <div className="profileMiddlePane bg-white rounded-4 shadow-9">
                 <PostForm />
-                center
-                        { posts.map(post => (
-                            <PostItem key={ post._id } post={ post } />
-                        )) }
+                {
+                    posts.map(post => (
+                        <PostItem key={ post._id } post={ post } />
+                    ))
+                }
 
             </div>
             <div className="profileRightPane bg-white rounded-4 shadow-9">
@@ -34,12 +34,12 @@ const Community = ({
     )
 }
 Community.propTypes = {
-    getPosts:PropTypes.func.isRequired,
-    post:PropTypes.object.isRequired,
+    getPosts: PropTypes.func.isRequired,
+    post: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
     post: state.post
 })
 
-export default  connect(mapStateToProps, {getPosts})(Community);
+export default connect(mapStateToProps, { getPosts })(Community);

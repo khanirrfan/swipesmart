@@ -11,6 +11,7 @@ type Post struct {
 	ID       primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
 	UID      primitive.ObjectID `json:"_uid,omitempty" bson:"_uid,omitempty"`
 	Title    string             `json:"title,omitempty" bson:"title,omitempty"`
+	Name     string             `json:"name,omitempty" bson:"name,omitempty"`
 	Post     string             `json:"post,omitempty" bson:"post,omitempty"`
 	Date     time.Time          `json:"date,omitempty" bson:"date,omitempty"`
 	Comments []*Comment         `json:"comments,omitempty" bson:"comments,omitempty"`

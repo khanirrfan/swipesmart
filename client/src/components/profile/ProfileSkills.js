@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 const ProfileSkills = ({ profile: { skills } }) => {
-    console.log(skills);
     return (
         <Fragment>
             { skills !== undefined && skills.length > 0 && skills.map((item, index) => {

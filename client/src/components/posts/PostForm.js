@@ -10,7 +10,7 @@ const PostForm = ({ addPost, auth:{user} }) => {
   return (
     <div className='post-form'>
       <div className='bg-primary p'>
-        <h3>Say Something...</h3>
+        <h4>What would you like announce...</h4>
       </div>
       <form
         className='form my-1'

@@ -10,18 +10,15 @@ const PostItem = ({
   removeLike,
   deletePost,
   auth,
-  post: { _id, _uid, post,likes, comments, date },
+  post: { _id, _uid, post,name, likes, comments, date },
   showActions
 }) => {
-  console.log(showActions);
-  console.log(likes);
-  console.log(comments);
   return (
   <div className='post bg-white p-1 my-1'>
     <div>
       <Link to={`/profile/${auth.user.username}`}>
         <img className='round-img' alt='' />
-        <h4>{auth.user.username}</h4>
+        <h4>{name}</h4>
       </Link>
     </div>
     <div>

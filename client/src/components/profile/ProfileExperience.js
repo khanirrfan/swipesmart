@@ -6,7 +6,6 @@ import moment from 'moment';
 const ProfileExperience = ({
   profile: { experience }
 }) => {
-  console.log(experience)
   return(
     <Fragment>
       { experience !== undefined && experience.length > 0 &&
