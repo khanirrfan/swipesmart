@@ -110,7 +110,7 @@ export const addPost = (formData) => async dispatch => {
 // Get post
 export const getPost = id => async dispatch => {
   try {
-    const res = await axios.get(`/api/posts/${id}`);
+    const res = await axios.get(`/post/get/${id}`);
 
     dispatch({
       type: GET_POST,
@@ -119,7 +119,7 @@ export const getPost = id => async dispatch => {
   } catch (err) {
     dispatch({
       type: POST_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg: err.statusText, status: err.status }
     });
   }
 };

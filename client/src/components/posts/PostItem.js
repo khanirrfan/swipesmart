@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import { addLike, removeLike, deletePost } from '../../actions/post';
+import CommentForm from '../post/CommentForm';
+import CommentItem from '../post/CommentItem';
 
 const PostItem = ({
   addLike,
@@ -44,7 +46,7 @@ const PostItem = ({
           >
             <i className='fas fa-thumbs-down' />
           </button>
-          <Link to={`/posts/${_id}`} className='btn btn-primary'>
+          <Link to={`/post/get/${_id}`} className='btn btn-primary'>
             Discussion{' '}
             {comments !== undefined && comments.length > 0 && (
               <span className='comment-count'>{comments.length}</span>
@@ -59,6 +61,14 @@ const PostItem = ({
               <i className='fas fa-times' />
             </button>
           )}
+            <CommentForm postId={ post._id } />
+            <div className="comments">
+              { post.comments !== undefined && post.comments.length > 0 &&
+                post.comments.map(comment => (
+                  <CommentItem key={ comment._id } comment={ comment } postId={ post._id } />
+                )) }
+            </div>
+
         </Fragment>
           )}
     </div>

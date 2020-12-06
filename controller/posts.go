@@ -90,6 +90,32 @@ func GetPost(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(posts)
 }
 
+// GetPostByID ...
+func GetPostByID(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var post model.Post
+	postID := mux.Vars(r)["id"]
+	// token validation
+
+	dbConnection, err := db.GetDBCollection()
+	if err != nil {
+		log.Fatal(err)
+	}
+	collection := dbConnection.Collection("success_story")
+	id, err := primitive.ObjectIDFromHex(postID)
+	if err != nil {
+		log.Fatal(err)
+	}
+	// token validaton condition
+	err = collection.FindOne(context.TODO(), bson.M{"_id": id}).Decode(&post)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	json.NewEncoder(w).Encode(post)
+
+}
+
 // EditPost ...
 func EditPost(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")

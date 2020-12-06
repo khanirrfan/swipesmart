@@ -56,6 +56,7 @@ func main() {
 
 	// post CRUD
 	r.HandleFunc("/post/create/{id}", controller.CreatePost).Methods("POST")
+	r.HandleFunc("/post/get/{id}", controller.GetPostByID).Methods("GET")
 	r.HandleFunc("/posts/get", controller.GetPost).Methods("GET")
 	r.HandleFunc("/post/edit", controller.EditPost).Methods("PUT")
 	r.HandleFunc("/post/delete/{id}", controller.DeletePost).Methods("DELETE")

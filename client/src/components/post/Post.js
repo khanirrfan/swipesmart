@@ -23,7 +23,8 @@ const Post = ({ getPost, post: { post, loading }, match }) => {
       <PostItem post={post} showActions={false} />
       <CommentForm postId={post._id} />
       <div className="comments">
-        {post.comments.map(comment => (
+        { post.comments !== undefined && post.comments.length > 0 &&
+          post.comments.map(comment => (
           <CommentItem key={comment._id} comment={comment} postId={post._id} />
         ))}
       </div>
