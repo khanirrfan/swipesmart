@@ -47,8 +47,6 @@ const Profile = ({
   }
   const onSubmit = e => {
     e.preventDefault();
-    setAboutEdit(!aboutEdit)
-    setAddSkills(!addSkills)
   };
 
   // if (user === null) {

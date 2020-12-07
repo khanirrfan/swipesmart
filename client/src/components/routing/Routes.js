@@ -24,6 +24,7 @@ import { connect } from 'react-redux';
 import CompanyProfile from '../company/companyProfile';
 import UserDashboard from '../dashboard/UserDashboard';
 import Community from '../Community/Community';
+import CoverLetter from '../coverLetter/CoverLetter';
 
 const Routes = ({ auth: { user } }) => {
   console.log(user);
@@ -38,6 +39,7 @@ const Routes = ({ auth: { user } }) => {
         <Route exact path='/login' component={ Login } />
         <Route exact path='/profiles' component={ Profiles } />
         <Route exact path='/profile/:id' component={ Profile } />
+        <PrivateRoute exact path ='/cover-letter' component = {CoverLetter} />
         <PrivateRoute exact path ='/post/get/:id' component = { Post } />
         <PrivateRoute exact path = '/community' component = {Community} />
         <PrivateRoute exact path='/getProfileByID/:id' component={ Profile } />
