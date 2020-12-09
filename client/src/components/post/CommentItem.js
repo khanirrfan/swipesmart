@@ -1,31 +1,100 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, generatePath } from 'react-router-dom';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
 import { deleteComment } from '../../actions/post';
 
+import { CloseIcon } from '../shared/icons';
+import { A } from '../shared/pages/Home/Text';
+import { Spacing } from '../shared/Layout';
+import Avatar from '../shared/pages/Home/Avatar';
+
+const DeleteButton = styled.button`
+  cursor: pointer;
+  display: none;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  position: absolute;
+  right: 7px;
+  top: 6px;
+`;
+
+const Root = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: ${(p) => p.theme.spacing.xxs} 0;
+  font-size: ${(p) => p.theme.font.size.xxs};
+
+  &:hover ${DeleteButton} {
+    display: block;
+  }
+`;
+
+const UserName = styled.div`
+  color: ${(p) => p.theme.colors.primary.main};
+  font-weight: ${(p) => p.theme.font.weight.bold};
+`;
+
+const CommentSection = styled.div`
+  position: relative;
+  word-wrap: break-word;
+  overflow: hidden;
+  padding: 0 ${(p) => p.theme.spacing.lg} ${(p) => p.theme.spacing.xxs} ${(p) => p.theme.spacing.xs};
+  background-color: ${(p) => p.theme.colors.grey[100]};
+  border-radius: ${(p) => p.theme.radius.lg};
+  margin-left: ${(p) => p.theme.spacing.xxs};
+  color: ${(p) => p.theme.colors.text.main};
+`;
+
 const CommentItem = ({
   postId,
-  comment: { _id, text, name, avatar, user, date },
-  auth,
+  comment: { _uid, commenttext, username, date },
+  auth:{user, loading},
   deleteComment
-}) => (
-  <div className='post bg-white p-1 my-1'>
+}) => {
+  const handleDeleteComment = async () => {}
+  return (
+    <>
+    <Root>
+      <A
+          to={ `/profile/${username}` }
+      >
+        <Avatar  />
+      </A>
+        <CommentSection>
+          { _uid === user._id && (
+            <DeleteButton onClick={ handleDeleteComment }>
+              <CloseIcon width="10" />
+            </DeleteButton>
+          ) }
+
+          <Spacing top="xxs" />
+
+          <Spacing inline right="xxs">
+            
+          </Spacing>
+
+          { commenttext }
+        </CommentSection>
+      </Root>
+
     <div>
       <Link to={`/profile/${user}`}>
-        <img className='round-img' src={avatar} alt='' />
-        <h4>{name}</h4>
+        <img className='round-img' alt='' />
+        <h4>{username}</h4>
       </Link>
     </div>
     <div>
-      <p className='my-1'>{text}</p>
+      <p className='my-1'>{commenttext}</p>
       <p className='post-date'>
         Posted on <Moment format='YYYY/MM/DD'>{date}</Moment>
       </p>
-      {!auth.loading && user === auth.user._id && (
+      {!loading && user === user._id && (
         <button
-          onClick={() => deleteComment(postId, _id)}
+          onClick={() => deleteComment(postId, _uid)}
           type='button'
           className='btn btn-danger'
         >
@@ -33,9 +102,9 @@ const CommentItem = ({
         </button>
       )}
     </div>
-  </div>
+  </>
 );
-
+}
 CommentItem.propTypes = {
   postId: PropTypes.string.isRequired,
   comment: PropTypes.object.isRequired,

@@ -1,9 +1,7 @@
-import React, { Fragment, useEffect, useState, initialState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import DashboardActions from '../dashboard/DashboardActions';
 import { getProfileByID } from '../../actions/profile';
-import CreateProfile from '../profile-forms/CreateProfile';
 import ProfileAbout from './ProfileAbout';
 import ProfileSkills from './ProfileSkills';
 import ProfileExperience from './ProfileExperience';
@@ -17,11 +15,11 @@ const Profile = ({
 }) => {
   const [aboutEdit, setAboutEdit] = useState(true)
   const [addSkills, setAddSkills] = useState(true)
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({profile:{
     about:'',
     skills:'',
     education:[],
-    experience:[]
+    experience:[]}
   });
   useEffect(() => {
     getProfileByID(match.params.id);
@@ -41,19 +39,12 @@ const Profile = ({
     console.log('education edit button changed');
   }
   const onChange = e => {
-    // console.log('hello change', e.target.name, e.target.value)
-    console.log(formData);
     setFormData({...formData, [e.target.name]:e.target.value});
   }
   const onSubmit = e => {
     e.preventDefault();
   };
 
-  // if (user === null) {
-  //   return (
-  //     <DashboardActions />
-  //   )
-  // } else
   return (
     <Fragment>
       <div className="container1 row">
@@ -118,7 +109,7 @@ const Profile = ({
                       }
                       { !aboutEdit &&
                         <form onSubmit ={onSubmit}> 
-                          <input type="text" value={ profile.about } onChange={ onChange } style={ {   width:'-webkit-fill-available'}} name = "about" rows={5}/>
+                          <textarea type="text" value = { profile.about } onChange={ onChange } style={ {   width:'-webkit-fill-available'}} name = "about" rows={5}/>
                           <input type="submit" value="Save"/>
                         </form>
                       }

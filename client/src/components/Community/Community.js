@@ -18,7 +18,7 @@ const Community = ({
             <div className="profileLeftPane bg-white shadow-9 rounded-4">
                 left
             </div>
-            <div className="profileMiddlePane bg-white rounded-4 shadow-9">
+            <div className="profileMiddlePane shadow-9">
                 <PostForm />
                 {
                     posts.map(post => (
