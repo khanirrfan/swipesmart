@@ -1,17 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { addComment } from '../../actions/post';
 
-const CommentForm = ({ postId, addComment }) => {
+import { Button, Textarea } from '../shared/pages/Home/Forms';
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+`;
+
+const CommentForm = ({ postId, addComment, focus }) => {
   const [text, setText] = useState('');
 
+  const [comment, setComment] = useState('');
+  const buttonEl = useRef(null);
+  const TextareaEl = useRef(false);
+
+
+  useEffect(() => {
+    focus && TextareaEl.current.focus();
+  }, [focus]);
+
+  const onEnterPress = (e) => {}
   return (
-    <div className='post-form'>
-      <div className='bg-primary p'>
-        <h3>Leave a Comment</h3>
-      </div>
-      <form
+
+      <Form
         className='form my-1'
         onSubmit={e => {
           e.preventDefault();
@@ -19,23 +36,30 @@ const CommentForm = ({ postId, addComment }) => {
           setText('');
         }}
       >
-        <textarea
-          name='text'
-          cols='30'
-          rows='5'
-          placeholder='Comment the post'
-          value={text}
-          onChange={e => setText(e.target.value)}
-          required
-        />
-        <input type='submit' className='btn btn-dark my-1' value='Submit' />
-      </form>
-    </div>
+          <Textarea
+          placeholder='Add a comment'
+          value={ text }
+          onChange={ e => setText(e.target.value) }
+          onKeyDown ={ onEnterPress}
+          ref= {TextareaEl}
+           />
+           <Button 
+            type="submit"
+            color={ comment ? 'primary.main' : 'grey[500]' }
+            weight="bold"
+            text
+            ref={ buttonEl }
+            disabled={ !comment } 
+          >
+            Post
+           </Button>
+      </Form>
   );
 };
 
 CommentForm.propTypes = {
-  addComment: PropTypes.func.isRequired
+  addComment: PropTypes.func.isRequired,
+  focus: PropTypes.bool,
 };
 
 export default connect(

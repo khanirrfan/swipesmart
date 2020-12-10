@@ -2,11 +2,11 @@ import React, { Fragment, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import { addLike, removeLike, deletePost } from '../../actions/post';
 import CommentForm from '../post/CommentForm';
 import CommentItem from '../post/CommentItem';
+import PostItemOptions from './PostItemOptions';
 
 // import Like from '../shared/pages/Home/Like';
 import { Button } from '../shared/pages/Home/Forms';
@@ -99,6 +99,7 @@ const PostItem = ({
   post: { _id, _uid, post,name, likes, comments, date },
   showActions
 }) => {
+  console.log('commnets', comments);
   const [isCommentOpen, setIsCommentOpen] = useState(false);
   const [isOptionOpen, setIsOptionOpen] = useState(false);
 
@@ -118,7 +119,7 @@ const PostItem = ({
   <>
   <Root>
     <Modal onClose={closeOption} open= {isOptionOpen} >
-
+          <PostItemOptions postId={ _id } userId = {_uid} closeOption={ closeOption } author={ name } deletePost={ deletePost } />
     </Modal>
     <TopRow>
       <Author to={`profile/${auth.user.username}`}>
@@ -139,24 +140,40 @@ const PostItem = ({
         {/* image && <Poster src={ image } onClick={ openModal } /> */}
     <BottomRow>
       <CountAndIcons>
-            {/*  <Count>
-          {likes.length} Likes
+             <Count>
+          {likes !== undefined && likes.length} Likes
               <Spacing />
               <StyledButton onClick={ toggleComment } text>
-                { comments.length } comments
+                {comments !== undefined && comments.length } comments
               </StyledButton>
         </Count>
             <Icons>
-              <Like fullWidth withText user={ name } postId={ _id } likes={ likes } />
-
+             {/* <Like fullWidth withText user={ name } postId={ _id } likes={ likes } />*/}
+              <PostCommentIcon /> <Spacing inline left="xxs" /> <b>Likes</b>
               <Button fullWidth text onClick={ toggleCreateComment }>
                 <PostCommentIcon /> <Spacing inline left="xxs" /> <b>Comment</b>
               </Button>
-            </Icons>*/}
+            </Icons>
 
       </CountAndIcons>
+          { isCommentOpen && (
+            <>
+              <Spacing top="xs">
+                <CommentLine />
+                <CommentForm postId={ _id, name } focus={ isCommentOpen } />
+              </Spacing>
+
+              { comments !== undefined && comments.length > 0 && <CommentLine /> }
+
+              <Comments>
+                { comments !== undefined && comments.length > 0 && comments.map((comment) => (
+                  <CommentItem key={ comment._uid } comment={ comment } postId={ _id } postAuthor={ name } />
+                )) }
+              </Comments>
+            </>
+          ) }
     </BottomRow>
-    <div>
+    {/*<div>
       {showActions && (
         <Fragment>
           <button
@@ -175,7 +192,7 @@ const PostItem = ({
             <i className='fas fa-thumbs-down' />
           </button>
           <Link to={`/post/get/${_id}`} className='btn btn-primary'>
-            Discussion{' '}
+            Comments{' '}
             {comments !== undefined && comments.length > 0 && (
               <span className='comment-count'>{comments.length}</span>
             )}
@@ -189,17 +206,17 @@ const PostItem = ({
               <i className='fas fa-times' />
             </button>
           )}
-            <CommentForm postId={ post._id } />
+{/*            <CommentForm postId={ post._id } />
             <div className="comments">
               { post.comments !== undefined && post.comments.length > 0 &&
                 post.comments.map(comment => (
                   <CommentItem key={ comment._id } comment={ comment } postId={ post._id } />
                 )) }
             </div>
-
+}
         </Fragment>
           )}
-    </div>
+</div>*/}
       </Root>
   </>
 )

@@ -34,7 +34,7 @@ const Textarea = styled.textarea`
   outline: none;
   resize: none;
   transition: 0.1s ease-out;
-  height: ${(p) => (p.focus ? '80px' : '40px')};
+  height: ${(p) => (p.focus ? '120px' : '40px')};
   font-size: ${(p) => p.theme.font.size.xs};
   background-color: ${(p) => p.theme.colors.grey[100]};
   border-radius: ${(p) => p.theme.radius.md};

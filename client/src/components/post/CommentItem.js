@@ -59,9 +59,7 @@ const CommentItem = ({
   return (
     <>
     <Root>
-      <A
-          to={ `/profile/${username}` }
-      >
+      <A to={ `/profile/${username}` }>
         <Avatar  />
       </A>
         <CommentSection>
@@ -74,34 +72,16 @@ const CommentItem = ({
           <Spacing top="xxs" />
 
           <Spacing inline right="xxs">
-            
+            <A to = {`/profile/${username}`}>
+              <UserName >
+                {username}
+              </UserName>
+            </A>
           </Spacing>
 
           { commenttext }
         </CommentSection>
       </Root>
-
-    <div>
-      <Link to={`/profile/${user}`}>
-        <img className='round-img' alt='' />
-        <h4>{username}</h4>
-      </Link>
-    </div>
-    <div>
-      <p className='my-1'>{commenttext}</p>
-      <p className='post-date'>
-        Posted on <Moment format='YYYY/MM/DD'>{date}</Moment>
-      </p>
-      {!loading && user === user._id && (
-        <button
-          onClick={() => deleteComment(postId, _uid)}
-          type='button'
-          className='btn btn-danger'
-        >
-          <i className='fas fa-times' />
-        </button>
-      )}
-    </div>
   </>
 );
 }
