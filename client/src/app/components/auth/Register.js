@@ -61,8 +61,8 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
         </p>
                 <form className='formContainer form'
                     onSubmit={ e => onSubmit(e) } >
-                    <div className="form-check" >
-                        <ul className="m-1">
+                    <div className="form-check" style={{margin:'auto'}}>
+                        <ul className="m-1" style={{display:'flex'}}>
                             {
                                 useType.types.map((jobType, index) => {
                                     return (<CheckBox key={ index } handleCheckChieldElement={ e => handleCheckTypeElement(e) }  { ...jobType } />)

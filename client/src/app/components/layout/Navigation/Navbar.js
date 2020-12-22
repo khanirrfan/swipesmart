@@ -5,13 +5,12 @@ import PropTypes from 'prop-types';
 import { logout } from '../../../actions/auth';
 
 import { Nav, NavLink, Bars, NavMenu, NavBtn, NavBtnLink, Times } from '../Navigation/NavbarElements';
-// import {MenuItems} from './MenuItems';
-import '../Navigation/Navbar.css';
+
+import './Navbar.css';
 const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
   const [state, setState] = useState({ clicked: true })
   const handleClick = (e) => {
     setState({ clicked: !state.clicked })
-    console.log('state chnaged');
   }
   const authLinks = (
     <NavMenu>
@@ -37,7 +36,7 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
           <span className='hide-sm'>Account</span>
         </NavLink>
       }
-      <NavLink to={ `/` } onClick={ e => logout(e) } activeStyle>
+      <NavLink to= '#' onClick={ e => logout(e) } activeStyle>
         <i className='fas fa-sign-out-alt' />{ ' ' }
         <span className='hide-sm'>Logout</span>
       </NavLink>
@@ -60,7 +59,7 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
           <span className='hide-sm'>Account</span>
         </NavLink>
       }
-      <NavLink to={ `/` } onClick={ e => logout(e) } activeStyle>
+      <NavLink to= '#' onClick={ e => logout(e) } activeStyle>
         <i className='fas fa-sign-out-alt' />{ ' ' }
         <span className='hide-sm'>Logout</span>
       </NavLink>
@@ -76,13 +75,16 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
       <NavLink to='/posts' activeStyle>
         Posts
         </NavLink>
+      <NavLink to='/login' activeStyle>
+        Login
+        </NavLink>
     </NavMenu>
   );
 
   return (
 
     <Nav>
-      <NavLink to="/">
+      <NavLink to="#">
         <h1>
           SwipeSmart
         </h1>
@@ -93,22 +95,22 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
           (<Bars />) : (<Times />)
         }
       </div>
-      <div className={ !state.clicked ? 'nav-menu active' : 'nav-menu'}>
-      { !loading ? (
+      <div className={ !state.clicked ? 'nav-menu active' : 'nav-menu' }>
+        { user && !loading ? (
 
           <Fragment>
-          { 
-            ( 
-              user && isAuthenticated && (user.type === 'employee')
-            ) ? authLinks : orgLinks 
-          }
+            {
+              (
+                user && isAuthenticated && (user.type === 'employee')
+              ) ? authLinks : orgLinks
+            }
           </Fragment>
-      ): (
-        <Fragment>
-          {displayLinks }
-        </Fragment>
-      )
-      }
+        ) : (
+            <Fragment>
+              {displayLinks }
+            </Fragment>
+          )
+        }
       </div>
     </Nav>
   );

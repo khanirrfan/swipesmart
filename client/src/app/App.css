@@ -949,6 +949,8 @@ a {
 .alert-primary {
   background: var(--primary-color);
   color: #fff;
+  width: 50%;
+  margin: auto;
 }
 
 .btn-light,
@@ -1058,7 +1060,8 @@ fieldset:disabled a.btn {
 /* Forms */
 .authBox {
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
-  height: 80vh !important;
+  /* height: 80vh !important; */
+  width: -webkit-fill-available;
 }
 .formContainer {
   width: 80%;
@@ -1082,8 +1085,9 @@ fieldset:disabled a.btn {
 .form input[type="date"],
 .form select,
 .form textarea {
-  display: block;
-  width: 100%;
+  display: flex;
+  width: 50%;
+  margin: auto;
   padding: 0.4rem;
   font-size: 1.2rem;
   /* border: 1px solid #ccc; */
