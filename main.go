@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+
 	"github.com/swipesmart/controller"
 )
 
@@ -15,7 +16,7 @@ func main() {
 	r.HandleFunc("/login", controller.LoginHandler).Methods("POST")
 
 	// user profile
-	r.HandleFunc("/profile", controller.ProfileHandler).Methods("GET")
+	r.HandleFunc("/profile", controller.GetProfile).Methods("GET")
 	r.HandleFunc("/profiles", controller.GetProfiles).Methods("GET")
 	r.HandleFunc("/getProfileByID/{id}", controller.GetProfileByID).Methods("GET")
 	r.HandleFunc("/update-profile/{id}", controller.UpdateProfile).Methods("POST")
@@ -53,11 +54,25 @@ func main() {
 
 	// success story apis
 
+	// post CRUD
 	r.HandleFunc("/post/create/{id}", controller.CreatePost).Methods("POST")
-	r.HandleFunc("/posts/get", controller.GetPost).Methods("GEt")
+	r.HandleFunc("/post/get/{id}", controller.GetPostByID).Methods("GET")
+	r.HandleFunc("/posts/get", controller.GetPost).Methods("GET")
 	r.HandleFunc("/post/edit", controller.EditPost).Methods("PUT")
-	r.HandleFunc("/post/delete", controller.DeletePost).Methods("POST")
-	// r.HandleFunc("/posts/")
+	r.HandleFunc("/post/delete/{id}", controller.DeletePost).Methods("DELETE")
+
+	// like, comment on post
+	r.HandleFunc("/post/like/{id}", controller.LikePost).Methods("PUT")
+	r.HandleFunc("/post/unlike/{id}", controller.UnlikePost).Methods("PUT")
+	r.HandleFunc("/post/comment/{id}", controller.Comment).Methods("POST")
+	r.HandleFunc("/post/comment/delete/{id}", controller.DeleteComment).Methods("DELETE")
+	r.HandleFunc("/post/comment/edit/{id}", controller.EditComment).Methods("PUT")
+
+	// get cover letters and save them
+	r.HandleFunc("/getCoverLetters/{userId}/{jobId}", controller.GetCoverLetters).Methods("GET")
+	r.HandleFunc("/readFileByname/{name}", controller.ReadFileByName).Methods("GET")
+	// save edited cover letter
+	r.HandleFunc("/save/coverletter/{userId}/{jobId}", controller.SaveCoverLetter).Methods("PUT")
 
 	r.HandleFunc("/protected", controller.TokenVerifyMiddleWare(controller.ProtectedEndPoint))
 	log.Fatal(http.ListenAndServe(":8080", r))

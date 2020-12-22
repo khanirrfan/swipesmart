@@ -1,17 +1,21 @@
 package controller
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo/gridfs"
 
 	"github.com/swipesmart/config/db"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo/gridfs"
 )
 
 // UploadFile ...
@@ -76,32 +80,33 @@ func FetchCVFiles(w http.ResponseWriter, r *http.Request) {
 	if err = cursor.All(context.TODO(), &foundFiles); err != nil {
 		log.Fatal(err)
 	}
-
 	json.NewEncoder(w).Encode(foundFiles)
 
-	// for _, file := range foundFiles {
-	// 	fmt.Printf("filename: %s, length: %d\n", file.Name, file.Length)
-	// }
+	for _, file := range foundFiles {
+		fmt.Printf("filename: %s, length: %d\n", file.Name, file.Length)
+	}
+
+	name := "br100_update.txt"
+	downloadStream, err := bucket.OpenDownloadStreamByName(name)
+	if err != nil {
+		log.Printf("Failed to open %s: %v", name, err)
+		http.Error(w, "something went wrong", http.StatusInternalServerError)
+		return
+	}
+	defer func() {
+		if err := downloadStream.Close(); err != nil {
+			log.Fatal(err)
+		}
+	}()
+
+	// Use SetReadDeadline to force a timeout if the download does not succeed in 2 seconds.
+	if err = downloadStream.SetReadDeadline(time.Now().Add(2 * time.Second)); err != nil {
+		log.Fatal(err)
+	}
+
+	fileBuffer := bytes.NewBuffer(nil)
+	if _, err := io.Copy(fileBuffer, downloadStream); err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(fileBuffer)
 }
-
-// func DownloadFile(w http.ResponseWriter, r *http.Request) {
-// 	dbConnection, err := db.GetDBCollection()
-
-// 	fsFiles := dbConnection.Collection("fs.files")
-// 	var results bson.M
-// 	err = fsFiles.FindOne(context.Background(), bson.M{}).Decode(&results)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	// you can print out the results
-// 	fmt.Println(results)
-
-// 	bucket, _ := gridfs.NewBucket(dbConnection)
-// 	var buf bytes.Buffer
-// 	dStream, err := bucket.DownloadToStreamByName(fileName, &buf)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	fmt.Printf("File size to download: %v\n", dStream)
-// 	ioutil.WriteFile(fileName, buf.Bytes(), 0600)
-// }

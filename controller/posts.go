@@ -9,11 +9,12 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 
 	"github.com/swipesmart/config/db"
-	"go.mongodb.org/mongo-driver/bson"
-
 	"github.com/swipesmart/model"
 )
 
@@ -39,6 +40,16 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 	collection := dbConnection.Collection("success_story")
 	userID, err := primitive.ObjectIDFromHex(uID)
 	posts.UID = userID
+
+	// find the user by uiD
+	userCollection := dbConnection.Collection("user")
+	var userProfile model.Getuser
+	err = userCollection.FindOne(context.TODO(), bson.M{"_id": userID}).Decode(&userProfile)
+	if err != nil {
+		fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
+	}
+	posts.Name = userProfile.Username
+	// insert post
 	cursor, err := collection.InsertOne(context.Background(), posts)
 	if err != nil {
 		log.Fatal(err)
@@ -79,6 +90,32 @@ func GetPost(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(posts)
 }
 
+// GetPostByID ...
+func GetPostByID(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var post model.Post
+	postID := mux.Vars(r)["id"]
+	// token validation
+
+	dbConnection, err := db.GetDBCollection()
+	if err != nil {
+		log.Fatal(err)
+	}
+	collection := dbConnection.Collection("success_story")
+	id, err := primitive.ObjectIDFromHex(postID)
+	if err != nil {
+		log.Fatal(err)
+	}
+	// token validaton condition
+	err = collection.FindOne(context.TODO(), bson.M{"_id": id}).Decode(&post)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	json.NewEncoder(w).Encode(post)
+
+}
+
 // EditPost ...
 func EditPost(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
@@ -101,5 +138,77 @@ func EditPost(w http.ResponseWriter, r *http.Request) {
 
 // DeletePost ...
 func DeletePost(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("delete Post")
+	w.Header().Set("Content-Type", "application/json")
+	pid := mux.Vars(r)["id"]
+
+	// token authorization
+
+	dbConnection, err := db.GetDBCollection()
+	if err != nil {
+		log.Fatal(err)
+	}
+	collection := dbConnection.Collection("success_story")
+	id, err := primitive.ObjectIDFromHex(pid)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	var post bson.M
+	err = collection.FindOneAndDelete(context.TODO(), bson.D{{"_id", id}}, options.FindOneAndDelete()).Decode(&post)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return
+		}
+		log.Fatal(err)
+	}
+	json.NewEncoder(w).Encode(post)
+}
+
+// LikePost ...
+func LikePost(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("ContentType", "application/json")
+	pid := mux.Vars(r)["id"]
+
+	// token authentication
+
+	dbConnection, err := db.GetDBCollection()
+	if err != nil {
+		log.Fatal(err)
+	}
+	collection := dbConnection.Collection("success_story")
+	id, err := primitive.ObjectIDFromHex(pid)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var result bson.M
+	err = collection.FindOne(context.TODO(), bson.D{{"_id", id}}).Decode(&result)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return
+		}
+		log.Fatal(err)
+	}
+
+	json.NewEncoder(w).Encode(result)
+}
+
+// UnlikePost ...
+func UnlikePost(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("un like")
+}
+
+// Comment ...
+func Comment(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("commnet")
+}
+
+// DeleteComment ...
+func DeleteComment(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("delete comment")
+}
+
+// EditComment ...
+func EditComment(w http.ResponseWriter, r *http.Request) {
+
+	fmt.Println("edit comment")
 }

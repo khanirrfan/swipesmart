@@ -69,15 +69,10 @@ type SavedJobs struct {
 	Jobs   Getjobs            `json:"jobs,omitempty" bson:"jobs,omitempty"`
 }
 
-// UserSavedJobs ...
-// type UserSavedJobs struct {
-// 	UserJobs SavedJobs `json:"savedjobs,omitempty" bson:"savedjobs,omitempty"`
-// }
-
 // FilterParams ...
 type FilterParams struct {
-	Salary   string `json:"salary,omitempty" bson:salary,omitempty"`
-	JobTitle string `json:"jobtitle,omitempty" bson:jobtitle,omitempty"`
+	Salary   string `json:"salary" bson:salary"`
+	JobTitle string `json:"jobtitle" bson:jobtitle"`
 }
 
 //JobSwipe ...

@@ -2,22 +2,20 @@ package controller
 
 import (
 	"context"
-
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"sync"
 
-	"github.com/gorilla/mux"
-
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/swipesmart/config/db"
-	"github.com/swipesmart/model"
-
+	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+
+	"github.com/swipesmart/config/db"
+	"github.com/swipesmart/model"
 )
 
 var wg sync.WaitGroup
@@ -62,6 +60,7 @@ func MatchPercent(w http.ResponseWriter, r *http.Request) {
 			}
 
 		}
+
 		jobMatchPercenat := float64(float64(count)/float64(len(jobParams.Skills))) * 100
 		fmt.Println(jobMatchPercenat)
 		json.NewEncoder(w).Encode(jobMatchPercenat)

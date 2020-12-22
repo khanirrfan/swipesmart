@@ -535,8 +535,46 @@ func FilterJobs(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	collection := dbConnection.Collection("jobs")
-
-	cursor, err := collection.Find(context.Background(), bson.M{"salary": params.Salary, "jobtitle": params.JobTitle})
+	filter := bson.M{"salary": params.Salary, "jobtitle": params.JobTitle}
+	fmt.Println("filter", filter)
+	// var filter bson.M
+	// if params.JobTitle != " " || params.Salary == " " {
+	// 	filter = bson.M{"jobtitle": params.JobTitle}
+	// 	fmt.Println("1", params.JobTitle)
+	// } else if params.JobTitle == " " || params.Salary != " " {
+	// 	filter = bson.M{"salary": params.Salary}
+	// 	fmt.Println("2", params.Salary)
+	// } else {
+	// 	filter = bson.M{"salary": params.Salary, "jobtitle": params.JobTitle}
+	// 	fmt.Println("3", params)
+	// }
+	// if (jobtypes == null ) {
+	// 	db.Jobs.find(
+	// 		{Country : country ,
+	// 		  JobCategory : jobcategory
+	// 		},
+	// 		{_id : 0 }
+	// 	)
+	// } else if (country == null && jobtypes == null) {
+	// 	db.Jobs.find(
+	// 		{JobCategory : jobcategory},
+	// 		{_id : 0 }
+	// 	)
+	// } else if (jobcategory == null && jobtypes == null ) {
+	// 	db.Jobs.find(
+	// 		{Country : country},
+	// 		{_id : 0 }
+	// 	)
+	// } else {
+	// 	db.Jobs.find(
+	// 		{Country : country ,
+	// 		  JobCategory : jobcategory,
+	// 		  JobTypes : /jobtypes/
+	// 		},
+	// 		{_id : 0 }
+	// 	)
+	// }
+	cursor, err := collection.Find(context.Background(), filter)
 	if err != nil {
 		log.Fatal(err)
 	}
