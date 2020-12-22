@@ -4,10 +4,11 @@ import { appliedJobs } from '../../actions/jobs';
 import JobItem from './jobItem';
 import Spinner from '../layout/Spinner';
 import { connect } from 'react-redux';
-const AppliedJobsPage = ({appliedJobs, jobs:{jobsApplied, loading}, match}) => {
+import { Link } from 'react-router-dom';
+const AppliedJobsPage = ({appliedJobs, jobs:{jobsApplied, loading}, user}) => {
     useEffect(() => {
-        appliedJobs(match.params.id);
-    }, [appliedJobs], match.params.id);
+      appliedJobs(user._id);
+    }, [appliedJobs], user._id);
     return (
         <Fragment>
       {loading ? (
@@ -25,7 +26,12 @@ const AppliedJobsPage = ({appliedJobs, jobs:{jobsApplied, loading}, match}) => {
                 <JobItem key={index} item={item.jobs} />
               ))
             ) : (
+              <>
               <h4>No jobs found...</h4>
+                <Link to ="/cover-letter" >
+                  <button>Add cover letter</button>
+                </Link>
+              </>
             )}
           </div>
         </Fragment>

@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import * as BsIcons from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import ListItems from '../../shared/directives/List-items';
 
 import SidebarData from './SidebarData';
 
 import './Sidebar.css';
 
-const Sidebar = () => {
+import AppliedJobsPage from '../../jobs/appliedJobs'; 
+import SavedJobs from '../../jobs/savedJobs';
+
+const Sidebar = ({auth: {user}}) => {
     const [sidebar, setSidebar] = useState(false)
     let [topic, setTopic] = useState({select:''})
     const showSideBar = () => {
@@ -57,16 +62,22 @@ const Sidebar = () => {
                     <p>content2</p>
             }
             { topic.select === 'Applied Jobs' &&
-                    <p>content3</p>
+                 <AppliedJobsPage user ={user}/>
             }
             { topic.select === 'Saved Jobs' &&
-                    <p>content4</p>
+                    <SavedJobs user = {user} />
             }
-          </div>
-
-            
+          </div> 
         </>
     )
 }
+Sidebar.propTypes = {
+    auth: PropTypes.object.isRequired,
+}
 
-export default Sidebar;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    auth: state.auth
+})
+
+export default connect(mapStateToProps, {})(Sidebar);

@@ -6,8 +6,8 @@
   --color-texts: #6b6e6f;
   --color-headings: #2b3940;
   --bg-2: #f4f5f8;
-      /* --bg-1: #F2F2F2;
-    --bg-2: #f4f5f8; */
+  --bg-1: #F2F2F2;
+  --bg-3: #f4f5f8;
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
   --success-color: #28a745;
@@ -35,7 +35,7 @@ html {
     line-height: 1.5;
     color: var(--color-texts);
     text-align: left;
-    background-color: var(--bg);
+    background-color: var(--bg-3);
 }
 
 a {
