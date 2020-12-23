@@ -15,16 +15,16 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
   const [jobTypes, setJobTypes] = useState({
     types: [
       { id: 0, value: 'value0', label: 'Marketing', name: 'type', isChecked: true },
-      { id: 1, value: 'value1', label: 'Engineering', name:'type', isChecked: false },
-      { id: 2, value: 'value2', label: 'Humar resource', name:'type', isChecked: false },
+      { id: 1, value: 'value1', label: 'Engineering', name: 'type', isChecked: false },
+      { id: 2, value: 'value2', label: 'Humar resource', name: 'type', isChecked: false },
       { id: 3, value: 'value3', label: 'Executive', name: 'type', isChecked: false }
     ]
   })
   const [expLevel, setexpLevel] = useState({
     level: [
-      { id: 0, value: 'All', label: 'All', name: 'type',isChecked: true },
+      { id: 0, value: 'All', label: 'All', name: 'type', isChecked: true },
       { id: 1, value: 'Senior', label: 'Senior', name: 'type', isChecked: false },
-      { id: 2, value: 'Mid', label: 'Mid', name: 'type',  isChecked: false },
+      { id: 2, value: 'Mid', label: 'Mid', name: 'type', isChecked: false },
       { id: 3, value: 'Junior', label: 'Junior', name: 'type', isChecked: false }
     ]
   })
@@ -61,9 +61,16 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
     setposted({ duration: durations })
   }
   const [show, setShow] = useState(false);
+  let [jobDescription, setJobDescription] = useState('')
   const showDescription = (item, e) => {
     e.preventDefault();
+    jobDescription = item;
+    setJobDescription(jobDescription);
+    console.log(jobDescription);
     setShow(true);
+  }
+  const closeJobDescription = () => {
+    setShow(false)
   }
   const aquaticCreatures = [
     { label: 'Shark', value: 'Shark' },
@@ -75,7 +82,7 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
   ];
   return (
     <>
-   {/* <div className="row" style={{marginLeft:'20%', marginBottom:'1%'}}>
+      {/* <div className="row" style={{marginLeft:'20%', marginBottom:'1%'}}>
     <div className="Select">
           <Select options={ aquaticCreatures } onChange={ opt => console.log(opt.label, opt.value) } />
     </div>
@@ -89,7 +96,7 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
           <Select options={ aquaticCreatures } onChange={ opt => console.log(opt.label, opt.value) } />
         </div>
   </div>*/}
-       <div className="leftpane ">
+      <div className="leftpane ">
         <div className="container-left">
           <h4 className=" m-1"> Job Types </h4>
           <ul className="m-1">
@@ -149,39 +156,41 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
             </Fragment>
           ) }
       </div>
-      { show && <div className="rightpane">
-        <div className="jobs bg-white p-1 my-2" >
-          <div className="jobDetails" >
-            <div className="border-bottom border-width-1 border-default-color">
-              <div className="row p-1">
-                <div className="company-logo">
-                  company-logo
-                      </div>
-                <div className="jobTitle">
-                  <a className="font-size-6">jobTitle </a>
-                  <span>company name</span>
-                </div>
-                <div className="jobSalary">
-                  <span className="font-size-5">
-                    Job relevant:50%
+      { show && jobDescription !== '' &&
+        <div className="rightpane">
+          <div className="jobs bg-white p-1 my-2" >
+            <div className="jobDetails" >
+              <div className="border-bottom border-width-1 border-default-color">
+                <div className="row p-1">
+                  <div className="company-logo">
+                    company-logo
+                  </div>
+                  <div className="jobTitle">
+                    <a className="font-size-6">{jobDescription.jobtitle} </a>
+                    <span>company name</span>
+                  </div>
+                  <div className="jobSalary">
+                    <span className="font-size-5">
+                      Job relevant:50%
                 </span>
+                  </div>
                 </div>
-              </div>
-              <div className="row p-1">
-                <button style={ { width: "30%", marginRight: "1%" } }>
-                  Apply to this job
+                <div className="row p-1">
+                  <button style={ { width: "30%", marginRight: "1%" } }>
+                    Apply to this job
               </button>
-                <button style={ { width: "20%", marginLeft: "1%" } }>
-                  Save Job
+                  <button style={ { width: "20%", marginLeft: "1%" } }>
+                    Save Job
               </button>
+              <button style={{width:"20%", marginLeft:"1%"}} onClick={closeJobDescription}>Close</button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-      </div>
+        </div>
       }
-      </>
+    </>
   );
 };
 
