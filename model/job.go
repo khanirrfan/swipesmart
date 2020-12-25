@@ -55,7 +55,7 @@ type Getjobs struct {
 	Visa           string             `json:"visa,omitempty" bson:"visa,omitempty"`
 	Salary         string             `json:"salary,omitempty" bson:"salary,omitempty"`
 	Language       []string           `json:"language,omitempty" bson:"language,omitempty"`
-	Education      Education          `json:"education,omitempty" bson:"education,omitempty"`
+	Education      []*DegreeName          `json:"education,omitempty" bson:"education,omitempty"`
 	Country        string             `json:"country,omitempty" bson:"country,omitempty"`
 	JobCategory    []string           `json:"jobCategory,omitempty" bson:"jobCategory,omitempty"`
 	JobTypes       Fields             `json:"jobTypes,omitempty" bson:"jobTypes,omitempty"`

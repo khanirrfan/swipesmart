@@ -84,6 +84,7 @@ img {
   width: 20%;
   height: 100%;
   float: left;
+  margin-right: 1%;
   border-collapse: collapse;
 }
 
@@ -1092,7 +1093,9 @@ fieldset:disabled a.btn {
   font-size: 1.2rem;
   /* border: 1px solid #ccc; */
 }
-
+button {
+  cursor: pointer;
+}
 .form input[type="submit"],
 button {
   font: inherit;
@@ -1389,7 +1392,6 @@ button {
 }
 .jobDetails {
   width: 100%;
-  cursor: pointer;
 }
 .docsRequired {
   flex-direction: column;
@@ -9087,4 +9089,14 @@ a.hover-text-hitgray:hover {
 
 .icon-layout-11-2::before {
   content: "\eadf";
+}
+
+@media (min-width: 768px){
+.justify-content-md-start {
+    justify-content: flex-start !important;
+}
+}
+.media {
+    display: flex;
+    align-items: flex-start;
 }

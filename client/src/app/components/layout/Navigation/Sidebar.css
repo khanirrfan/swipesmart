@@ -119,10 +119,11 @@
   background-color:#fff;
   border-right: 2px solid #efefef;
 }
-span {
+.span {
   margin-left: 16px;
 }
 
 .content {
+  width: 100%;
   padding: 0.5rem calc((100vw - 1200px) / 2);
 }

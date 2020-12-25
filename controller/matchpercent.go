@@ -41,6 +41,7 @@ func MatchPercent(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(res)
 	}
 	if token.Valid {
+		fmt.Println("reached")
 		oneUser := make(chan model.Getuser)
 		oneJob := make(chan model.Getjobs)
 		wg.Add(2) // number of go routines runnig
@@ -51,7 +52,6 @@ func MatchPercent(w http.ResponseWriter, r *http.Request) {
 		wg.Wait()
 		var count = 0
 		for i := 0; i < len(jobParams.Skills); i++ {
-
 			for j := 0; j < len(userParams.Skills); j++ {
 				if jobParams.Skills[i] == userParams.Skills[j] {
 					count++

@@ -44,7 +44,7 @@ export const rejectJob = ({item, user}) => async dispatch => {
 }
 
 // apply job
-export const applyJob = ({item, user}) => async dispatch => {
+export const applyJob = ({ item, user}) => async dispatch => {
     item.status = 'applied'
     try {
         await axios.post(`/appliedjob/${user._id}`, item);

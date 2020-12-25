@@ -4,24 +4,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
 const JobItem = ({ item, showDescription, auth: { user }, jobs, saveJob, rejectJob, applyJob, getMatchPercent }) => {
-    const [modal, setModal] = useState(false);
-    const toggle = async e => {
-        e.preventDefault();
-        setModal(!modal)
-        getMatchPercent({ item, user })
-    };
-    const handlesave = async e => {
-        e.preventDefault();
-        saveJob({ item, user });
-    }
-    const handleReject = async e => {
-        e.preventDefault();
-        rejectJob({ item, user });
-    }
-    const handleApply = async e => {
-        e.preventDefault();
-        applyJob({ item, user });
-    }
+
+    // const handleReject = async e => {
+    //     e.preventDefault();
+    //     rejectJob({ item, user });
+    // }
     if (user === null) {
         return (<Spinner />)
     } else {

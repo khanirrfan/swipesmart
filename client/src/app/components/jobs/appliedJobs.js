@@ -9,6 +9,7 @@ const AppliedJobsPage = ({appliedJobs, jobs:{jobsApplied, loading}, user}) => {
     useEffect(() => {
       appliedJobs(user._id);
     }, [appliedJobs], user._id);
+    
     return (
         <Fragment>
       {loading ? (
@@ -23,7 +24,7 @@ const AppliedJobsPage = ({appliedJobs, jobs:{jobsApplied, loading}, user}) => {
             {
                 jobsApplied && jobsApplied.length > 0 ? (
                 jobsApplied.map((item,index) => (
-                <JobItem key={index} item={item.jobs} />
+                  <JobItem key={ index } item={ item.jobs }/>
               ))
             ) : (
               <>

@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import JobItem from './jobItem';
-import { getJobs, getMatchPercent } from '../../actions/jobs';
+import { getJobs, getMatchPercent, applyJob } from '../../actions/jobs';
 import CheckBox from '../shared/Checkbox.js';
 import Select from 'react-select';
-import Sidebar from '../layout/Navigation/Sidebar';
+import JobDescription from './jobDescription';
 
-const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
+const JobsListing = ({ getJobs, jobs: { jobs, loading }, auth: { user } }) => {
   useEffect(() => {
     getJobs();
   }, [getJobs]);
@@ -66,8 +66,8 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
     e.preventDefault();
     jobDescription = item;
     setJobDescription(jobDescription);
-    console.log(jobDescription);
     setShow(true);
+
   }
   const closeJobDescription = () => {
     setShow(false)
@@ -80,29 +80,16 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
     { label: 'Crab', value: 'Crab' },
     { label: 'Lobster', value: 'Lobster' },
   ];
+
   return (
     <>
-      {/* <div className="row" style={{marginLeft:'20%', marginBottom:'1%'}}>
-    <div className="Select">
-          <Select options={ aquaticCreatures } onChange={ opt => console.log(opt.label, opt.value) } />
-    </div>
-        <div className="Select">
-          <Select options={ aquaticCreatures } onChange={ opt => console.log(opt.label, opt.value) } />
-        </div>
-        <div className="Select">
-          <Select options={ aquaticCreatures } onChange={ opt => console.log(opt.label, opt.value) } />
-        </div>
-        <div className="Select">
-          <Select options={ aquaticCreatures } onChange={ opt => console.log(opt.label, opt.value) } />
-        </div>
-  </div>*/}
       <div className="leftpane ">
         <div className="container-left">
           <h4 className=" m-1"> Job Types </h4>
           <ul className="m-1">
             {
               jobTypes.types.map((jobType, index) => {
-                return (<CheckBox key={ index } handleCheckChieldElement={ e => handleCheckTypeElement(e) }  { ...jobType } />)
+                return (<CheckBox key={ index } handleCheckFieldElement={ e => handleCheckTypeElement(e) }  { ...jobType } />)
               })
             }
           </ul>
@@ -112,7 +99,7 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
           <ul className="m-1">
             {
               expLevel.level.map((level, index) => {
-                return (<CheckBox key={ index } handleCheckChieldElement={ e => handleCheckExpElement(e) }  { ...level } />)
+                return (<CheckBox key={ index } handleCheckFieldElement={ e => handleCheckExpElement(e) }  { ...level } />)
               })
             }
           </ul>
@@ -120,7 +107,7 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
           <ul className="m-1">
             {
               posted.duration.map((duration, index) => {
-                return (<CheckBox key={ index } handleCheckChieldElement={ e => handleCheckdurationElement(e) }  { ...duration } />)
+                return (<CheckBox key={ index } handleCheckFieldElement={ e => handleCheckdurationElement(e) }  { ...duration } />)
               })
             }
           </ul>
@@ -158,36 +145,7 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
       </div>
       { show && jobDescription !== '' &&
         <div className="rightpane">
-          <div className="jobs bg-white p-1 my-2" >
-            <div className="jobDetails" >
-              <div className="border-bottom border-width-1 border-default-color">
-                <div className="row p-1">
-                  <div className="company-logo">
-                    company-logo
-                  </div>
-                  <div className="jobTitle">
-                    <a className="font-size-6">{jobDescription.jobtitle} </a>
-                    <span>company name</span>
-                  </div>
-                  <div className="jobSalary">
-                    <span className="font-size-5">
-                      Job relevant:50%
-                </span>
-                  </div>
-                </div>
-                <div className="row p-1">
-                  <button style={ { width: "30%", marginRight: "1%" } }>
-                    Apply to this job
-              </button>
-                  <button style={ { width: "20%", marginLeft: "1%" } }>
-                    Save Job
-              </button>
-              <button style={{width:"20%", marginLeft:"1%"}} onClick={closeJobDescription}>Close</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
+        <JobDescription item={ jobDescription } closeJD={ closeJobDescription }/>
         </div>
       }
     </>
@@ -197,13 +155,18 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading } }) => {
 JobsListing.propTypes = {
   getJobs: PropTypes.func.isRequired,
   getMatchPercent: PropTypes.func.isRequired,
-  jobs: PropTypes.object.isRequired
+  jobs: PropTypes.object.isRequired,
+  applyJob: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  matchPercent: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  jobs: state.jobs
+  jobs: state.jobs,
+  auth: state.auth,
+  matchPercent: state.matchPercent
 });
 export default connect(
   mapStateToProps,
-  { getJobs, getMatchPercent }
+  { getJobs, getMatchPercent, applyJob }
 )(JobsListing);

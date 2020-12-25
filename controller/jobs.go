@@ -9,17 +9,17 @@ import (
 	"net/http"
 
 	// "go.mongodb.org/mongo-driver/x/mongo/driver/mongocrypt/options"
-
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
 
 	// "github.com/mongodb/mongo-go-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	// "github.com/mongodb/mongo-go-driver/mongo/options"
-	"github.com/swipesmart/config/db"
-	"github.com/swipesmart/model"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+
+	"github.com/swipesmart/config/db"
+	"github.com/swipesmart/model"
 )
 
 // CreateJobs ...
@@ -207,18 +207,18 @@ func AppliedJobs(w http.ResponseWriter, r *http.Request) {
 	// if  token.Valid {
 	// 	// id, ok := claims["id"].(string)
 	// 	if !ok {
-	// 		log.Fatal(ok)
-	// 	}
+	// 		log.Fatal(ok) 
 	userID, err := primitive.ObjectIDFromHex(id)
 	// if err != nil {
 	// 	log.Fatal(err)
-	// }
+	// } 
 	// err = collection.FindOne(context.TODO(), bson.M{"_id": currentJobID}).Decode(&job)
 	// if err != nil {
 	// 	fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
 	// }
 	newSavedJobs.UserID = userID
 	newSavedJobs.Jobs = job
+	newSavedJobs.Jobs.Status = "Applied"
 
 	fmt.Println("savedJobs:", newSavedJobs)
 	if token.Valid {

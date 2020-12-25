@@ -11,7 +11,7 @@ const ListItems = (props) => {
             <li className={ props.cName } onClick={ props.changeRoute}>
             <Link to={ props.path }>
                 { props.icon }
-                    <span>{ props.title }</span>
+                    <span className="span">{ props.title }</span>
             </Link>
 
          </li>   
