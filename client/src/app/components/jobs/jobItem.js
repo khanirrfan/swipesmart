@@ -1,21 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { saveJob, rejectJob, applyJob, getMatchPercent } from '../../actions/jobs';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
-const JobItem = ({ item, showDescription, auth: { user }, jobs, saveJob, rejectJob, applyJob, getMatchPercent }) => {
+const JobItem = ({ item, showDescription, auth: { user }}) => {
 
-    // const handleReject = async e => {
-    //     e.preventDefault();
-    //     rejectJob({ item, user });
-    // }
     if (user === null) {
         return (<Spinner />)
     } else {
         return (
             <div className="jobs bg-white p-1 my-2">
                 <div className="jobDetails" onClick={ showDescription } key={ item._id }>
-                    <a href={ '#' + item._id } role="tab" data-toggle="tab">
+                    <a href={ '/' + item._id } role="tab" data-toggle="tab">
                         <div className="row p-1">
                             <div className="company-logo">
                                 <img href="" alt="logo">
