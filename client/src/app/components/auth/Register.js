@@ -65,7 +65,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                         <ul className="m-1" style={{display:'flex'}}>
                             {
                                 useType.types.map((jobType, index) => {
-                                    return (<CheckBox key={ index } handleCheckChieldElement={ e => handleCheckTypeElement(e) }  { ...jobType } />)
+                                    return (<CheckBox key={ index } handleCheckFieldElement={ e => handleCheckTypeElement(e) }  { ...jobType } />)
                                 })
                             }
                         </ul>

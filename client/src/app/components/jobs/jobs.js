@@ -83,6 +83,21 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading }, auth: { user } }) => {
 
   return (
     <>
+
+      {/* navigating to job details in mobile view
+
+        const [width, setWidth] = useState<number>(window.innerWidth);
+        function handleWindowSizeChange() {
+          setWidth(window.innerWidth);
+        }
+        useEffect(() => {
+                window.addEventListener('resize', handleWindowSizeChange);
+                return () => {
+                    window.removeEventListener('resize', handleWindowSizeChange);
+                }
+            }, []);
+
+        let isMobile: boolean = (width <= 768);*/}
       <div className="leftpane ">
         <div className="container-left">
           <h4 className=" m-1"> Job Types </h4>
@@ -145,7 +160,7 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading }, auth: { user } }) => {
       </div>
       { show && jobDescription !== '' &&
         <div className="rightpane">
-        <JobDescription item={ jobDescription } closeJD={ closeJobDescription }/>
+          <JobDescription item={ jobDescription } closeJD={ closeJobDescription } />
         </div>
       }
     </>
@@ -170,3 +185,4 @@ export default connect(
   mapStateToProps,
   { getJobs, getMatchPercent, applyJob }
 )(JobsListing);
+

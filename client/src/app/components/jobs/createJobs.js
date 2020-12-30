@@ -1,121 +1,69 @@
-import React, {Fragment,useState} from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
 import { addJob } from '../../actions/jobs';
 import { connect } from 'react-redux';
 
-const CreateJobs = ({addJob}) => {
-    const [formData, setFormData] = useState({
-        jobTitle: '',
-        experience: '',
-        skills: '',
-        from: '',
-        to: '',
-        Country: '',
-        jobDescription: ''
-      });
+import Stepper from '../shared/Stepper/Stepper';
+import './createJobs.scss';
+
+const CreateJobs = ({ addJob }) => {
+  const [formData, setFormData] = useState({
+    jobTitle: '',
+    jobDescription: '',
+    experience: '',
+    visa: '',
+    skills: [],
+    salary: '',
+    language: [],
+    Country: '',
+    jobCategory: [],
+    jobType: []
+  });
   const {
     jobTitle,
+    jobDescription,
     experience,
     skills,
-    from,
-    to,
+    visa,
+    language,
+    salary,
     Country,
-    jobDescription
+    jobCategory,
+    jobType
+
   } = formData;
 
+  const stepArray = ["Company Details", "Office Location", "Job Overview", "Job Description", "Preview"]
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    return (
-        <Fragment>
-        <h1 className='large text-primary'>Create Job</h1>
-        <small>* = required field</small>
-        <form
-          className='form'
-          onSubmit={e => {
-            e.preventDefault();
-            addJob(formData);
-          }}
-        >
-          <div className='form-group'>
-            <input
-              type='text'
-              placeholder='* job title'
-              name='jobTitle'
-              value={jobTitle}
-              onChange={e => onChange(e)}
-              required
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='text'
-              placeholder='* Degree or Certificate'
-              name='experience'
-              value={experience}
-              onChange={e => onChange(e)}
-              required
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='text'
-              placeholder='Field of Study'
-              name='skills'
-              value={skills}
-              onChange={e => onChange(e)}
-            />
-          </div>
-          <div className='form-group'>
-            <h4>From Date</h4>
-            <input
-              type='date'
-              name='from'
-              value={from}
-              onChange={e => onChange(e)}
-            />
-          </div>
-          <div className='form-group'>
-            <h4>Country</h4>
-              <input
-                type='text'
-                name='Country'
-                checked={Country}
-                value={Country}
-                onChange={e => onChange(e)}
-              />{' '}
-          </div>
-          <div className='form-group'>
-            <h4>To Date</h4>
-            <input
-              type='date'
-              name='to'
-              value={to}
-              onChange={e => onChange(e)}
-            />
-          </div>
-          <div className='form-group'>
-            <textarea
-              name='jobDescription'
-              cols='30'
-              rows='5'
-              placeholder='Job Description'
-              value={jobDescription}
-              onChange={e => onChange(e)}
-            />
-          </div>
-          <input type='submit' className='btn btn-primary my-1' />
-          <Link className='btn btn-light my-1' to='/jobs'>
-            Go Back
-          </Link>
-        </form>
-      </Fragment>
-    )
+  const [CurrentStep, setCurrentStep] = useState('1')
+  const handleClick = (type) => {
+    let newStep = CurrentStep;
+    type === 'next' ? newStep++ :newStep--;
+    if(newStep > 0 && newStep <= 5){
+    setCurrentStep(newStep);}
+    console.log('hello')
+  }
+
+  return (
+    <>
+      <div className="stepper-container-vertical" >
+        <Stepper steps={ stepArray } direction="vertical" currentStepNumber={ CurrentStep } />
+      </div>
+      <div className="buttons-container">
+        <button onClick={() => handleClick('prevous')}>Previous</button>
+        <button onClick={ () => handleClick('next') }>Next</button>
+      </div>
+    </>
+
+  )
 }
 
 CreateJobs.propTypes = {
-addJob: PropTypes.func.isRequired,
+  addJob: PropTypes.func.isRequired,
 };
 
-export default connect(null, {addJob})(CreateJobs)
+export default connect(null, { addJob })(CreateJobs)

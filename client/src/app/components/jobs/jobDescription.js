@@ -39,13 +39,13 @@ const JobDescription = ({ item, auth: { user }, closeJD, matchPercent, applyJob,
               </div>
             </div>
             <div className="row p-1">
-              <button style={ { width: "30%", marginRight: "1%" } } onClick={ e => handleApply(e) }>
+              <button className="btn" style={ { width: "30%", marginRight: "1%" } } onClick={ e => handleApply(e) }>
                 Apply to this job
               </button>
-              <button style={ { width: "20%", marginLeft: "1%" } } onClick={ e => handleSave(e) }>
+              <button className="btn" style={ { width: "20%", marginLeft: "1%" } } onClick={ e => handleSave(e) }>
                 Save Job
               </button>
-              <button style={ { width: "20%", marginLeft: "1%" } } onClick={ closeJD }>Close</button>
+              <button className="btn" style={ { width: "20%", marginLeft: "1%" } } onClick={ closeJD }>Close</button>
             </div>
           </div>
           <div className='job-details-content pt-8 pl-sm-9 pl-6 pr-sm-9 pr-6 pb-10 border-bottom border-width-1 border-default-color light-mode-texts'>
@@ -77,19 +77,19 @@ const JobDescription = ({ item, auth: { user }, closeJD, matchPercent, applyJob,
             </div>
 
             <div className="row">
-              <div className="col-md-4 mb-lg-0 mb-10">
+              <div className="col-md-4 pr-lg-0 pl-lg-10 mb-lg-0 mb-8">
                 <div className="">
                   <span className="font-size-4 d-block mb-4 text-gray">Career level</span>
                   <h6 className="font-size-5 text-black-2 font-weight-semibold mb-9">Project Manager</h6>
                 </div>
                 <div className="tags">
-                  <p className="font-size-4 text-gray mb-0"> skills</p>
-                  <ul className="list-unstyled mr-n3 mb-0">
+                  <p className="font-size-4 text-gray mb-0"> Technical Skills</p>
+                  <ul className="d-flex list-unstyled flex-wrap pr-sm-25 pr-md-0">
                     {
                       item.skills.map((item, index) => {
                         return (
-                          <li key={ index } className="d-block font-size-4 text-black-2 mt-2">
-                            <span className="d-inline-block mr-2">{ item }</span>
+                          <li key={ index } className="bg-regent-opacity-15 mr-3 h-px-33 text-center flex-all-center rounded-3 px-5 font-size-3 text-black-2 mt-2">
+                            { item }
                           </li>
                         )
                       })
@@ -126,14 +126,15 @@ const JobDescription = ({ item, auth: { user }, closeJD, matchPercent, applyJob,
                   <span className="font-size-4 font-weight-semibold text-black-2 mb-7"> Your Resposobilities</span>
                   <ul className="list-unstyled">
                     <li className="d-block font-size-4 text-black-2 d-flex flex-row mt-2">
-                      <span className="d-inline-block mr-7">•</span>Contribute new controls or design improvements to our
-                        </li>
+                      {/*<span className="d-inline-block mr-7">•</span>*/}
+                      Contribute new controls or design improvements to our
+                    </li>
                   </ul>
-
                 </div>
               </div>
             </div>
           </div>
+          <button className="btn mr-7 mt-5 mb-7">Apply </button>
         </div>
       </div>
     </>

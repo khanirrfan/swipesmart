@@ -3,7 +3,7 @@ import { saveJob, rejectJob, applyJob, getMatchPercent } from '../../actions/job
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
-const JobItem = ({ item, showDescription, auth: { user }}) => {
+const JobItem = ({ item, showDescription, auth: { user } }) => {
 
     if (user === null) {
         return (<Spinner />)
@@ -19,7 +19,6 @@ const JobItem = ({ item, showDescription, auth: { user }}) => {
                             </div>
                             <div className="jobTitle">
                                 <p className="font-size-6">{ item.jobtitle } </p>
-
                                 <span>company name</span>
                             </div>
                             <div className="jobSalary">
@@ -48,6 +47,11 @@ const JobItem = ({ item, showDescription, auth: { user }}) => {
                             </div>
                         </div>
                     </a>
+                    { item.status === 'Applied' &&
+                        <div className="row p-1">
+                            <button className="btn btn-info">Cover letter</button>
+                        </div>
+                    }
                 </div>
             </div>
         )

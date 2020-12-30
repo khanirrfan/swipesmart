@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom';
 
 const ListItems = (props) => {
 
-    const handleClick = (e, cName) => {
-        console.log(e, cName)
-    }
     return (
         <>
             <li className={ props.cName } onClick={ props.changeRoute}>
