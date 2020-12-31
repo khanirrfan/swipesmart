@@ -313,6 +313,9 @@ a.hover-bg-green {
   padding-bottom: 0.75rem !important;
 }
 
+.pb-7, .py-7 {
+    padding-bottom: 1.25rem !important;
+}
 .pr-9,
 .px-9 {
   padding-right: 1.875rem !important;
@@ -387,10 +390,6 @@ a.hover-bg-green {
 .pt-7,
 .py-7 {
   padding-top: 1.25rem !important;
-}
-.pb-5,
-.py-5 {
-  padding-bottom: 0.75rem !important;
 }
 .p-5 {
   padding: 0.75rem !important;
@@ -1735,6 +1734,7 @@ body[data-theme='light'] .dark-mode-texts .light-shape.default-shape, .light-mod
 /* ---------------------------
   01.Component -> { Form } 
 ------------------------------*/
+
 .gr-check-input {
   margin-bottom: 20px;
 }

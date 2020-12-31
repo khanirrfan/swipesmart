@@ -7,9 +7,13 @@ import { connect } from 'react-redux';
 import Stepper from '../shared/Stepper/Stepper';
 import './createJobs.scss';
 
-
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import CompanyDetails from './CreateJobs/CompanyDetails';
+import JobOverview from './CreateJobs/JobOverview';
+import JobDescription from './CreateJobs/JobDescription';
+import Preview from './CreateJobs/Preview';
+import CompanyLocation from './CreateJobs/CompanyLocation';
 
 const CreateJobs = ({ addJob }) => {
   const [formData, setFormData] = useState({
@@ -22,7 +26,11 @@ const CreateJobs = ({ addJob }) => {
     language: [],
     Country: '',
     jobCategory: [],
-    jobType: []
+    jobType: [],
+    companyName:'',
+    City:'',
+    Locality:'',
+    WorkingDays:''
   });
   const {
     jobTitle,
@@ -32,58 +40,70 @@ const CreateJobs = ({ addJob }) => {
     visa,
     language,
     salary,
-    Country,
+    country,
     jobCategory,
-    jobType
+    jobType,
+    companyName,
+    city,
+    locality,
+    workingDays
 
   } = formData;
 
   const stepArray = ["Company Details", "Office Location", "Job Overview", "Job Description", "Preview"]
-  const handleChange = e =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const [CurrentStep, setCurrentStep] = useState('1')
-  const handleClick = (type) => {
-    let newStep = CurrentStep;
-    type === 'next' ? newStep++ :newStep--;
-    if(newStep > 0 && newStep <= 5){
-      setCurrentStep(newStep);
-    }
+  const [CurrentStep, setCurrentStep] = useState(1)
+const nextStep = () => {
+  let newStep = CurrentStep;
+  newStep++
+  setCurrentStep(newStep)
+}
+const prevStep = () => {
+  let newStep = CurrentStep;
+  newStep--
+  setCurrentStep(newStep)
+}
+
+  const handleChange = input => e => {
+    setFormData({ [input]: e.target.value });
   }
-
-  const onChange = ({e, value}) => {  };
 
   return (
     <>
       <div className="stepper-container-vertical" >
         <Stepper steps={ stepArray } direction="vertical" currentStepNumber={ CurrentStep } />
       </div>
-      <div>
-
-        <CKEditor
-          editor={ ClassicEditor }
-          data="<p>Hello from CKEditor 5!</p>"
-          onReady={ editor => {
-            // You can store the "editor" and use when it is needed.
-            console.log('Editor is ready to use!', editor);
-          } }
-          onChange={ (event, editor) => {
-            const data = editor.getData();
-            console.log({ event, editor, data });
-          } }
-          onBlur={ (event, editor) => {
-            console.log('Blur.', editor);
-          } }
-          onFocus={ (event, editor) => {
-            console.log('Focus.', editor);
-          } }
-        />
-      
-      <div className="buttons-container">
-        {CurrentStep > 1 && <button onClick={() => handleClick('prevous')}>Previous</button>}
-        {CurrentStep < 5 && <button onClick={ () => handleClick('next') }>Next</button>}
-          { CurrentStep === 5 && <button onClick={ () => handleClick('next') }>Submit</button> }
-      </div>
+      <div className="form-container">
+        { CurrentStep === 1 && 
+          <CompanyDetails 
+            nextStep = {nextStep}
+            handleChange={ handleChange }
+            currentStepNumber={ CurrentStep } 
+            companyName = {companyName}
+          /> }
+        { CurrentStep === 2 && 
+          <CompanyLocation 
+            nextStep={ nextStep }
+            prevStep = { prevStep}
+            handleChange={ handleChange }
+            currentStepNumber={ CurrentStep }
+            country={ country }
+            city = {city}
+            locality = {locality}
+          /> }
+        { CurrentStep === 3 && 
+          <JobOverview 
+            nextStep = {nextStep}
+            prevStep = {prevStep}
+            handleChange = {handleChange}
+            jobTitle = {jobTitle}
+            salary ={salary}
+            experience = {experience}
+            skills = {skills}
+            workingDays = {workingDays}
+          /> }
+        { CurrentStep === 4 && <JobDescription /> }
+        { CurrentStep === 5 && <Preview /> }      
       </div>
     </>
 

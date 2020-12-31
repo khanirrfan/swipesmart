@@ -20,6 +20,7 @@
 
 .buttons-container {
     text-align: center;
+    margin: 10px 0;
     button {
         margin: 0 2rem;
         width: 100px;
@@ -27,4 +28,8 @@
         background-color: lightsalmon;
         border: none;
     }
+}
+.form-container {
+    width: 70%;
+    margin-left: 2%;
 }
