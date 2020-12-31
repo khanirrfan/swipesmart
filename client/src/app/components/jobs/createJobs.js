@@ -4,11 +4,14 @@ import { Link } from 'react-router-dom';
 
 import { addJob } from '../../actions/jobs';
 import { connect } from 'react-redux';
-import RichTextEditor from 'react-rte';
 import Stepper from '../shared/Stepper/Stepper';
 import './createJobs.scss';
 
-const CreateJobs = ({ addJob, propChange }) => {
+
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+const CreateJobs = ({ addJob }) => {
   const [formData, setFormData] = useState({
     jobTitle: '',
     jobDescription: '',
@@ -35,7 +38,6 @@ const CreateJobs = ({ addJob, propChange }) => {
 
   } = formData;
 
-  const [value, setValue] = useState({value: RichTextEditor.createEmptyValue()})
   const stepArray = ["Company Details", "Office Location", "Job Overview", "Job Description", "Preview"]
   const handleChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -49,17 +51,7 @@ const CreateJobs = ({ addJob, propChange }) => {
     }
   }
 
-  const onChange = ({value}) => {
-    setValue({ value:value });
-    if (propChange) {
-      // Send the changes up to the parent component as an HTML string.
-      // This is here to demonstrate using `.toString()` but in a real app it
-      // would be better to avoid generating a string on each change.
-      propChange(
-        value.toString('html')
-      );
-    }
-  };
+  const onChange = ({e, value}) => {  };
 
   return (
     <>
@@ -67,7 +59,25 @@ const CreateJobs = ({ addJob, propChange }) => {
         <Stepper steps={ stepArray } direction="vertical" currentStepNumber={ CurrentStep } />
       </div>
       <div>
-        <RichTextEditor value = {value.value} onChange= {() =>onChange(value)}/>
+
+        <CKEditor
+          editor={ ClassicEditor }
+          data="<p>Hello from CKEditor 5!</p>"
+          onReady={ editor => {
+            // You can store the "editor" and use when it is needed.
+            console.log('Editor is ready to use!', editor);
+          } }
+          onChange={ (event, editor) => {
+            const data = editor.getData();
+            console.log({ event, editor, data });
+          } }
+          onBlur={ (event, editor) => {
+            console.log('Blur.', editor);
+          } }
+          onFocus={ (event, editor) => {
+            console.log('Focus.', editor);
+          } }
+        />
       
       <div className="buttons-container">
         {CurrentStep > 1 && <button onClick={() => handleClick('prevous')}>Previous</button>}
@@ -81,8 +91,7 @@ const CreateJobs = ({ addJob, propChange }) => {
 }
 
 CreateJobs.propTypes = {
-  addJob: PropTypes.func.isRequired,
-  propChange: PropTypes.func
+  addJob: PropTypes.func.isRequired
 };
 
 export default connect(null, { addJob })(CreateJobs)

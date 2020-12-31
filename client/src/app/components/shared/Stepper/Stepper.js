@@ -26,9 +26,9 @@ const Stepper = ({ steps, direction, currentStepNumber }) => {
         setStep({ steps: currentSteps })
     })
 
-    const displayArray = step.steps;
-    const updateStep = (stepNumber, displayArray) => {
-        const newSteps = [...displayArray]    
+    const displayStepArray = step.steps;
+    const updateStep = (stepNumber, displayStepArray) => {
+        const newSteps = [...displayStepArray]    
         // completed - to show a checkmark
         // selected - to fill the step with color
         // highlighted - to make the description bold
@@ -77,7 +77,7 @@ const Stepper = ({ steps, direction, currentStepNumber }) => {
         return newSteps;
 
     }
-    const stepDisplay = displayArray.map((item, index) => {
+    const stepDisplay = displayStepArray.map((item, index) => {
         return (
             <div key = {index} className="step-wrapper">
                 <div className={ `step-number 
@@ -88,7 +88,7 @@ const Stepper = ({ steps, direction, currentStepNumber }) => {
                     }
                 </div>
                 <div className={ `step-description ${item.highlighted && "step-description-active"}` }>{ item.description }</div>
-                <div className={ index !== displayArray.length - 1 ? `divider-line divider-line-${displayArray.length}` : '' } />
+                <div className={ index !== displayStepArray.length - 1 ? `divider-line divider-line-${displayStepArray.length}` : '' } />
             </div>
         )
     })
