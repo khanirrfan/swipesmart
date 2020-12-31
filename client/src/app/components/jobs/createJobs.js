@@ -102,8 +102,16 @@ const prevStep = () => {
             skills = {skills}
             workingDays = {workingDays}
           /> }
-        { CurrentStep === 4 && <JobDescription /> }
-        { CurrentStep === 5 && <Preview /> }      
+        { CurrentStep === 4 && 
+          <JobDescription 
+          nextStep={ nextStep }
+          prevStep={ prevStep }
+          handleChange={ handleChange }
+          /> }
+        { CurrentStep === 5 && 
+          <Preview 
+          prevStep={ prevStep }
+          /> }      
       </div>
     </>
 
