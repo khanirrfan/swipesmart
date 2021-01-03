@@ -21,9 +21,9 @@ const CompanyLocation = ({country, city, locality, handleChange, nextStep, prevS
                                 <input
                                     type="text"
                                     placeholder="Country"
-                                    name="city"
+                                    name="country"
                                     value={ country }
-                                    onChange={ handleChange('city') }
+                                    onChange={ handleChange('country') }
                                     className="form-control" />
                             </div>
                             <div className="col-sm-6 col-md-6 mb-7">

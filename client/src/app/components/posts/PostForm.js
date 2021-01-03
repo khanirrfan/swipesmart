@@ -99,7 +99,7 @@ const PostForm = ({ addPost, auth:{user} }) => {
     { isFocused && 
       <Overlay onClick={handleReset}/> }
 
-      <Root zIndex={ isFocused ? 'md' : 'xs' } color="white" radius="sm" padding="sm">
+      <Root zIndex={ isFocused ? 'md' : 3 } color="white" radius="sm" padding="sm">
       <form className='form '
         onSubmit={e => {
           e.preventDefault();

@@ -25,9 +25,9 @@ import CompanyProfile from '../company/companyProfile';
 import UserDashboard from '../dashboard/UserDashboard';
 import Community from '../Community/Community';
 import CoverLetter from '../coverLetter/CoverLetter';
+import SigninPage from '../shared/pages/SignIn/Signin';
 
 const Routes = ({ auth: { user } }) => {
-  console.log(user);
   return (
     <section className='container1'>
       <Alert />

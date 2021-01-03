@@ -1,118 +1,174 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../../actions/auth';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
-import { Nav, NavLink, Bars, NavMenu, NavBtn, NavBtnLink, Times } from '../Navigation/NavbarElements';
+import { Nav, NavLink, NavLinks, NavLogo, Bars, NavMenu, NavBtn, NavBtnLink, Times, NavHeader, NavbarContainer, MobileIcon, NavItem } from '../Navigation/NavbarElements';
+import TopNavBar from './TopNavBar';
 
-import './Navbar.css';
-const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
+import { IconContext } from 'react-icons/lib';
+
+import { animateScroll as scroll } from 'react-scroll';
+// import './Navbar.css';
+const Navbar = ({ auth: { isAuthenticated, loading, user }, logout, toggle }) => {
   const [state, setState] = useState({ clicked: true })
-  const handleClick = (e) => {
-    setState({ clicked: !state.clicked })
+  const [scrollNav, setScrollNav] = useState(false)
+
+  const changeNav = () => {
+    if (window.scrollY >= 80) {
+      setScrollNav(true)
+    } else {
+      setScrollNav(false)
+    }
+
   }
+
+  useEffect(() => {
+    window.addEventListener('scroll', changeNav)
+  }, [])
+
+  const toggleHome = () => {
+    scroll.scrollToTop()
+  }
+
   const authLinks = (
     <NavMenu>
-      <NavLink to="/jobs" activeStyle>
-        Jobs
+      <NavItem>
+        <NavLink to="/jobs" activeStyle>
+          Jobs
         </NavLink>
-      <NavLink to="/community" activeStyle>
-        Community
+      </NavItem>
+      <NavItem>
+        <NavLink to="/community" activeStyle>
+          Community
         </NavLink>
-      <NavLink to="/cover-letter" activeStyle>
-        Cover Letter
+      </NavItem>
+      <NavItem>
+        <NavLink to="/cover-letter" activeStyle>
+          Cover Letter
         </NavLink>
-      <NavLink to="/userDashboard" activeStyle>
-        Dashboard
+      </NavItem>
+      <NavItem>
+        <NavLink to="/userDashboard" activeStyle>
+          Dashboard
         </NavLink>
-      <NavLink to="/companyProfile" activeStyle>
-        Comapny
+      </NavItem>
+      <NavItem>
+        <NavLink to="/companyProfile" activeStyle>
+          Comapny
         </NavLink>
+      </NavItem>
       {
         user &&
-        <NavLink to={ `/getProfileByID/${user._id}` } activeStyle>
-          <i className="fas fa-sign-out-alt' " />
-          <span className='hide-sm'>Account</span>
-        </NavLink>
+        <NavItem>
+          <NavLink to={ `/getProfileByID/${user._id}` } activeStyle>
+            <i className="fas fa-sign-out-alt' " />
+            <span className='hide-sm'>Account</span>
+          </NavLink>
+        </NavItem>
       }
-      <NavLink to= '#' onClick={ e => logout(e) } activeStyle>
-        <i className='fas fa-sign-out-alt' />{ ' ' }
-        <span className='hide-sm'>Logout</span>
-      </NavLink>
+      <NavItem>
+        <NavLink to='#' onClick={ e => logout(e) } activeStyle>
+          <i className='fas fa-sign-out-alt' />{ ' ' }
+          <span className='hide-sm'>Logout</span>
+        </NavLink>
+      </NavItem>
     </NavMenu>
 
   );
 
   const orgLinks = (
     <NavMenu>
-      <NavLink to='/createJobs' activeStyle>
-        Create Jobs
+      <NavItem>
+        <NavLink to='/createJobs' activeStyle>
+          Create Jobs
         </NavLink>
-      <NavLink to='/posts' activeStyle>
-        Posts
+      </NavItem>
+      <NavItem>
+        <NavLink to='/posts' activeStyle>
+          Posts
         </NavLink>
+      </NavItem>
       {
         user &&
-        <NavLink to={ `/getProfileByID/${user._id}` } activeStyle>
-          <i className="fas fa-sign-out-alt' " />
-          <span className='hide-sm'>Account</span>
-        </NavLink>
+        <NavItem>
+          <NavLink to={ `/getProfileByID/${user._id}` } activeStyle>
+            <i className="fas fa-sign-out-alt' " />
+            <span className='hide-sm'>Account</span>
+          </NavLink>
+        </NavItem>
       }
-      <NavLink to= '#' onClick={ e => logout(e) } activeStyle>
-        <i className='fas fa-sign-out-alt' />{ ' ' }
-        <span className='hide-sm'>Logout</span>
-      </NavLink>
+      <NavItem>
+        <NavLink to='#' onClick={ e => logout(e) } activeStyle>
+          <i className='fas fa-sign-out-alt' />{ ' ' }
+          <span className='hide-sm'>Logout</span>
+        </NavLink>
+      </NavItem>
     </NavMenu>
 
   );
 
   const displayLinks = (
     <NavMenu>
-      <NavLink to='/createJobs' activeStyle>
-        Create Jobs
+      <NavItem>
+        <NavLinks to='about' smooth={ true } duration={ 500 } spy={ true } exact='true' offset={ -80 }>
+          About
+        </NavLinks>
+      </NavItem>
+      <NavItem>
+        <NavLinks to='discover' smooth={ true } duration={ 500 } spy={ true } exact='true' offset={ -80 }>
+          Discover
+        </NavLinks>
+      </NavItem>
+      <NavItem>
+        <NavLinks to='services' smooth={ true } duration={ 500 } spy={ true } exact='true' offset={ -80 }>
+          Services
+        </NavLinks>
+      </NavItem>
+
+      <NavItem>
+        <NavLink to='/signin' smooth={ true } duration={ 500 } spy={ true } exact='true' offset={ -80 }>
+          Login
         </NavLink>
-      <NavLink to='/posts' activeStyle>
-        Posts
-        </NavLink>
-      <NavLink to='/login' activeStyle>
-        Login
-        </NavLink>
+      </NavItem>
     </NavMenu>
   );
 
   return (
+    <>
+      <IconContext.Provider value={ { color: '#fff' } }>
+        <Nav scrollNav={ scrollNav }>
+          <NavbarContainer>
+            <NavLogo to="#" onClick={ toggleHome }>
+              <NavHeader>
+                SwipeSmart
+              </NavHeader>
+            </NavLogo>
 
-    <Nav>
-      <NavLink to="#">
-        <h1>
-          SwipeSmart
-        </h1>
-      </NavLink>
+            <MobileIcon onClick={ toggle }>
+              <Bars />
+            </MobileIcon>
+            { user && !loading ? (
 
-      <div onClick={ e => handleClick(e) }>
-        { state.clicked ?
-          (<Bars />) : (<Times />)
-        }
-      </div>
-      <div className={ !state.clicked ? 'nav-menu active' : 'nav-menu' }>
-        { user && !loading ? (
-
-          <Fragment>
-            {
-              (
-                user && isAuthenticated && (user.type === 'employee')
-              ) ? authLinks : orgLinks
+              <>
+                {
+                  (
+                    user && isAuthenticated && (user.type === 'employee')
+                  ) ? authLinks : orgLinks
+                }
+              </>
+            ) : (
+                <>
+                  { displayLinks }
+                </>
+              )
             }
-          </Fragment>
-        ) : (
-            <Fragment>
-              {displayLinks }
-            </Fragment>
-          )
-        }
-      </div>
-    </Nav>
+          </NavbarContainer>
+        </Nav>
+      </IconContext.Provider >
+    </>
   );
 };
 

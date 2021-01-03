@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import PostItem from '../posts/PostItem';
 import PostForm from '../posts/PostForm';
 
-
 const Community = ({
     getPosts,
     post: { posts, loading }
