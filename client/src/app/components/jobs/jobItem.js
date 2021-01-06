@@ -3,13 +3,59 @@ import { saveJob, rejectJob, applyJob, getMatchPercent } from '../../actions/job
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
+
+import { JobContainer, JobWrapper, JobCards, CompanyLogo, CompanyDetails, CompanyName, JobTitle, JobOverview, JobExperience, JobSalary, JobLocation, JobSkills, JobSkillsItem, JobCardFooter, JobCategory } from './jobItemElements';
+
 const JobItem = ({ item, showDescription, auth: { user } }) => {
 
     if (user === null) {
         return (<Spinner />)
     } else {
         return (
-            <div className="jobs bg-white p-1 my-2">
+            <>
+            <JobContainer>
+                <JobWrapper>
+                    <JobCards>
+                     <CompanyLogo>
+                     <img alt = "logo"/>
+                     </CompanyLogo>
+                     <CompanyDetails> 
+                        <CompanyName>
+                            Enquero
+                        </CompanyName>
+                        <JobTitle>
+                        Sr Software Engineer
+                        </JobTitle>
+                        <JobOverview>
+                            <JobExperience>3</JobExperience>
+                            <JobSalary>1000000</JobSalary>
+                            <JobLocation>Bengaluru</JobLocation>
+                            
+                        </JobOverview>
+                                <JobSkills>
+                                    { item.skills.map((skill, index) => {
+                                        return (
+                                            <JobSkillsItem
+                                                key={ index }>
+                                                { skill }
+                                            </JobSkillsItem>
+                                        )
+                                    })
+                                    }
+                                </JobSkills>
+                     </CompanyDetails>    
+                     
+                    </JobCards>
+                        
+                </JobWrapper>
+                    <JobCardFooter>
+                        <JobCategory>
+                            Premium
+                     </JobCategory>
+                    </JobCardFooter>
+            </JobContainer>
+
+     <div className="jobs bg-white p-1 my-2">
                 <div className="jobDetails" onClick={ showDescription } key={ item._id }>
                     <a href={ '/' + item._id } role="tab" data-toggle="tab">
                         <div className="row p-1">
@@ -27,16 +73,14 @@ const JobItem = ({ item, showDescription, auth: { user } }) => {
                                 </span>
                             </div>
                         </div>
-                        <div className="row p-1">
-                            <div style={ { width: "50%" } }>
+                        <div className="row p-1" style={{flexWrap:"wrap"}}>
                                 { item.skills.map((skill, index) => {
                                     return (
                                         <span style={ {
                                             margin: "1%",
                                             padding: ".5rem",
                                             backgroundColor: "#eee",
-                                            borderRadius: "5px",
-                                            width: "100%"
+                                            borderRadius: "5px"
                                         } }
                                             key={ index }>
                                             { skill }
@@ -44,7 +88,6 @@ const JobItem = ({ item, showDescription, auth: { user } }) => {
                                     )
                                 })
                                 }
-                            </div>
                         </div>
                     </a>
                     { item.status === 'Applied' &&
@@ -53,7 +96,8 @@ const JobItem = ({ item, showDescription, auth: { user } }) => {
                         </div>
                     }
                 </div>
-            </div>
+                </div>
+                </>
         )
     }
 }

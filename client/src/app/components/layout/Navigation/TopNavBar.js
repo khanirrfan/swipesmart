@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../../actions/auth';
 
-import { SidebarContainer, Icon, CloseIcon, SideBtnWrap, SidebarLink, SidebarWrapper, SidebarMenu, SidebarRoute } from './TopNavBarElements'
+import { SidebarContainer, Icon, CloseIcon, SideBtnWrap, SidebarLink, SidebarLinks, SidebarWrapper, SidebarMenu, SidebarRoute } from './TopNavBarElements'
 
 const TopNavBar = ({ auth: { isAuthenticated, loading, user }, logout, isOpen, toggle }) => {
     const loggedLinks = (
@@ -50,12 +50,12 @@ const TopNavBar = ({ auth: { isAuthenticated, loading, user }, logout, isOpen, t
     const displayLinks = (
         <SidebarWrapper>
             <SidebarMenu>
-                <SidebarLink to="about" onClick={ toggle }>About
-                    </SidebarLink>
-                <SidebarLink to="discover" onClick={ toggle }>Discover
-                    </SidebarLink>
-                <SidebarLink to="services" onClick={ toggle }>Services
-                    </SidebarLink>
+                <SidebarLinks to="about" onClick={ toggle }>About
+                    </SidebarLinks>
+                <SidebarLinks to="discover" onClick={ toggle }>Discover
+                    </SidebarLinks>
+                <SidebarLinks to="services" onClick={ toggle }>Services
+                    </SidebarLinks>
             </SidebarMenu>
             <SideBtnWrap>
                 <SidebarRoute to="/signin">

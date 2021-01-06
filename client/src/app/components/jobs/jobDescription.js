@@ -31,21 +31,19 @@ const JobDescription = ({ item, auth: { user }, closeJD, matchPercent, applyJob,
                 <a className="font-size-6">{ item.jobtitle } </a>
                 <span>company name</span>
               </div>
-              <div className="jobSalary">
                 { matchPercent !== null &&
                   <span className="font-size-5">
                     Job relevant:{ matchPercent }%
                 </span> }
-              </div>
             </div>
             <div className="row p-1">
-              <button className="btn" style={ { width: "30%", marginRight: "1%" } } onClick={ e => handleApply(e) }>
+              <button className="btn" onClick={ e => handleApply(e) }>
                 Apply to this job
               </button>
-              <button className="btn" style={ { width: "20%", marginLeft: "1%" } } onClick={ e => handleSave(e) }>
+              <button className="btn" onClick={ e => handleSave(e) }>
                 Save Job
               </button>
-              <button className="btn" style={ { width: "20%", marginLeft: "1%" } } onClick={ closeJD }>Close</button>
+              <button className="btn" onClick={ closeJD }>Close</button>
             </div>
           </div>
           <div className='job-details-content pt-8 pl-sm-9 pl-6 pr-sm-9 pr-6 pb-10 border-bottom border-width-1 border-default-color light-mode-texts'>
