@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getMatchPercent, applyJob, saveJob } from '../../actions/jobs';
 
+// import { JobDescriptionContainer, CompanyOverview, CompanyLogo, Button, JobTitle, JobMatch, ButtonsSection, JobDetails, CompanyName, JobOverview, JobSalary, JobCategory, CarerLevel,JobExperience, JobRequirements} from './jobDescriptionElements.js'; 
 const JobDescription = ({ item, auth: { user }, closeJD, matchPercent, applyJob, saveJob, getMatchPercent }) => {
 
   useEffect(() => {
@@ -20,6 +21,46 @@ const JobDescription = ({ item, auth: { user }, closeJD, matchPercent, applyJob,
   }
   return (
     <>
+{/*
+    <JobDescriptionContainer>
+      <CompanyOverview>
+        <CompanyLogo>
+        <img alt="logo" />
+        </CompanyLogo>
+
+        <JobTitle>
+            { item.jobtitle } 
+          <CompanyName>
+          company name
+          </CompanyName>
+        </JobTitle> 
+        <JobMatch>
+        Job Relevant: {matchPercent}%
+        </JobMatch>
+        
+      </CompanyOverview>
+        <ButtonsSection>
+          <Button nClick={ e => handleApply(e) }>
+            Apply For this job
+        </Button>
+          <Button onClick={ closeJD }>
+            Close
+        </Button>
+        </ButtonsSection>
+      <JobDetails>
+        <JobOverview>
+        <JobSalary>10000</JobSalary>
+        <JobCategory>Full Time</JobCategory>
+        <JobExperience>3years</JobExperience>
+        </JobOverview>
+      </JobDetails>
+      <JobRequirements> 
+        Career Level
+        <CarerLevel>
+        Career Level
+        </CarerLevel>
+      </JobRequirements>
+</JobDescriptionContainer>*/}
       <div className="jobs bg-white p-1 my-2" >
         <div className="jobDetails" >
           <div className="border-bottom border-width-1 border-default-color">
@@ -40,12 +81,16 @@ const JobDescription = ({ item, auth: { user }, closeJD, matchPercent, applyJob,
               <button className="btn" onClick={ e => handleApply(e) }>
                 Apply to this job
               </button>
-              <button className="btn" onClick={ e => handleSave(e) }>
+               <button className="btn" onClick={ e => handleSave(e) }>
                 Save Job
-              </button>
+                </button>
               <button className="btn" onClick={ closeJD }>Close</button>
             </div>
           </div>
+
+
+
+          
           <div className='job-details-content pt-8 pl-sm-9 pl-6 pr-sm-9 pr-6 pb-10 border-bottom border-width-1 border-default-color light-mode-texts'>
             <div className="row mb-7">
               <div className="col-md-4 mb-md-0 mb-6">
@@ -124,7 +169,7 @@ const JobDescription = ({ item, auth: { user }, closeJD, matchPercent, applyJob,
                   <span className="font-size-4 font-weight-semibold text-black-2 mb-7"> Your Resposobilities</span>
                   <ul className="list-unstyled">
                     <li className="d-block font-size-4 text-black-2 d-flex flex-row mt-2">
-                      {/*<span className="d-inline-block mr-7">•</span>*/}
+                      <span className="d-inline-block mr-7">•</span>
                       Contribute new controls or design improvements to our
                     </li>
                   </ul>
@@ -134,7 +179,7 @@ const JobDescription = ({ item, auth: { user }, closeJD, matchPercent, applyJob,
           </div>
           <button className="btn mr-7 mt-5 mb-7">Apply </button>
         </div>
-      </div>
+                  </div>
     </>
   )
 }

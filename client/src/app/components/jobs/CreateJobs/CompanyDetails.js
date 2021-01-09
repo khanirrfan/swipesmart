@@ -1,17 +1,15 @@
-import React, {useState} from 'react'
-
+import React from 'react'
+import PropTypes from 'prop-types';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import './CompanyDetails.scss'
 
-const CompanyDetails = ({ handleChange, companyName, companyWebsite, companySize, industry, about,nextStep }) => {
+const CompanyDetails = ({ handleChange, getData, companyName, companyWebsite, companySize, industry, about,nextStep }) => {
 
-    const [text, setText] = useState("")
     const handleOnChange = (event, editor) => {
         const data = editor.getData();
-        setText(data);
-        handleChange('about')
+        getData(data);
     } 
 
     const next = (e) => {
@@ -26,7 +24,7 @@ const CompanyDetails = ({ handleChange, companyName, companyWebsite, companySize
                     <div className="detailsContainer">
                         <div className="form-row row">
                             <div className="col-sm-12 col-md-6 mb-7">
-                                <label className="font-size-4 font-weight-semibold text-black-2 mb-5 line-height-reset">Company Name</label>
+                                <label className="font-size-4 font-weight-semibold text-black-2 mb-5 line-height-reset">Name</label>
                                 <input
                                     type="text"
                                     placeholder="Compnay Name"
@@ -36,7 +34,7 @@ const CompanyDetails = ({ handleChange, companyName, companyWebsite, companySize
                                     className="form-control" />
                             </div>
                             <div className="col-sm-12 col-md-6 mb-7">
-                                <label className="font-size-4 font-weight-semibold text-black-2 mb-5 line-height-reset">Company website</label>
+                                <label className="font-size-4 font-weight-semibold text-black-2 mb-5 line-height-reset">Website</label>
                                 <input
                                     type="text"
                                     placeholder="Compnay Website"
@@ -48,7 +46,7 @@ const CompanyDetails = ({ handleChange, companyName, companyWebsite, companySize
                         </div>
                         <div className="form-row row">
                             <div className="col-sm-12 col-md-6 mb-7">
-                                <label className="font-size-4 font-weight-semibold text-black-2 mb-5 line-height-reset">Company Size</label>
+                                <label className="font-size-4 font-weight-semibold text-black-2 mb-5 line-height-reset">Size</label>
                                 <input
                                     type="text"
                                     placeholder="Compnay Size"
@@ -58,7 +56,7 @@ const CompanyDetails = ({ handleChange, companyName, companyWebsite, companySize
                                     className="form-control" />
                             </div>
                             <div className="col-sm-12 col-md-6 mb-7">
-                                <label className="font-size-4 font-weight-semibold text-black-2 mb-5 line-height-reset">Company Industry</label>
+                                <label className="font-size-4 font-weight-semibold text-black-2 mb-5 line-height-reset">Industry</label>
                                 <input
                                     type="text"
                                     placeholder="Compnay Industry"
@@ -73,10 +71,12 @@ const CompanyDetails = ({ handleChange, companyName, companyWebsite, companySize
                             <CKEditor
                                 placeholder = "About"
                                 editor={ ClassicEditor }
-                                data={ text }
+                                data={ about }
                                 name = 'about'
                                 value = {about}
-                                onChange={ handleOnChange }
+                                type="text"
+                                onChange={handleOnChange}
+                              
                             />
                         </div>
                     </div>
@@ -88,5 +88,9 @@ const CompanyDetails = ({ handleChange, companyName, companyWebsite, companySize
         </>
     )
 }
+
+CompanyDetails.propTypes = {
+    handleChange: PropTypes.func
+};
 
 export default CompanyDetails

@@ -4,34 +4,40 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
 
-import { JobContainer, JobWrapper, JobCards, CompanyLogo, CompanyDetails, CompanyName, JobTitle, JobOverview, JobExperience, JobSalary, JobLocation, JobSkills, JobSkillsItem, JobCardFooter, JobCategory } from './jobItemElements';
+import { JobContainer, JobWrapper, JobCards, CompanyLogo, CompanyDetails, CompanyName, JobTitle, JobOverview, JobExperience, JobSalary, JobLocation, JobSkills, JobSkillsItem, JobCardFooter, JobCategory, JobPosted, JobSaveOption, LocationIcon, SalaryIcon, ExperienceIcon } from './jobItemElements';
 
-const JobItem = ({ item, showDescription, auth: { user } }) => {
-
+const JobItem = ({ item, showDescription, auth: { user }, saveJob }) => {
+    const handleSave = async e => {
+        e.preventDefault();
+        saveJob({ item, user });
+    }
     if (user === null) {
         return (<Spinner />)
     } else {
         return (
             <>
-            <JobContainer>
-                <JobWrapper>
-                    <JobCards>
-                     <CompanyLogo>
-                     <img alt = "logo"/>
-                     </CompanyLogo>
-                     <CompanyDetails> 
-                        <CompanyName>
-                            Enquero
-                        </CompanyName>
-                        <JobTitle>
-                        Sr Software Engineer
-                        </JobTitle>
-                        <JobOverview>
-                            <JobExperience>3</JobExperience>
-                            <JobSalary>1000000</JobSalary>
-                            <JobLocation>Bengaluru</JobLocation>
+                <JobContainer>
+                    <JobWrapper to={ '/' + item._id } onClick={ showDescription } key={ item._id }>
+                        <CompanyLogo>
+                            <img alt="logo" />
+                        </CompanyLogo>
+                        <JobCards>
                             
-                        </JobOverview>
+                            <CompanyDetails>
+                                <CompanyName>
+                                    Enquero
+                                </CompanyName>
+                                <JobTitle>
+                                    { item.jobtitle }
+                                </JobTitle>
+                                <JobOverview>
+                                    <JobExperience><ExperienceIcon />3</JobExperience>
+                                    <JobSalary><SalaryIcon />{ item.salary }</JobSalary>
+                                    <JobLocation>
+                                        <LocationIcon />
+                                    Bengaluru</JobLocation>
+
+                                </JobOverview>
                                 <JobSkills>
                                     { item.skills.map((skill, index) => {
                                         return (
@@ -43,61 +49,22 @@ const JobItem = ({ item, showDescription, auth: { user } }) => {
                                     })
                                     }
                                 </JobSkills>
-                     </CompanyDetails>    
-                     
-                    </JobCards>
-                        
-                </JobWrapper>
+                            </CompanyDetails>
+                        </JobCards>
+                    </JobWrapper>
                     <JobCardFooter>
                         <JobCategory>
                             Premium
                      </JobCategory>
+                        <JobPosted>
+                            4 Days ago
+                     </JobPosted>
+                        {
+                            item.status === 'Applied' ? (<JobSaveOption>Cover Letter</JobSaveOption>) : (<JobSaveOption onClick={ e => handleSave(e) }>Save</JobSaveOption>)
+                        }
                     </JobCardFooter>
-            </JobContainer>
-
-     <div className="jobs bg-white p-1 my-2">
-                <div className="jobDetails" onClick={ showDescription } key={ item._id }>
-                    <a href={ '/' + item._id } role="tab" data-toggle="tab">
-                        <div className="row p-1">
-                            <div className="company-logo">
-                                <img href="" alt="logo">
-                                </img>
-                            </div>
-                            <div className="jobTitle">
-                                <p className="font-size-6">{ item.jobtitle } </p>
-                                <span>company name</span>
-                            </div>
-                            <div className="jobSalary">
-                                <span className="font-size-7">
-                                    { item.salary }
-                                </span>
-                            </div>
-                        </div>
-                        <div className="row p-1" style={{flexWrap:"wrap"}}>
-                                { item.skills.map((skill, index) => {
-                                    return (
-                                        <span style={ {
-                                            margin: "1%",
-                                            padding: ".5rem",
-                                            backgroundColor: "#eee",
-                                            borderRadius: "5px"
-                                        } }
-                                            key={ index }>
-                                            { skill }
-                                        </span>
-                                    )
-                                })
-                                }
-                        </div>
-                    </a>
-                    { item.status === 'Applied' &&
-                        <div className="row p-1">
-                            <button className="btn btn-info">Cover letter</button>
-                        </div>
-                    }
-                </div>
-                </div>
-                </>
+                </JobContainer>
+            </>
         )
     }
 }

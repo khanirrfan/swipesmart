@@ -7,10 +7,16 @@ import { getJobs, getMatchPercent, applyJob } from '../../actions/jobs';
 import CheckBox from '../shared/Checkbox.js';
 import Select from 'react-select';
 import JobDescription from './jobDescription';
+import { JobSection } from './jobElements.js';
 
 const JobsListing = ({ getJobs, jobs: { jobs, loading }, auth: { user } }) => {
   useEffect(() => {
     getJobs();
+    window.addEventListener('resize', handleWindowSizeChange);
+    return () => {
+      window.removeEventListener('resize', handleWindowSizeChange);
+    }
+
   }, [getJobs]);
   const [jobTypes, setJobTypes] = useState({
     types: [
@@ -80,69 +86,49 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading }, auth: { user } }) => {
     { label: 'Crab', value: 'Crab' },
     { label: 'Lobster', value: 'Lobster' },
   ];
+  const [width, setWidth] = useState(window.innerWidth);
+  const handleWindowSizeChange = () => {
+    setWidth(window.innerWidth);
+  }
+  console.log(width);
+  let isMobile = (width <= 920);
+  console.log(isMobile);
 
   return (
+     
     <>
+      { !isMobile &&
+        <div className="leftpane ">
+          <div className="container-left">
+            <h4 className=" m-1"> Job Types </h4>
+            <ul className="m-1">
+              {
+                jobTypes.types.map((jobType, index) => {
+                  return (<CheckBox key={ index } handleCheckFieldElement={ e => handleCheckTypeElement(e) }  { ...jobType } />)
+                })
+              }
+            </ul>
 
-      {/* navigating to job details in mobile view
-
-        const [width, setWidth] = useState<number>(window.innerWidth);
-        function handleWindowSizeChange() {
-          setWidth(window.innerWidth);
-        }
-        useEffect(() => {
-                window.addEventListener('resize', handleWindowSizeChange);
-                return () => {
-                    window.removeEventListener('resize', handleWindowSizeChange);
-                }
-            }, []);
-
-        let isMobile: boolean = (width <= 768);*/}
-      <div className="leftpane ">
-        <div className="container-left">
-          <h4 className=" m-1"> Job Types </h4>
-          <ul className="m-1">
-            {
-              jobTypes.types.map((jobType, index) => {
-                return (<CheckBox key={ index } handleCheckFieldElement={ e => handleCheckTypeElement(e) }  { ...jobType } />)
-              })
-            }
-          </ul>
-
-          <h4 className="m-1"> Salary Range</h4>
-          <h4 className="m-1"> Experience Level</h4>
-          <ul className="m-1">
-            {
-              expLevel.level.map((level, index) => {
-                return (<CheckBox key={ index } handleCheckFieldElement={ e => handleCheckExpElement(e) }  { ...level } />)
-              })
-            }
-          </ul>
-          <h4 className="m-1">Posted time</h4>
-          <ul className="m-1">
-            {
-              posted.duration.map((duration, index) => {
-                return (<CheckBox key={ index } handleCheckFieldElement={ e => handleCheckdurationElement(e) }  { ...duration } />)
-              })
-            }
-          </ul>
-        </div>
-      </div>
-      <div className="middlepane">
-        <div className="row" >
-          <div className="Select">
-            <Select options={ aquaticCreatures } onChange={ opt => console.log(opt.label, opt.value) } />
+            <h4 className="m-1"> Salary Range</h4>
+            <h4 className="m-1"> Experience Level</h4>
+            <ul className="m-1">
+              {
+                expLevel.level.map((level, index) => {
+                  return (<CheckBox key={ index } handleCheckFieldElement={ e => handleCheckExpElement(e) }  { ...level } />)
+                })
+              }
+            </ul>
+            <h4 className="m-1">Posted time</h4>
+            <ul className="m-1">
+              {
+                posted.duration.map((duration, index) => {
+                  return (<CheckBox key={ index } handleCheckFieldElement={ e => handleCheckdurationElement(e) }  { ...duration } />)
+                })
+              }
+            </ul>
           </div>
-          <div className="Select">
-            <Select options={ aquaticCreatures } onChange={ opt => console.log(opt.label, opt.value) } />
-          </div>
-          <div className="Select">
-            <Select options={ aquaticCreatures } onChange={ opt => console.log(opt.label, opt.value) } />
-          </div>
-          <div className="Select">
-            <Select options={ aquaticCreatures } onChange={ opt => console.log(opt.label, opt.value) } />
-          </div>
-        </div>
+        </div> }
+      <JobSection >
         { loading ? (
           <Spinner />
         ) : (
@@ -157,7 +143,7 @@ const JobsListing = ({ getJobs, jobs: { jobs, loading }, auth: { user } }) => {
                   ) }
             </Fragment>
           ) }
-      </div>
+      </JobSection>
       { show && jobDescription !== '' &&
         <div className="rightpane">
           <JobDescription item={ jobDescription } closeJD={ closeJobDescription } />
