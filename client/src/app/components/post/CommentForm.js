@@ -25,21 +25,29 @@ const CommentForm = ({ postId, addComment, focus }) => {
     focus && TextareaEl.current.focus();
   }, [focus]);
 
-  const onEnterPress = (e) => {}
+  const handleComment = (e) => {
+    setText(e.target.value)
+  }
+  const handleSubmit = (e) => {
+    
+      e.preventDefault();
+      addComment(postId, { text });
+      setText('');
+    
+  }
+  const onEnterPress = (e) => {
+    
+  }
   return (
 
       <Form
         className='form my-1'
-        onSubmit={e => {
-          e.preventDefault();
-          addComment(postId, { text });
-          setText('');
-        }}
+        onSubmit={e => handleSubmit(e)}
       >
           <Textarea
           placeholder='Add a comment'
           value={ text }
-          onChange={ e => setText(e.target.value) }
+          onChange={ e => handleComment(e) }
           onKeyDown ={ onEnterPress}
           ref= {TextareaEl}
            />

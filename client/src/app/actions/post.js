@@ -93,11 +93,11 @@ export const addPost = (formData) => async dispatch => {
   try {
     const res = await axios.post(`/post/create/${formData.user._id}`, formData, config);
 
-    dispatch({
-      type: ADD_POST,
-      payload: res.data
-    });
-
+    // dispatch({
+    //   type: ADD_POST,
+    //   payload: res.data
+    // });
+    dispatch(getPosts());
     dispatch(setAlert('Post Created', 'success'));
   } catch (err) {
     dispatch({

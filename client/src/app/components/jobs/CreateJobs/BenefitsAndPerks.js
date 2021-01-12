@@ -1,13 +1,11 @@
 import React, {useState} from 'react'
-
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-const JobDescription = ({nextStep, prevStep, jobDescription, handleChange}) => {
+const BenefitsAndPerks = ({nextStep, prevStep, handleChange}) => {
     const [text, setText] = useState("")
     const handleOnChange = (event, editor) => {
         const data = editor.getData();
-        setText(data);
     }
 
     const next = (e) => {
@@ -18,18 +16,9 @@ const JobDescription = ({nextStep, prevStep, jobDescription, handleChange}) => {
         e.preventDefault()
         prevStep()
     }
-    const Tabs = () => {
-        const [selected, setSelected] = useState(0)
-        
-    }
     return (
         <>
-
-        
-
-
-         <h2>Job description</h2>   
-
+            <h2>Benefits and perks</h2>   
             <div className="col-12 mb-7">
                 <CKEditor
                     editor={ ClassicEditor }
@@ -45,4 +34,4 @@ const JobDescription = ({nextStep, prevStep, jobDescription, handleChange}) => {
     )
 }
 
-export default JobDescription
+export default BenefitsAndPerks

@@ -66,7 +66,6 @@ const Buttons = styled.div`
 `;
 
 const PostForm = ({ addPost, auth:{user} }) => {
-  console.log(user);
   const [post, setPost] = useState('');
   const [isFocused, setIsFocused] = useState(false)
   const [image, setImage] = useState('');
@@ -92,7 +91,13 @@ const PostForm = ({ addPost, auth:{user} }) => {
     setIsFocused(true);
     e.target.value = null;
   };
-  const isShareDisabled =   !image || !post;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addPost({ post, user });
+    setPost('');
+    handleReset();
+  }
+  // const isShareDisabled =   !image || !post;
 
   return (
     <Fragment>
@@ -101,11 +106,7 @@ const PostForm = ({ addPost, auth:{user} }) => {
 
       <Root zIndex={ isFocused ? 'md' : 3 } color="white" radius="sm" padding="sm">
       <form className='form '
-        onSubmit={e => {
-          e.preventDefault();
-          addPost({ post, user });
-          setPost('');
-        }}>
+        onSubmit={e =>  handleSubmit(e)}>
         <Wrapper>
             <Avatar size={ 40 } />
         <Textarea
@@ -135,7 +136,7 @@ const PostForm = ({ addPost, auth:{user} }) => {
                 <Button text type="button" onClick={ handleReset }>
                   Cancel
                 </Button>
-                <Button type="submit" disabled={ isShareDisabled}>
+                <Button type="submit" > {/*disabled={ isShareDisabled}*/}
                   Share
                 </Button>
               </Buttons>

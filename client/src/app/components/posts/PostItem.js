@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addLike, removeLike, deletePost } from '../../actions/post';
+import { addLike, removeLike, deletePost, getPosts } from '../../actions/post';
 import CommentForm from '../post/CommentForm';
 import CommentItem from '../post/CommentItem';
 import PostItemOptions from './PostItemOptions';
@@ -229,6 +229,7 @@ PostItem.defaultProps = {
 
 PostItem.propTypes = {
   post: PropTypes.object.isRequired,
+  getPosts: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   addLike: PropTypes.func.isRequired,
   removeLike: PropTypes.func.isRequired,
@@ -242,5 +243,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addLike, removeLike, deletePost }
+  { addLike, removeLike, deletePost, getPosts }
 )(PostItem);

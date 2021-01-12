@@ -8,9 +8,11 @@ import './createJobs.scss';
 
 import CompanyDetails from './CreateJobs/CompanyDetails';
 import JobOverview from './CreateJobs/JobOverview';
-import JobDescription from './CreateJobs/JobDescription';
+import JobDescription from './CreateJobs/JobDescription'
 import Preview from './CreateJobs/Preview';
 import CompanyLocation from './CreateJobs/CompanyLocation';
+import RolesAndResponsibility from './CreateJobs/RolesAndResponsibility';
+import BenefitsAndPerks from './CreateJobs/BenefitsAndPerks';
 
 
 
@@ -279,6 +281,22 @@ getData = data => {
         jobDescription={ jobDescription }
       />)
       if(CurrentStep === 5)
+          return(
+            <RolesAndResponsibility 
+              nextStep = {this.nextStep}
+              prevStep = {this.prevStep}
+              handleChange = {this.handleChange}
+            />
+          )
+      if(CurrentStep === 6)
+        return (
+          <BenefitsAndPerks 
+            nextStep = {this.nextStep}
+            prevStep = {this.prevStep}
+            handleChange = {this.handleChange}
+          />
+        )
+      if(CurrentStep === 7)
         return( <Preview
           prevStep={ this.prevStep }
       />)
@@ -304,4 +322,4 @@ CreateJobs.propTypes = {
 
 export default connect(null, { addJob })(CreateJobs)
 
-const stepArray = ["Company Details", "Office Location", "Job Overview", "Job Description", "Preview"]
+const stepArray = ["Company Details", "Office Location", "Job Overview", "Job Description", "Roles and Responsibility", "Perks and Benefits", "Preview"]
