@@ -1,4 +1,4 @@
-import React, {  Component, useState } from 'react';
+import React, { Component, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { addJob } from '../../actions/jobs';
@@ -176,8 +176,8 @@ import BenefitsAndPerks from './CreateJobs/BenefitsAndPerks';
 // }
 class CreateJobs extends Component {
   state = {
-    CurrentStep : 1,
-        jobTitle: '',
+    CurrentStep: 1,
+    jobTitle: '',
     jobDescription: '',
     experience: '',
     visa: '',
@@ -187,72 +187,86 @@ class CreateJobs extends Component {
     Country: '',
     jobCategory: [],
     jobType: [],
-    companyName:'',
-    City:'',
-    Locality:'',
-    WorkingDays:'',
-    companyWebsite:'',
-    companySize:'',
-    about:'',
-    industry:''
+    companyName: '',
+    City: '',
+    Locality: '',
+    WorkingDays: '',
+    companyWebsite: '',
+    companySize: '',
+    about: '',
+    industry: '',
+    responsibility:'',
+    perksBenefits:''
   }
 
 
- nextStep = () => {
-   const { CurrentStep } = this.state;
+  nextStep = () => {
+    const { CurrentStep } = this.state;
 
-   this.setState({CurrentStep:CurrentStep+1})
-}
- prevStep = () => {
-   const { CurrentStep } = this.state;
+    this.setState({ CurrentStep: CurrentStep + 1 })
+  }
+  prevStep = () => {
+    const { CurrentStep } = this.state;
 
-   this.setState({CurrentStep:CurrentStep-1})
-}
+    this.setState({ CurrentStep: CurrentStep - 1 })
+  }
 
-   handleChange = input => e => {
+  handleChange = input => e => {
     this.setState({ [input]: e.target.value });
-}
-getData = data => {
-  this.setState({'about': data});
-}
+  }
+  getAboutData = data => {
+    this.setState({ 'about': data });
+  }
 
+  getJDData = data => {
+    this.setState({ 'jobDescription': data });
+  }
+
+  getRolesResponsibility = data => {
+    this.setState({'responsibility': data})
+  }
+getPerksAndBenefits = data => {
+  this.setState({ "perksBenefits": data})
+}
   showSteps = () => {
-  const {
-    CurrentStep,
-    jobTitle,
-    jobDescription,
-    experience,
-    skills,
-    visa,
-    language,
-    salary,
-    country,
-    jobCategory,
-    jobType,
-    companyName,
-    city,
-    locality,
-    workingDays,
-    companyWebsite,
-    companySize,
-    about,
-    industry
+    const {
+      CurrentStep,
+      jobTitle,
+      jobDescription,
+      experience,
+      skills,
+      visa,
+      language,
+      salary,
+      country,
+      jobCategory,
+      jobType,
+      companyName,
+      city,
+      locality,
+      workingDays,
+      companyWebsite,
+      companySize,
+      about,
+      industry,
+      responsibility,
+      perksBenefits
 
-  } = this.state;
-    
-      if (CurrentStep === 1)
+    } = this.state;
+
+    if (CurrentStep === 1)
       return (<CompanyDetails
         nextStep={ this.nextStep }
         handleChange={ this.handleChange }
-        getData={ this.getData }
+        getData={ this.getAboutData }
         currentStepNumber={ CurrentStep }
         companyName={ companyName }
         companyWebsite={ companyWebsite }
         companySize={ companySize }
         about={ about }
-        industry = {industry}
+        industry={ industry }
       />)
-      if (CurrentStep === 2 )
+    if (CurrentStep === 2)
       return (<CompanyLocation
         nextStep={ this.nextStep }
         prevStep={ this.prevStep }
@@ -262,8 +276,8 @@ getData = data => {
         city={ city }
         locality={ locality }
       />)
-     if( CurrentStep === 3 )
-      return ( <JobOverview
+    if (CurrentStep === 3)
+      return (<JobOverview
         nextStep={ this.nextStep }
         prevStep={ this.prevStep }
         handleChange={ this.handleChange }
@@ -273,44 +287,66 @@ getData = data => {
         skills={ skills }
         workingDays={ workingDays }
       />)
-      if(CurrentStep === 4)
-        return( <JobDescription
-          nextStep={ this.nextStep }
-          prevStep={ this.prevStep }
-          handleChange={ this.handleChange }
+    if (CurrentStep === 4)
+      return (<JobDescription
+        nextStep={ this.nextStep }
+        prevStep={ this.prevStep }
+        getJDData={ this.getJDData }
+        handleChange={ this.handleChange }
         jobDescription={ jobDescription }
       />)
-      if(CurrentStep === 5)
-          return(
-            <RolesAndResponsibility 
-              nextStep = {this.nextStep}
-              prevStep = {this.prevStep}
-              handleChange = {this.handleChange}
-            />
-          )
-      if(CurrentStep === 6)
-        return (
-          <BenefitsAndPerks 
-            nextStep = {this.nextStep}
-            prevStep = {this.prevStep}
-            handleChange = {this.handleChange}
-          />
-        )
-      if(CurrentStep === 7)
-        return( <Preview
+    if (CurrentStep === 5)
+      return (
+        <RolesAndResponsibility
+          nextStep={ this.nextStep }
           prevStep={ this.prevStep }
+          getRolesResponsibility={ this.getRolesResponsibility}
+          responsibility = {responsibility}
+          handleChange={ this.handleChange }
+        />
+      )
+    if (CurrentStep === 6)
+      return (
+        <BenefitsAndPerks
+          nextStep={ this.nextStep }
+          prevStep={ this.prevStep }
+          getPerksAndBenefits = {this.getPerksAndBenefits}
+          perksBenefits = {perksBenefits}
+          handleChange={ this.handleChange }
+        />
+      )
+    if (CurrentStep === 7)
+      return (<Preview
+        prevStep={ this.prevStep }
+        about={ about }
+        perksBenefits={ perksBenefits }
+        responsibility={ responsibility }
+        jobDescription={ jobDescription }
+        jobTitle={ jobTitle }
+        salary={ salary }
+        experience={ experience }
+        skills={ skills }
+        workingDays={ workingDays }
+        country={ country }
+        city={ city }
+        locality={ locality }
+        companyName={ companyName }
+        companyWebsite={ companyWebsite }
+        companySize={ companySize }
+        about={ about }
+        industry={ industry }
       />)
-    
+
   }
   render() {
     const { CurrentStep } = this.state;
     return (
       <>
         <div className="stepper-container-vertical" >
-        <Stepper steps={ stepArray } direction="vertical" currentStepNumber={ CurrentStep } />
+          <Stepper steps={ stepArray } direction="vertical" currentStepNumber={ CurrentStep } />
         </div>
         <div className="form-container">
-        {this.showSteps() }
+          { this.showSteps() }
         </div>
       </>
     );

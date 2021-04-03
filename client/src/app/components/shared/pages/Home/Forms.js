@@ -86,9 +86,11 @@ export const Textarea = styled.textarea`
   height: 50px;
   width: 100%;
   resize: none;
-  border: 0;
+  border: 1px solid;
   padding-left: ${(p) => p.theme.spacing.sm};
   padding-top: ${(p) => p.theme.spacing.xs};
+  padding-bottom:${(p) => p.theme.spacing.xs};
+  padding-right:${(p) => p.theme.spacing.sm};
   color: ${(p) => p.theme.colors.text.main};
   font-size: ${(p) => p.theme.font.size.xs};
 

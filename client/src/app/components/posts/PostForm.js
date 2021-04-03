@@ -73,6 +73,7 @@ const PostForm = ({ addPost, auth:{user} }) => {
   const handleReset = () => {
     setImage('');
     setIsFocused(false)
+    setPost('')
 
   }
 
@@ -97,7 +98,12 @@ const PostForm = ({ addPost, auth:{user} }) => {
     setPost('');
     handleReset();
   }
-  // const isShareDisabled =   !image || !post;
+  const handleChange = e => {
+    setPost(e.target.value)
+    // setIsFocused(!isFocused)
+  }
+  // image is optional post and image should not be null 
+  const isShareDisabled = !post || !image; 
 
   return (
     <Fragment>
@@ -116,7 +122,7 @@ const PostForm = ({ addPost, auth:{user} }) => {
           onFocus={ handleOnFocus }
           placeholder='Add a post'
           value={post}
-          onChange={e => setPost(e.target.value)}
+          onChange={e => handleChange(e)}
           required/>
 
             { !isFocused && <PostImageUpload handleChange={ handlePostImageUpload } /> }
@@ -136,7 +142,7 @@ const PostForm = ({ addPost, auth:{user} }) => {
                 <Button text type="button" onClick={ handleReset }>
                   Cancel
                 </Button>
-                <Button type="submit" > {/*disabled={ isShareDisabled}*/}
+                <Button type="submit" disabled={ isShareDisabled } > {/*disabled={ isShareDisabled}*/}
                   Share
                 </Button>
               </Buttons>

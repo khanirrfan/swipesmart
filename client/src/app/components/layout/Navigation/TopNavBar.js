@@ -58,7 +58,7 @@ const TopNavBar = ({ auth: { isAuthenticated, loading, user }, logout, isOpen, t
                     </SidebarLinks>
             </SidebarMenu>
             <SideBtnWrap>
-                <SidebarRoute to="/signin">
+                <SidebarRoute to="/login">
                     Sign In
                     </SidebarRoute>
             </SideBtnWrap>

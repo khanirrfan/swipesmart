@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 
+	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -20,7 +21,7 @@ import (
 
 // CreatePost ...
 func CreatePost(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-ype", "application/json")
+	w.Header().Set("Content-Type", "application/json")
 	var posts model.Post
 	// get user id from req
 	uID := mux.Vars(r)["id"]
@@ -60,7 +61,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 
 // GetPost ...
 func GetPost(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-ype", "application/json")
+	w.Header().Set("Content-Type", "application/json")
 	var posts []model.Post
 
 	// token authentication
@@ -197,9 +198,62 @@ func UnlikePost(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("un like")
 }
 
-// Comment ...
-func Comment(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("commnet")
+// AddComment ...
+func AddComment(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	pID := mux.Vars(r)["id"]
+	uID := mux.Vars(r)["uid"]
+	fmt.Println(pID)
+	var comment model.Comment
+	body, _ := ioutil.ReadAll(r.Body)
+	err := json.Unmarshal(body, &comment)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("add commnet", &comment)
+
+	// token authentication
+	tokenString := r.Header.Get("Authorization")
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method")
+		}
+		return []byte("secret"), nil
+	})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	dbConnection, err := db.GetDBCollection()
+	if err != nil {
+		log.Fatal()
+	}
+	postCollection := dbConnection.Collection("success_story")
+
+	postID, err := primitive.ObjectIDFromHex(pID)
+	if err != nil {
+		log.Fatal(err)
+	}
+	userID, err := primitive.ObjectIDFromHex(uID)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var post model.Post
+	opts := options.FindOneAndUpdate().SetUpsert(true)
+	filter := bson.D{{"_id", postID}}
+	update := bson.D{{"$set", &post}}
+	if token.Valid {
+		err = postCollection.FindOne(context.TODO(), bson.M{"_id": postID}).Decode(&post)
+		if err != nil {
+			fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)
+		}
+		comment.UID = userID
+		post.Comments = append(post.Comments, &comment)
+		fmt.Println(post.Comments)
+		err = postCollection.FindOneAndUpdate(context.Background(), filter, update, opts).Decode(&post)
+		json.NewEncoder(w).Encode(post)
+	}
 }
 
 // DeleteComment ...

@@ -61,10 +61,10 @@ func main() {
 	r.HandleFunc("/post/edit", controller.EditPost).Methods("PUT")
 	r.HandleFunc("/post/delete/{id}", controller.DeletePost).Methods("DELETE")
 
-	// like, comment on post
+	// like, addcomment on post
 	r.HandleFunc("/post/like/{id}", controller.LikePost).Methods("PUT")
 	r.HandleFunc("/post/unlike/{id}", controller.UnlikePost).Methods("PUT")
-	r.HandleFunc("/post/comment/{id}", controller.Comment).Methods("POST")
+	r.HandleFunc("/post/comment/{id}/{uid}", controller.AddComment).Methods("PATCH")
 	r.HandleFunc("/post/comment/delete/{id}", controller.DeleteComment).Methods("DELETE")
 	r.HandleFunc("/post/comment/edit/{id}", controller.EditComment).Methods("PUT")
 

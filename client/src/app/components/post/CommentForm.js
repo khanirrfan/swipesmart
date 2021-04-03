@@ -11,13 +11,14 @@ const Form = styled.form`
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
+  padding:1rem;
 `;
 
 const CommentForm = ({ postId, addComment, focus }) => {
   const [text, setText] = useState('');
 
   const [comment, setComment] = useState('');
-  const buttonEl = useRef(null);
+  const buttonEl = useRef(false);
   const TextareaEl = useRef(false);
 
 
@@ -27,6 +28,9 @@ const CommentForm = ({ postId, addComment, focus }) => {
 
   const handleComment = (e) => {
     setText(e.target.value)
+    // buttonEl.
+    setComment(e.target.value)
+
   }
   const handleSubmit = (e) => {
     
@@ -41,7 +45,6 @@ const CommentForm = ({ postId, addComment, focus }) => {
   return (
 
       <Form
-        className='form my-1'
         onSubmit={e => handleSubmit(e)}
       >
           <Textarea

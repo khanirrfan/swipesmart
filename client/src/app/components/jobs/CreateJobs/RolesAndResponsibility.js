@@ -2,10 +2,11 @@ import React, {useState} from 'react'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-const RolesAndResponsibility = ({nextStep, prevStep, handleChange}) => {
-    const [text, setText] = useState("")
+const RolesAndResponsibility = ({ nextStep, prevStep, getRolesResponsibility, responsibility, handleChange}) => {
+    // const [text, setText] = useState("")
     const handleOnChange = (event, editor) => {
         const data = editor.getData();
+        getRolesResponsibility(data);
     }
 
     const next = (e) => {
@@ -22,7 +23,10 @@ const RolesAndResponsibility = ({nextStep, prevStep, handleChange}) => {
             <div className="col-12 mb-7">
                 <CKEditor
                     editor={ ClassicEditor }
-                    data={ text }
+                    data={ responsibility }
+                    value={ responsibility}
+                    name= "responsibility"
+                    type = "text"
                     onChange={ handleOnChange }
                 />
             </div> 

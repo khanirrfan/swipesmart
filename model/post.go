@@ -21,6 +21,7 @@ type Post struct {
 // Comment ...
 type Comment struct {
 	UID         primitive.ObjectID `json:"_uid,omitempty" bson:"_uid,omitempty"`
+	CID         primitive.ObjectID `json:"_cid,omitempty" bson:"_cid,omitempty"`
 	CommnetText string             `json:"commenttext,omitempty" bson:"commenttext,omitempty"`
 	Username    string             `json:"username,omitempty" bson:"username,omitempty"`
 	Date        time.Time          `json:"date,omitempty" bson:"date,omitempty"`

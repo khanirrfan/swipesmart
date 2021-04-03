@@ -19,8 +19,13 @@ const Profile = ({
     about:'',
     skills:'',
     education:[],
-    experience:[]}
+    experience:[]
+  }
   });
+  // const [about, setAbout] = useState('');
+  // const [skills, setSkills] = useState('');
+  // const [education, setEducation] = useState([]);
+  // const [experience, setExperience] = useState([]);
   useEffect(() => {
     getProfileByID(match.params.id);
   }, [getProfileByID, match.params.id]);
@@ -105,11 +110,12 @@ const Profile = ({
                       </h4>
                       { aboutEdit &&
                         <ProfileAbout profile ={profile}/>
+                        // <p className="font-size-4 mb-8">{ profile.about }</p>
                       }
                       { !aboutEdit &&
                         <form onSubmit ={onSubmit}> 
-                          <textarea type="text" value = { profile.about } onChange={ onChange } style={ {   width:'-webkit-fill-available'}} name = "about" rows={5}/>
-                          <input type="submit" value="Save"/>
+                          <input type="text" name="about" onChange={e => onChange(e) } value={ profile.about } style={ {   width:'-webkit-fill-available'}} />
+                          <button type="submit">Save</button>
                         </form>
                       }
                   </div>
