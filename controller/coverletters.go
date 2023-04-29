@@ -16,9 +16,9 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/gridfs"
 
-	"github.com/swipesmart/config/db"
-	"github.com/swipesmart/model"
-	"github.com/swipesmart/utils"
+	"github.com/khanirrfan/swipesmart/config/db"
+	"github.com/khanirrfan/swipesmart/model"
+	"github.com/khanirrfan/swipesmart/utils"
 )
 
 // GetCoverLetters ...

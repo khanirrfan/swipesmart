@@ -14,8 +14,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
-	"github.com/swipesmart/config/db"
-	"github.com/swipesmart/model"
+	"github.com/khanirrfan/swipesmart/config/db"
+	"github.com/khanirrfan/swipesmart/model"
 )
 
 // GetProfile ... calls when application loads first time or every time

@@ -18,8 +18,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 
-	"github.com/swipesmart/config/db"
-	"github.com/swipesmart/model"
+	"github.com/khanirrfan/swipesmart/config/db"
+	"github.com/khanirrfan/swipesmart/model"
 )
 
 // CreateJobs ...

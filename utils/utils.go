@@ -8,7 +8,7 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 
-	"github.com/swipesmart/model"
+	"github.com/khanirrfan/swipesmart/model"
 )
 
 // CheckError ...
