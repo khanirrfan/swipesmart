@@ -75,6 +75,10 @@ func main() {
 	r.HandleFunc("/save/coverletter/{userId}/{jobId}", controller.SaveCoverLetter).Methods("PUT")
 
 	r.HandleFunc("/protected", controller.TokenVerifyMiddleWare(controller.ProtectedEndPoint))
-	log.Fatal(http.ListenAndServe(":8081", r))
+	err := http.ListenAndServe(":8082", r)
+        if err != nil {
+                log.Fatalln("There's an error with the server,", err)
+        }
+	// log.Fatal(http.ListenAndServe(":8081", r))
 
 }
