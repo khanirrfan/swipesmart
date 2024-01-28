@@ -207,11 +207,11 @@ func AppliedJobs(w http.ResponseWriter, r *http.Request) {
 	// if  token.Valid {
 	// 	// id, ok := claims["id"].(string)
 	// 	if !ok {
-	// 		log.Fatal(ok) 
+	// 		log.Fatal(ok)
 	userID, err := primitive.ObjectIDFromHex(id)
 	// if err != nil {
 	// 	log.Fatal(err)
-	// } 
+	// }
 	// err = collection.FindOne(context.TODO(), bson.M{"_id": currentJobID}).Decode(&job)
 	// if err != nil {
 	// 	fmt.Println("FindOne() ObjectIDFromHex ERROR:", err)

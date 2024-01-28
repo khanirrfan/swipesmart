@@ -76,9 +76,9 @@ func main() {
 
 	r.HandleFunc("/protected", controller.TokenVerifyMiddleWare(controller.ProtectedEndPoint))
 	err := http.ListenAndServe(":8082", r)
-        if err != nil {
-                log.Fatalln("There's an error with the server,", err)
-        }
+	if err != nil {
+		log.Fatalln("There's an error with the server,", err)
+	}
 	// log.Fatal(http.ListenAndServe(":8081", r))
 
 }
